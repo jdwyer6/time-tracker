@@ -2,30 +2,124 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { DEMOEMPLOYEES } from '../shared/DEMOEMPLOYEES';
 import { useEffect, useState } from 'react';
+import EmployeeCard from '../components/EmployeeCard';
+import HoursCard from '../components/HoursCard';
+import Spinner from 'react-bootstrap/Spinner';
 
 const ClockInPage = () => {
     const { user } = useSelector(state => state.user);
     const employee = DEMOEMPLOYEES.find(employee => employee.id === user);
     const [employees, setEmployees] = useState(DEMOEMPLOYEES);
-    let utc = new Date().toJSON().slice(0,10).replace(/-/g,'/');
+
+    const minute = 1000 * 60;
+    const hour = minute * 60;
+    const day = hour * 24;
+    let current = new Date();
+    const weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const [time, setTime] = useState(current.toLocaleTimeString());
     const [date, setDate] = useState();
+    const [info, setInfo] = useState({
+        date: '',
+        start: '',
+        end: '',
+        hoursWorked: ''
+    });
+
+    const [clockedIn, setClockedIn] = useState(false);
+
+    function calculateWeekOf(){
+        let day = current.getDay();
+        let date = current.getDate();
+        return (date - day) + 1;
+    }
 
     useEffect(() => {
-        console.log(DEMOEMPLOYEES[employee.id])
-    }, [])
+        // console.log(DEMOEMPLOYEES[employee.id])
+        setInterval(()=>{
+            setTime(new Date().toLocaleTimeString())
+            
+        }, 1000)
+    },[time])
+
+    useEffect(()=>{
+        console.log(info)
+        console.log(clockedIn)
+    }, [clockedIn, info])
+
+    function handleClockIn(){
+        setClockedIn(!clockedIn) 
+        setInfo({...info, start: Date.now()})
+    }
+
+    function handleClockOut(){
+        setClockedIn(!clockedIn)
+        setInfo({...info, end: Date.now(), date: current.getDate(), hoursWorked: ((info.start - info.end)/600000)})
+    }
+
+
+
+    // setInterval(function() {
+    //     var delta = Date.now() - start; 
+    //     return (new Date().toUTCString());
+    // }, 1000); // update about every second
 
 
     return ( 
         <Container>
-            <Row>
-                <Col>
-                
-                </Col>
-                <Col>
-                
+            <Row className='mt-medium'>
+                <EmployeeCard img={employee.image} name={employee.name} title={employee.title}/>
+                <Col className='text-center d-flex flex-column justify-content-center align-items-center'>
+                    <h1 className='fw-bold fs-2'>Today is {weekday[current.getDay()]}, {months[current.getMonth()]} {current.getDate()}</h1>
+                    <p>{time}</p>
+                    {clockedIn === false ? (
+                        <Button onClick={()=>handleClockIn()} className='button-lg'>Clock in</Button>
+                    ) : (
+                        <>
+                            <Button onClick={()=>handleClockOut()} className='button-lg__alert'>Clock out {time}</Button>
+                            <div className='d-flex mt-1'>
+                                <Spinner animation="grow" className='tracking-icon'/>
+                                <p style={{fontSize: '80%'}}>Tracking your time</p>
+                            </div>
+                            
+                        </>
+
+                    )}
+                    
                 </Col>
             </Row>
-            <h1>clock in for {user}</h1>
+            <Row className='calendar-container'>
+                <table className="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Week of:</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Handle</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">{months[current.getMonth()]} {calculateWeekOf()}</th>
+                        <td><HoursCard /></td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">3</th>
+                        <td>Larry the Bird</td>
+                        <td>@twitter</td>
+                      </tr>
+                    </tbody>
+                </table>
+            </Row>
+            {/* <h1>clock in for {user}</h1>
             <p>{employee.name}</p>
             <p>Today's date is: {utc}</p>
             <p>Chosen date is: {date}</p>
@@ -36,7 +130,7 @@ const ClockInPage = () => {
             <Button onClick={()=> {
                 DEMOEMPLOYEES[employee.id].hours[date] = 3;
 
-            }}>click here</Button>
+            }}>click here</Button> */}
         </Container>
      );
 }

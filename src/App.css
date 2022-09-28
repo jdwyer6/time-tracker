@@ -43,6 +43,24 @@ html, body {
 .btn.button-main:hover {
   background-color: #7e968a;
 }
+.btn.button-lg {
+  width: clamp(100px, 30%, 250px);
+  background-color: #91AA9D;
+  font-weight: 600;
+  color: white;
+}
+.btn.button-lg:hover {
+  background-color: #7e968a;
+}
+.btn.button-lg__alert {
+  width: clamp(100px, 30%, 250px);
+  background-color: rgb(230, 132, 132);
+  color: white;
+  font-weight: 600;
+}
+.btn.button-lg__alert:hover {
+  background-color: rgb(196, 105, 105);
+}
 
 .container-centered {
   display: flex;
@@ -64,6 +82,7 @@ html, body {
   margin: 10% auto 0 auto;
   width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   text-align: center;
   justify-content: center;
@@ -112,6 +131,9 @@ html, body {
   width: 50%;
 }
 
+.employee-card {
+  text-align: center;
+}
 .employee-card img {
   width: 10rem;
   height: 10rem;
@@ -128,6 +150,19 @@ html, body {
   font-size: 1.2rem;
   margin: 1rem 0 0 0;
   font-weight: 500;
+}
+
+.calendar-container {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  height: auto;
+}
+
+.tracking-icon {
+  color: rgb(230, 132, 132);
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.1rem;
 }
 
 @media only screen and (max-width: 576px) {

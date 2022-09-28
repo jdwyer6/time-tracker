@@ -15,62 +15,62 @@ export const DEMOEMPLOYEES = [
         name: 'Albert Pujols',
         title: 'Employee',
         image: albert,
-        hours: {}
+        hours: []
     },
     {
         id: 1,
         name: 'Bill Gates',
         title: 'Admin',
         image: bill,
-        hours: {}
+        hours: []
     },
     {
         id: 2,
         name: 'Elon Musk',
         title: 'Employee',
         image: elon,
-        hours: {}
+        hours: []
     },
     {
         id: 3,
         name: 'Jeff Bezos',
         title: 'Admin',
         image: jeff,
-        hours: {}
+        hours: []
     },
     {
         id: 4,
         name: 'Mark Zuckerberg',
         title: 'Employee',
         image: mark,
-        hours: {}
+        hours: []
     },
     {
         id: 5,
         name: 'Tony Stark',
         title: 'Employee',
         image: tony,
-        hours: {}
+        hours: []
     },
     {
         id: 6,
         name: 'Ava',
         title: 'Employee',
         image: ava,
-        hours: {}
+        hours: []
     },
     {
         id: 7,
         name: 'Richard Hendricks',
         title: 'Employee',
         image: richard,
-        hours: {}
+        hours: []
     },
     {
         id: 8,
         name: 'Steve Jobs',
         title: 'Admin',
         image: steve,
-        hours: {}
+        hours: []
     },
 ]
