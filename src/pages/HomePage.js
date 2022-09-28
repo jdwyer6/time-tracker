@@ -1,7 +1,13 @@
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { increment, decrement, incrementByAmount } from '../redux/counterSlice';
+import { useDispatch, useSelector } from "react-redux";
 
 const HomePage = () => {
+    const { count } = useSelector(state => state.counter);
+    // const count = useSelector((state) => state.counter.count);
+    const dispatch = useDispatch();
+
     return ( 
         <Container fluid>
             <div className='circle'></div>
@@ -13,7 +19,7 @@ const HomePage = () => {
             </Row>
             <Row className='home-button-group'>
                     <Col md='4' className="button-container">
-                        <Button className='button_xl'>Login</Button>
+                        <Button className='button_xl' onClick={()=>dispatch(increment())}>Login</Button>
                     </Col>
                     <Col md='4' className="button-container">
                         <Link to='demo'>
@@ -22,7 +28,7 @@ const HomePage = () => {
                         
                     </Col>
                     <Col md='4' className="button-container">
-                        <Button className='button_xl'>Sign up free</Button>
+                        <Button className='button_xl' onClick={()=>dispatch(decrement())}>Sign up free</Button>
                     </Col>
             </Row>
         </Container>

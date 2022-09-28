@@ -3,7 +3,8 @@ import { Routes, Route, Link } from "react-router-dom";
 import './App.css';
 import HomePage from './pages/HomePage';
 import Navigation from './components/Navbar';
-import DemoPage from './pages/DemoPage_Home';
+import DemoPage from './pages/DemoPage';
+import ClockInPage from './pages/ClockInPage';
 
 function App() {
   	return (
@@ -11,7 +12,8 @@ function App() {
 			<Navigation />
 			<Routes>
 				<Route path='/' element={<HomePage />}/>
-				<Route path='demo' element={<DemoPage />}/>
+				<Route path='/demo' element={<DemoPage />}/>
+				<Route path='/clockin' element={<ClockInPage />}/>
 			</Routes>
 			
   	  	</div>

@@ -3,8 +3,10 @@
 $green-light: #FCFFF5;
 $green-mid: #D1DBBD;
 $green-dark: #91AA9D;
+$green-dark-hover: #7e968a;
 $blue-mid: #3E606F;
 $blue-dark: #193441;
+$gray-mid: rgb(146, 151, 150);
 
 body{
     font-family: 'Inter', sans-serif;
@@ -47,6 +49,16 @@ html, body {
 
     }
 
+    &.button-main{
+        width: clamp(100px, 10%, 150px);
+        background-color: $green-dark;
+        color: white;
+
+        &:hover{
+            background-color: $green-dark-hover;
+        }
+    }
+
 
 }
 
@@ -77,6 +89,10 @@ html, body {
         text-align: center;
         justify-content: center;
     }
+}
+
+.mt-medium{
+    margin-top: clamp(1rem, 6vw, 5rem);
 }
 
 // HOME PAGE
@@ -121,21 +137,22 @@ html, body {
             border-radius: 0;
             width: 50%;
         }
-
-        .btn{
-            border-radius: 0;
-            width: clamp(100px, 10%, 150px)
-        }
 }
 
 .employee-card{
-    // width: 10rem;
     
     img{
         width: 10rem;
         height: 10rem;
         border-radius: 50%;
         object-fit: cover;
+        transition: all .4s;
+
+        &:hover{
+            transform: scale(1.02);
+            cursor: pointer;
+            filter: sepia(.4);
+        }
     }
 
     h3{
@@ -145,16 +162,35 @@ html, body {
     }
 }
 
-@media only screen and (max-width: 600px){
+//SMALL BREAKPOINT///////////
+@media only screen and (max-width: 576px){
 
     .search-bar{
         input{
             width: 100%;
         }
+    }
 
-        .btn{
-            width: clamp(50px, 100%, 150px);
-            margin-top: 1rem;
+    .button-main{
+        margin-top: 1rem;
+    }
+
+    .employee-card{
+    
+        img{
+            width: 5rem;
+            height: 5rem;
+
+        }
+    
+        h3{
+            font-size: 1rem;
+            margin: .2rem 0 0 0;
+            font-weight: 500;
+        }
+
+        P{
+            font-size: .8rem;
         }
     }
 
