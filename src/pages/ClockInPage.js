@@ -7,15 +7,15 @@ import HoursCard from '../components/HoursCard';
 import Spinner from 'react-bootstrap/Spinner';
 import Timer from 'react-timer-wrapper';
 import Timecode from 'react-timecode';
+import moment from 'moment/moment';
+import { PreciseRangeValueObject } from 'moment-precise-range-plugin';
+import _default from 'react-bootstrap/esm/Accordion';
 
 const ClockInPage = () => {
     const { user } = useSelector(state => state.user);
     const employee = DEMOEMPLOYEES.find(employee => employee.id === user);
     const [employees, setEmployees] = useState(DEMOEMPLOYEES);
 
-    // const minute = 1000 * 60;
-    // const hour = minute * 60;
-    // const day = hour * 24;
     let current = new Date();
     const weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -23,9 +23,7 @@ const ClockInPage = () => {
     const [info, setInfo] = useState({
         date: '',
         start: '',
-        end: '',
-        startTime: '',
-        endTime: '',
+        end: 0,
         hoursWorked: 0
     });
 
@@ -38,26 +36,26 @@ const ClockInPage = () => {
     }
 
     useEffect(() => {
-        // console.log(DEMOEMPLOYEES[employee.id])
         setInterval(()=>{
             setTime(new Date().toLocaleTimeString())
         }, 1000)
     },[time])
-
+    
     useEffect(()=>{
         console.log(info)
     }, [clockedIn, info])
 
     function handleClockIn(){
-        setClockedIn(!clockedIn) 
-        setInfo({...info, start: Date.now()})
-        setInfo({...info, startTime: time})
+        setClockedIn(!clockedIn); 
+        setInfo({...info, start: current.getTime(), end: 0, hoursWorked: 0});
+
     }
 
     function handleClockOut(){
-        setClockedIn(!clockedIn)
-        setInfo({...info, end: Date.now(), date: current.getDate(), endTime: time, hoursWorked: ((info.end - info.start)/36000000000000).toFixed(5)})
+        setClockedIn(!clockedIn);
+        setInfo({...info, date: current.getDate(), end: current.getTime(), hoursWorked: ((current.getTime()-info.start)/60000).toFixed(2)});
     }
+
 
 
     return ( 
@@ -100,7 +98,7 @@ const ClockInPage = () => {
                     <tbody>
                       <tr>
                         <th scope="row">{months[current.getMonth()]} {calculateWeekOf()}</th>
-                        <td><HoursCard day={weekday[current.getDay()]} month={months[current.getMonth()]} date={current.getDate()} startTime={info.startTime} endTime={info.endTime} hoursWorked={info.hoursWorked}/></td>
+                        <td><HoursCard day={weekday[current.getDay()]} month={months[current.getMonth()]} date={current.getDate()} hoursWorked={info.hoursWorked}/></td>
                         <td>Otto</td>
                         <td>@mdo</td>
                       </tr>
