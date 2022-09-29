@@ -1,11 +1,11 @@
-const HoursCard = ({day, month, date, start, end, hoursWorked}) => {
+const HoursCard = ({day, month, date, startTime, endTime, hoursWorked}) => {
     return ( 
-        <>
+        <div className='hours-card'>
             <h4>{day}</h4>
-            <p>{month} {date}</p>
-            {/* <p>{start} - {end}</p> */}
-            <p>{hoursWorked}</p>
-        </>
+            <h5>{month} {date}</h5>
+            <p className='start-end-times'>{startTime} - {endTime}</p>
+            <p className='hours-worked'>{hoursWorked} Hours</p>
+        </div>
      );
 }
  

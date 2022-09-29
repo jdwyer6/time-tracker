@@ -207,6 +207,7 @@ html, body {
     box-shadow: $shadow;
     width: 100%;
     height: auto;
+    margin-top: 3rem;
 }
 
 .tracking-icon{
@@ -214,6 +215,34 @@ html, body {
     width: 1rem;
     height: 1rem;
     margin-right: .1rem;
+}
+
+.hours-card{
+    text-align: center;
+    width: 10rem;
+    height: 10rem;
+    box-shadow: $shadow;
+    padding: 1rem;
+
+    h4{
+        font-size: 1.3rem;
+        font-weight: 300;
+        margin: 0;
+    }
+
+    h5{
+        font-size: .8rem;
+        font-weight: 300;
+    }
+
+    .start-end-times{
+        font-size: .8rem;
+        margin: 1rem auto;
+    }
+
+    .hours-worked{
+        font-weight: 900;
+    }
 }
 
 //SMALL BREAKPOINT///////////

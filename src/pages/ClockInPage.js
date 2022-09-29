@@ -7,9 +7,9 @@ import HoursCard from '../components/HoursCard';
 import Spinner from 'react-bootstrap/Spinner';
 import Timer from 'react-timer-wrapper';
 import Timecode from 'react-timecode';
-import moment from 'moment/moment';
-import { PreciseRangeValueObject } from 'moment-precise-range-plugin';
 import _default from 'react-bootstrap/esm/Accordion';
+import { MdLunchDining } from 'react-icons/md';
+import { ImClock2, ImClock } from 'react-icons/im';
 
 const ClockInPage = () => {
     const { user } = useSelector(state => state.user);
@@ -20,10 +20,13 @@ const ClockInPage = () => {
     const weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const [time, setTime] = useState(current.toLocaleTimeString());
+    const [shortTime, setShortTime] = useState(current.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}));
     const [info, setInfo] = useState({
         date: '',
-        start: '',
+        start: 0,
         end: 0,
+        startTime: '',
+        endTime: '',
         hoursWorked: 0
     });
 
@@ -38,40 +41,44 @@ const ClockInPage = () => {
     useEffect(() => {
         setInterval(()=>{
             setTime(new Date().toLocaleTimeString())
+            setShortTime(new Date().toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}));
         }, 1000)
-    },[time])
+    },[])
     
     useEffect(()=>{
         console.log(info)
     }, [clockedIn, info])
 
-    function handleClockIn(){
+    function handleClockIn(){ 
+        setInfo({...info, start: current.getTime(), startTime: shortTime});
         setClockedIn(!clockedIn); 
-        setInfo({...info, start: current.getTime(), end: 0, hoursWorked: 0});
 
     }
 
     function handleClockOut(){
+        setInfo({...info, date: current.getDate(), end: current.getTime(), hoursWorked: ((current.getTime()-info.start)/60000).toFixed(2), endTime: shortTime});
         setClockedIn(!clockedIn);
-        setInfo({...info, date: current.getDate(), end: current.getTime(), hoursWorked: ((current.getTime()-info.start)/60000).toFixed(2)});
     }
 
-
+    function pushinfo(){
+        DEMOEMPLOYEES[employee.id].work.push(info);
+    }
 
     return ( 
         <Container>
+            <Button onClick={()=>pushinfo()}>click</Button>
             <Row className='mt-medium'>
                 <EmployeeCard img={employee.image} name={employee.name} title={employee.title}/>
                 <Col className='text-center d-flex flex-column justify-content-center align-items-center'>
                     <h1 className='fw-bold fs-2'>Today is {weekday[current.getDay()]}, {months[current.getMonth()]} {current.getDate()}</h1>
                     <p>{time}</p>
                     {clockedIn === false ? (
-                        <Button onClick={()=>handleClockIn()} className='button-lg'>Clock in</Button>
+                        <Button onClick={()=>handleClockIn()} className='button-lg'><ImClock className='mx-1'/>Clock in</Button>
                     ) : (
                         <>
                             <div className='d-flex w-100 justify-content-center'>
-                                <Button onClick={()=>handleClockOut()} className='button-lg__alert'>Clock out <Timer style={{fontSize: '14px'}} active duration={null}><Timecode /></Timer></Button>
-                                <Button className='button-lg__option'>Lunch</Button>
+                                <Button onClick={()=>handleClockOut()} className='button-lg__alert'>Clock out <Timer style={{fontSize: '14px'}} active duration={null}><ImClock2 className='mx-1'/><Timecode /></Timer></Button>
+                                <Button className='button-lg__option'><MdLunchDining className='mx-2'/>Lunch</Button>
                             </div>
 
                             <div className='d-flex mt-1'>
@@ -88,31 +95,27 @@ const ClockInPage = () => {
             <Row className='calendar-container'>
                 <table className="table">
                     <thead>
-                      <tr>
-                        <th scope="col">Week of:</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
-                      </tr>
+                        <tr className='border-bottom'>
+                            <th scope="col">Week of:</th>
+                        </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row">{months[current.getMonth()]} {calculateWeekOf()}</th>
-                        <td><HoursCard day={weekday[current.getDay()]} month={months[current.getMonth()]} date={current.getDate()} hoursWorked={info.hoursWorked}/></td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td>Larry the Bird</td>
-                        <td>@twitter</td>
-                      </tr>
+                        <tr className='d-flex flex-start align-items-center'>
+                              <th className='p-4 border-0' scope="row">{months[current.getMonth()]} {calculateWeekOf()}</th>
+                                
+                                {DEMOEMPLOYEES[employee.id].work ? (
+                                    DEMOEMPLOYEES[employee.id].work.map((entry, index) => {
+                                        return(
+                                            <td key={index} className='border-0'>
+                                                <HoursCard day={weekday[current.getDay()]} month={months[current.getMonth()]} date={current.getDate()} hoursWorked={entry.hoursWorked} startTime={entry.startTime} endTime={entry.endTime}/>
+                                            </td>
+                                        )
+                                    })
+                                ) : ('')}
+
+
+                              
+                        </tr>
                     </tbody>
                 </table>
             </Row>
