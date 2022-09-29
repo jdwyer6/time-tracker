@@ -5,25 +5,28 @@ import { useEffect, useState } from 'react';
 import EmployeeCard from '../components/EmployeeCard';
 import HoursCard from '../components/HoursCard';
 import Spinner from 'react-bootstrap/Spinner';
+import Timer from 'react-timer-wrapper';
+import Timecode from 'react-timecode';
 
 const ClockInPage = () => {
     const { user } = useSelector(state => state.user);
     const employee = DEMOEMPLOYEES.find(employee => employee.id === user);
     const [employees, setEmployees] = useState(DEMOEMPLOYEES);
 
-    const minute = 1000 * 60;
-    const hour = minute * 60;
-    const day = hour * 24;
+    // const minute = 1000 * 60;
+    // const hour = minute * 60;
+    // const day = hour * 24;
     let current = new Date();
     const weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const [time, setTime] = useState(current.toLocaleTimeString());
-    const [date, setDate] = useState();
     const [info, setInfo] = useState({
         date: '',
         start: '',
         end: '',
-        hoursWorked: ''
+        startTime: '',
+        endTime: '',
+        hoursWorked: 0
     });
 
     const [clockedIn, setClockedIn] = useState(false);
@@ -38,31 +41,23 @@ const ClockInPage = () => {
         // console.log(DEMOEMPLOYEES[employee.id])
         setInterval(()=>{
             setTime(new Date().toLocaleTimeString())
-            
         }, 1000)
     },[time])
 
     useEffect(()=>{
         console.log(info)
-        console.log(clockedIn)
     }, [clockedIn, info])
 
     function handleClockIn(){
         setClockedIn(!clockedIn) 
         setInfo({...info, start: Date.now()})
+        setInfo({...info, startTime: time})
     }
 
     function handleClockOut(){
         setClockedIn(!clockedIn)
-        setInfo({...info, end: Date.now(), date: current.getDate(), hoursWorked: ((info.start - info.end)/600000)})
+        setInfo({...info, end: Date.now(), date: current.getDate(), endTime: time, hoursWorked: ((info.end - info.start)/36000000000000).toFixed(5)})
     }
-
-
-
-    // setInterval(function() {
-    //     var delta = Date.now() - start; 
-    //     return (new Date().toUTCString());
-    // }, 1000); // update about every second
 
 
     return ( 
@@ -76,7 +71,11 @@ const ClockInPage = () => {
                         <Button onClick={()=>handleClockIn()} className='button-lg'>Clock in</Button>
                     ) : (
                         <>
-                            <Button onClick={()=>handleClockOut()} className='button-lg__alert'>Clock out {time}</Button>
+                            <div className='d-flex w-100 justify-content-center'>
+                                <Button onClick={()=>handleClockOut()} className='button-lg__alert'>Clock out <Timer style={{fontSize: '14px'}} active duration={null}><Timecode /></Timer></Button>
+                                <Button className='button-lg__option'>Lunch</Button>
+                            </div>
+
                             <div className='d-flex mt-1'>
                                 <Spinner animation="grow" className='tracking-icon'/>
                                 <p style={{fontSize: '80%'}}>Tracking your time</p>
@@ -101,7 +100,7 @@ const ClockInPage = () => {
                     <tbody>
                       <tr>
                         <th scope="row">{months[current.getMonth()]} {calculateWeekOf()}</th>
-                        <td><HoursCard /></td>
+                        <td><HoursCard day={weekday[current.getDay()]} month={months[current.getMonth()]} date={current.getDate()} startTime={info.startTime} endTime={info.endTime} hoursWorked={info.hoursWorked}/></td>
                         <td>Otto</td>
                         <td>@mdo</td>
                       </tr>

@@ -5,6 +5,7 @@ $green-mid: #D1DBBD;
 $green-dark: #91AA9D;
 $green-dark-hover: #7e968a;
 $blue-mid: #3E606F;
+$blue-mid-hover: #2f4955;
 $blue-dark: #193441;
 $gray-mid: rgb(146, 151, 150);
 $red: rgb(230, 132, 132);
@@ -82,6 +83,17 @@ html, body {
 
             &:hover{
                 background-color: $red-hover;
+            }
+        }
+
+        &__option{
+            width: clamp(100px, 30%, 250px);
+            background-color: $green-dark;
+            color: white;
+            font-weight: 600;
+
+            &:hover{
+                background-color: $green-dark-hover;
             }
         }
     }
