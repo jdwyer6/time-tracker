@@ -223,6 +223,14 @@ html, body {
     height: 10rem;
     box-shadow: $shadow;
     padding: 1rem;
+    transition: all .4s;
+
+    &:hover{
+        cursor: pointer;
+        background-color: $green-light;
+        transform: scale(1.01);
+        box-shadow: 4px 4px 8px rgba(0, 0, 0, .3);
+    }
 
     h4{
         font-size: 1.3rem;
@@ -236,7 +244,7 @@ html, body {
     }
 
     .start-end-times{
-        font-size: .8rem;
+        font-size: .7rem;
         margin: 1rem auto;
     }
 

@@ -26,7 +26,7 @@ const ClockInPage = () => {
         start: 0,
         end: 0,
         startTime: '',
-        endTime: '',
+        endTime: null,
         hoursWorked: 0
     });
 
@@ -46,18 +46,25 @@ const ClockInPage = () => {
     },[])
     
     useEffect(()=>{
-        console.log(info)
-    }, [clockedIn, info])
+        
+        if(info.end){
+            pushinfo()
+        }else{
+            return
+        }
+
+    }, [info.end])
 
     function handleClockIn(){ 
-        setInfo({...info, start: current.getTime(), startTime: shortTime});
         setClockedIn(!clockedIn); 
+        setInfo({...info, start: current.getTime(), startTime: shortTime});
+        
 
     }
 
     function handleClockOut(){
-        setInfo({...info, date: current.getDate(), end: current.getTime(), hoursWorked: ((current.getTime()-info.start)/60000).toFixed(2), endTime: shortTime});
         setClockedIn(!clockedIn);
+        setInfo({...info, date: current.getDate(), end: current.getTime(), hoursWorked: ((current.getTime()-info.start)/60000).toFixed(2), endTime: shortTime});
     }
 
     function pushinfo(){
@@ -66,7 +73,6 @@ const ClockInPage = () => {
 
     return ( 
         <Container>
-            <Button onClick={()=>pushinfo()}>click</Button>
             <Row className='mt-medium'>
                 <EmployeeCard img={employee.image} name={employee.name} title={employee.title}/>
                 <Col className='text-center d-flex flex-column justify-content-center align-items-center'>
@@ -119,18 +125,6 @@ const ClockInPage = () => {
                     </tbody>
                 </table>
             </Row>
-            {/* <h1>clock in for {user}</h1>
-            <p>{employee.name}</p>
-            <p>Today's date is: {utc}</p>
-            <p>Chosen date is: {date}</p>
-            <p>{JSON.stringify(employee.hours)}</p>
-            <label for="start">Start date:</label>
-
-            <input type="date" id="start" name="trip-start" value="2018-07-22" min="2018-01-01" max="2018-12-31" onChange={(e)=>setDate(e.target.value)}></input>
-            <Button onClick={()=> {
-                DEMOEMPLOYEES[employee.id].hours[date] = 3;
-
-            }}>click here</Button> */}
         </Container>
      );
 }
