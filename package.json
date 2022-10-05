@@ -19,7 +19,9 @@
     "react-scripts": "^5.0.1",
     "react-timecode": "^1.2.0",
     "react-timer-wrapper": "^0.4.1",
+    "redux-persist": "^6.0.0",
     "sass": "^1.55.0",
+    "uselocalstorage-react-hook": "^1.0.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

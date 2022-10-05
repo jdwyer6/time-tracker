@@ -35,7 +35,10 @@ const ClockInPage = () => {
     }
 
     //////////////////BackEnd Set-up End
-    const { user } = useSelector(state => state.user);
+
+    
+    // const { user } = useSelector(state => state.user);
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('currentUser')))
     const employee = DEMOEMPLOYEES.find(employee => employee.id === user);
     const [employees, setEmployees] = useState(DEMOEMPLOYEES);
 
@@ -98,7 +101,7 @@ const ClockInPage = () => {
         <Container>
             {listOfUsers.map((user) => {
                 return (
-                    <div>
+                    <div key={user._id}>
                         <h3>{user.name}</h3>
                         <p>{user.admin}</p>
                         <img width="200px" src={user.image}></img>
