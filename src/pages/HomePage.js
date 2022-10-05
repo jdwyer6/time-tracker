@@ -8,6 +8,8 @@ const HomePage = () => {
     // const count = useSelector((state) => state.counter.count);
     const dispatch = useDispatch();
 
+
+
     return ( 
         <Container fluid>
             <div className='circle'></div>
@@ -31,6 +33,7 @@ const HomePage = () => {
                         <Button className='button_xl' onClick={()=>dispatch(decrement())}>Sign up free</Button>
                     </Col>
             </Row>
+
         </Container>
      );
 }
