@@ -1,49 +1,53 @@
 const mongoose = require('mongoose');
 
-const WorkSchema = new mongoose.Schema({
-    date: {
-        type: String,
-        required: true
-    },
-    start: {
-        type: Number,
-        required: false
-    },
-    end: {
-        type: Number,
-        required: false
-    },
-    startTime: {
-        type: String,
-        required: false
-    },
-    endTime: {
-        type: String,
-        required: false
-    },
-    hoursWorked: {
-        type: Number,
-        required: false
-    }
-},{
-    timestamps: true
-});
+// const WorkSchema = new mongoose.Schema({
+//     date: {
+//         type: String,
+//         required: true
+//     },
+//     start: {
+//         type: Number,
+//         required: false
+//     },
+//     end: {
+//         type: Number,
+//         required: false
+//     },
+//     startTime: {
+//         type: String,
+//         required: false
+//     },
+//     endTime: {
+//         type: String,
+//         required: false
+//     },
+//     hoursWorked: {
+//         type: Number,
+//         required: false
+//     }
+// },{
+//     timestamps: true
+// });
 
 
 const UserSchema = new mongoose.Schema({
-    name: {
+    username: {
         type: String,
         required: true
     },
-    admin: {
-        type: Boolean,
+    password: {
+        type: String,
         required: true
     },
-    image: {
-        type: String,
-        required: false,
-    },
-    work: [WorkSchema]
+    employees: {
+        type: Array,
+        required: false
+    }
+    // image: {
+    //     type: String,
+    //     required: false,
+    // },
+    // work: [WorkSchema]
 },{
     timestamps: true
 });

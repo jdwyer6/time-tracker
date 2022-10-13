@@ -21,7 +21,9 @@ const HomePage = () => {
             </Row>
             <Row className='home-button-group'>
                     <Col md='4' className="button-container">
-                        <Button className='button_xl' onClick={()=>dispatch(increment())}>Login</Button>
+                        <Link to='/login'>
+                            <Button className='button_xl' onClick={()=>dispatch(increment())}>Login</Button>
+                        </Link>
                     </Col>
                     <Col md='4' className="button-container">
                         <Link to='demo'>
@@ -30,7 +32,10 @@ const HomePage = () => {
                         
                     </Col>
                     <Col md='4' className="button-container">
-                        <Button className='button_xl' onClick={()=>dispatch(decrement())}>Sign up free</Button>
+                        <Link to='/register'>
+                            <Button className='button_xl' onClick={()=>dispatch(decrement())}>Sign up free</Button>
+                        </Link>
+                        
                     </Col>
             </Row>
 

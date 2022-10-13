@@ -68,3 +68,79 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+User Structure
+users = [
+    {
+        //Business owner/User 1
+        _id: '5523523SREHRRH1346',
+        username: "",
+        password: '',
+        name: '',
+        businessName: '',
+        employees: [
+            {
+                name: 'Elon Musk',
+                admin: false,
+                image: '',
+                hours: [
+                    {
+                        date: '',
+                        timeIn: '',
+                        timeOut: '',
+                        total: 0
+                    }
+                ]
+            },
+            {
+                name: 'Jack Black',
+                admin: false,
+                image: '',
+                hours: [
+                    {
+                        date: '',
+                        timeIn: '',
+                        timeOut: '',
+                        total: 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        //Business owner/User 2
+        _id: '2345KLJH234K5H234HK',
+        username: "",
+        password: '',
+        name: '',
+        businessName: '',
+        employees: [
+            {
+                name: 'Elon Musk',
+                admin: false,
+                image: '',
+                hours: [
+                    {
+                        date: '',
+                        timeIn: '',
+                        timeOut: '',
+                        total: 0
+                    }
+                ]
+            },
+            {
+                name: 'Jack Black',
+                admin: false,
+                image: '',
+                hours: [
+                    {
+                        date: '',
+                        timeIn: '',
+                        timeOut: '',
+                        total: 0
+                    }
+                ]
+            }
+        ]
+    }
+]
