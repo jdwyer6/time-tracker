@@ -38,7 +38,7 @@ const RegisterPage = () => {
                     <Form.Check type="checkbox" label="Keep me posted with email updates" />
                 </Form.Group>
                 <Button variant="primary" type="submit" onClick={createUser}>
-                    Submit
+                    Register
                 </Button>
             </Form>
         </Container>
