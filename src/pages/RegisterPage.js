@@ -1,5 +1,4 @@
 import { Container, Row, Col, Button, FormLabel, InputGroup, Form } from 'react-bootstrap';
-import FormCheckInput from 'react-bootstrap/esm/FormCheckInput';
 import Axios from 'axios';
 import { useState } from 'react';
 
@@ -12,19 +11,20 @@ const RegisterPage = () => {
     const createUser = () => {
         Axios.post("http://localhost:3001/register", {username, password})
         .then((response) => {
-            alert('User Added')
+            alert('User Added' + response)
         })
     }
     //Server requests
 
-
+//add type='email' to form control
 
     return ( 
         <Container>
+            <h1>Register</h1>
             <Form>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Username</Form.Label>
-                    <Form.Control type="email" placeholder="Enter username" onChange={(e)=>{setUsername(e.target.value)}}/>
+                    <Form.Control placeholder="Enter username" onChange={(e)=>{setUsername(e.target.value)}}/>
                     <Form.Text className="text-muted">
                     We'll never share your email with anyone else.
                     </Form.Text>
@@ -37,7 +37,7 @@ const RegisterPage = () => {
                 <Form.Group className="mb-3" controlId="formBasicCheckbox">
                     <Form.Check type="checkbox" label="Keep me posted with email updates" />
                 </Form.Group>
-                <Button variant="primary" type="submit" onClick={createUser}>
+                <Button className='button-main' variant="primary" type="submit" onClick={createUser}>
                     Register
                 </Button>
             </Form>

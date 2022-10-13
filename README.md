@@ -78,6 +78,7 @@ users = [
         password: '',
         name: '',
         businessName: '',
+        demo: true,
         employees: [
             {
                 name: 'Elon Musk',
@@ -114,6 +115,7 @@ users = [
         password: '',
         name: '',
         businessName: '',
+        demo: false,
         employees: [
             {
                 name: 'Elon Musk',

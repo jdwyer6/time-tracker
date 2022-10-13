@@ -12,9 +12,9 @@ function Navigation() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto">
                         <Nav.Link as={Link} to='/' className='mx-4 text-white' href="#home">Home</Nav.Link>
-                        <Nav.Link as={Link} to='/' className='mx-4 text-white' href="#link">Login</Nav.Link>
+                        <Nav.Link as={Link} to='/login' className='mx-4 text-white' href="#link">Login</Nav.Link>
                         <Nav.Link as={Link} to='demo' className='mx-4 text-white' href="#link">Demo</Nav.Link>
-                        <Nav.Link as={Link} to='/' className='mx-4 text-white' href="#link">Sign up free</Nav.Link>
+                        <Nav.Link as={Link} to='/register' className='mx-4 text-white' href="#link">Sign up free</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

@@ -5,7 +5,7 @@ const Users = require('./models/Users');
 //hashing
 const bycrypt = require('bcrypt');
 const cookieParser = require("cookie-parser");
-const {createTokens} = require('./JWT');
+const {createTokens, validateToken} = require('./JWT');
 const cors = require('cors');
 
 
@@ -73,8 +73,9 @@ app.post("/login", async (req, res) => {
     
 })
 
-app.get("/profile", (req, res) => {
+app.get("/profile", validateToken, (req, res) => {
     res.json("profile");
+    // res.render('../src/pages/DemoPage.js', {status: 'good'})
 })
 
 app.listen(3001, () => {
