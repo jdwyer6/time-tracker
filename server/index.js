@@ -35,12 +35,14 @@ mongoose.connect('mongodb+srv://jdwyer6:hpYOr45SNY9s8jxq@cluster0.sv4ojpk.mongod
 app.post("/register", (req, res) => {
     const password = req.body.password;
     const username = req.body.username;
+    const businessName = req.body.businessName;
     bycrypt.hash(password, 10)
     .then((hash) => {
-        const newUser = new Users({username, password: hash});
+        const newUser = new Users({username, password: hash, businessName});
         newUser.save({
             username: username,
-            password: hash
+            password: hash,
+            businessName: businessName
         }).then(() => {
             res.json("USER REGISTERED")
         }).catch((err) => {
@@ -55,7 +57,10 @@ app.post("/login", async (req, res) => {
     const {username, password} = req.body;
 
     const user = await Users.findOne({username: username})
-    if(!user) res.status(400).json({error: "User doesn't exist"});
+
+    if(!user){
+        res.status(400).json({error: "User doesn't exist"});
+    }
 
     const dbPassword = user.password
     bycrypt.compare(password, dbPassword).then((match) => {
@@ -63,14 +68,14 @@ app.post("/login", async (req, res) => {
             res.status(400).json({error: "Oops...wrong username and password."})
         }else{
             const accessToken = createTokens(user)
-
+            res.statusCode = 200;
             res.cookie("access-token", accessToken,{
                 maxAge: 60*60*24*30*1000,
             })
             res.json("Logged In.");
         }
     })
-    
+        
 })
 
 app.get("/profile", validateToken, (req, res) => {

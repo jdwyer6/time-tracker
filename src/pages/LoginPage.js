@@ -1,19 +1,25 @@
 import { Container, Row, Col, Button, FormLabel, InputGroup, Form } from 'react-bootstrap';
 import Axios from 'axios';
 import { useState } from 'react';
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
 
     //Server Requests
     const [ username, setUsername ] = useState('');
     const [ password, setPassword ] = useState('');
+    let navigate = useNavigate();
 
-    const login = () => {
+    const login = (e) => {
+        e.preventDefault();
         Axios.post("http://localhost:3001/login", {username, password})
-        .then((response) => {
-            alert('user logged in');
-        });
+        .then((res) => {
+            if(res.status === 200){
+                navigate('/profile');
+            }else{
+                console.log('Whoops...There was a problem logging in')
+            }
+        })
     }
     //Server requests
 
@@ -21,7 +27,7 @@ const LoginPage = () => {
     return ( 
         <Container>
             <h1>Login</h1>
-            <Form>
+            <Form onSubmit={login}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Username</Form.Label>
                     <Form.Control placeholder="Enter username" onChange={(e)=>{setUsername(e.target.value)}}/>
@@ -37,7 +43,7 @@ const LoginPage = () => {
                 <Form.Group className="mb-3" controlId="formBasicCheckbox">
                     <Form.Check type="checkbox" label="Keep me posted with email updates" />
                 </Form.Group>
-                <Button className='button-main' variant="primary" type="submit" onClick={login}>
+                <Button className='button-main' variant="primary" type="submit">
                     Login
                 </Button>
             </Form>

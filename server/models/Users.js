@@ -39,6 +39,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    businessName: {
+        type: String,
+        required: true
+    },
     employees: {
         type: Array,
         required: false

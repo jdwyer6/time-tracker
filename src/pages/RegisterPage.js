@@ -7,12 +7,13 @@ const RegisterPage = () => {
     //Server Requests
     const [ username, setUsername ] = useState('');
     const [ password, setPassword ] = useState('');
+    const [ businessName, setBusinessName ] = useState('');
 
     const createUser = () => {
-        Axios.post("http://localhost:3001/register", {username, password})
+        Axios.post("http://localhost:3001/register", {username, password, businessName})
         .then((response) => {
-            alert('User Added' + response)
-        })
+            alert('User added');
+        });
     }
     //Server requests
 
@@ -34,9 +35,16 @@ const RegisterPage = () => {
                     <Form.Label>Password</Form.Label>
                     <Form.Control type="password" placeholder="Password" onChange={(e)=>{setPassword(e.target.value)}}/>
                 </Form.Group>
+
+                <Form.Group className="mb-3">
+                    <Form.Label>Business Name</Form.Label>
+                    <Form.Control placeholder="Enter your business name" onChange={(e)=>{setBusinessName(e.target.value)}}/>
+                </Form.Group>
+
                 <Form.Group className="mb-3" controlId="formBasicCheckbox">
                     <Form.Check type="checkbox" label="Keep me posted with email updates" />
                 </Form.Group>
+
                 <Button className='button-main' variant="primary" type="submit" onClick={createUser}>
                     Register
                 </Button>
