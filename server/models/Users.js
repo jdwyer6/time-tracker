@@ -1,34 +1,14 @@
 const mongoose = require('mongoose');
 
-// const WorkSchema = new mongoose.Schema({
-//     date: {
-//         type: String,
-//         required: true
-//     },
-//     start: {
-//         type: Number,
-//         required: false
-//     },
-//     end: {
-//         type: Number,
-//         required: false
-//     },
-//     startTime: {
-//         type: String,
-//         required: false
-//     },
-//     endTime: {
-//         type: String,
-//         required: false
-//     },
-//     hoursWorked: {
-//         type: Number,
-//         required: false
-//     }
-// },{
-//     timestamps: true
-// });
-
+const EmployeeSchema = new mongoose.Schema({
+    name: {
+        type: String,
+    },
+    image: {
+        data: Buffer,
+        type: String
+    }
+})
 
 const UserSchema = new mongoose.Schema({
     username: {
@@ -47,11 +27,6 @@ const UserSchema = new mongoose.Schema({
         type: Array,
         required: false
     }
-    // image: {
-    //     type: String,
-    //     required: false,
-    // },
-    // work: [WorkSchema]
 },{
     timestamps: true
 });
