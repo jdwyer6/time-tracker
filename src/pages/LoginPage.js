@@ -1,20 +1,32 @@
 import { Container, Row, Col, Button, FormLabel, InputGroup, Form } from 'react-bootstrap';
 import Axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 
-const LoginPage = () => {
+const LoginPage = ({setCurrentUser, currentUser, listOfUsers}) => {
 
     //Server Requests
     const [ username, setUsername ] = useState('');
     const [ password, setPassword ] = useState('');
+    // const [ listOfUsers, setListOfUsers ] = useState([]);
+
+	// useEffect(()=>{
+    //     Axios.get("http://localhost:3001/getUsers")
+    //     .then((response) => {
+    //         setListOfUsers(response.data);
+    //     })
+    // }, [])
+
     let navigate = useNavigate();
+
 
     const login = (e) => {
         e.preventDefault();
         Axios.post("http://localhost:3001/login", {username, password})
         .then((res) => {
             if(res.status === 200){
+                setCurrentUser(JSON.stringify(res.data));
+                localStorage.setItem('currentUser', JSON.stringify(res.data))
                 navigate('/profile');
             }else{
                 console.log('Whoops...There was a problem logging in')

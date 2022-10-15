@@ -2,12 +2,19 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import Axios from 'axios';
+import { current } from '@reduxjs/toolkit';
 
-function Navigation() {
+function Navigation({currentUser}) {
+    let user;
+    if(currentUser) user = JSON.parse(currentUser);
+
     return (
         <Navbar expand="lg">
             <Container fluid>
                 <Navbar.Brand as={Link} to='/' className='text-white'>ClockedIn</Navbar.Brand>
+                <Navbar.Brand as={Link} to='/' className='text-white'>{user ? (user.businessName):('')}</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto">

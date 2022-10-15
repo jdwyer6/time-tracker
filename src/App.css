@@ -39,9 +39,24 @@ html, body {
   width: clamp(100px, 10%, 150px);
   background-color: #91AA9D;
   color: white;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 .btn.button-main:hover {
   background-color: #7e968a;
+}
+.btn.button-secondary {
+  background-color: white;
+  border: 1px solid #91AA9D;
+  width: clamp(100px, 10%, 150px);
+  color: black;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.btn.button-secondary:hover {
+  background-color: #7e968a;
+  color: white;
+  border: 1px solid #91AA9D;
 }
 .btn.button-lg {
   width: clamp(100px, 30%, 250px);

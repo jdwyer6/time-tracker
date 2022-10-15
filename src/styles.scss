@@ -59,9 +59,26 @@ html, body {
         width: clamp(100px, 10%, 150px);
         background-color: $green-dark;
         color: white;
+        margin-left: 5px;
+        margin-right: 5px;
 
         &:hover{
             background-color: $green-dark-hover;
+        }
+    }
+
+    &.button-secondary{
+        background-color: white;
+        border: 1px solid $green-dark;
+        width: clamp(100px, 10%, 150px);
+        color: black;
+        margin-left: 5px;
+        margin-right: 5px;
+
+        &:hover{
+            background-color: $green-dark-hover;
+            color: white;
+            border: 1px solid $green-dark;
         }
     }
 
