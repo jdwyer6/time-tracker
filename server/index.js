@@ -15,15 +15,25 @@ app.use(cors());
 
 mongoose.connect('mongodb+srv://jdwyer6:hpYOr45SNY9s8jxq@cluster0.sv4ojpk.mongodb.net/time-tracker-data?retryWrites=true&w=majority')
 
-// app.get("/getUsers", (req, res) => {
-//     Users.find({}, (err, result) => {
-//         if(err) {
-//             res.json(err);
-//         }else{
-//             res.json(result)
-//         }
-//     })
-// })
+app.get("/getUsers", (req, res) => {
+    Users.find({}, (err, result) => {
+        if(err) {
+            res.json(err);
+        }else{
+            res.json(result)
+        }
+    })
+})
+
+app.get("/getUser", (req, res) => {
+    Users.findOne({_id: req.body}, (err, result) => {
+        if(err) {
+            res.json(err);
+        }else{
+            res.json(result)
+        }
+    })
+})
 
 // app.post('/createUser', async (req, res) => {
 //     const user = req.body;
@@ -57,7 +67,7 @@ app.post("/login", async (req, res) => {
     const {username, password} = req.body;
 
     const user = await Users.findOne({username: username})
-
+    console.log(user)
     if(!user){
         res.status(400).json({error: "User doesn't exist"});
     }
@@ -72,7 +82,7 @@ app.post("/login", async (req, res) => {
             res.cookie("access-token", accessToken,{
                 maxAge: 60*60*24*30*1000,
             })
-            res.json("Logged In.");
+            res.json(user);
         }
     })
         
