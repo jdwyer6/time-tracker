@@ -67,7 +67,6 @@ app.post("/login", async (req, res) => {
     const {username, password} = req.body;
 
     const user = await Users.findOne({username: username})
-    console.log(user)
     if(!user){
         res.status(400).json({error: "User doesn't exist"});
     }
@@ -82,7 +81,9 @@ app.post("/login", async (req, res) => {
             res.cookie("access-token", accessToken,{
                 maxAge: 60*60*24*30*1000,
             })
-            res.json(user);
+            const tempUser = {...user._doc, password: ''}
+            res.json(tempUser);
+            console.log(tempUser)
         }
     })
         
