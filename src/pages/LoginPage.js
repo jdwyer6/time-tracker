@@ -2,12 +2,16 @@ import { Container, Row, Col, Button, FormLabel, InputGroup, Form } from 'react-
 import Axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import { setUser } from "../redux/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
-const LoginPage = ({setCurrentUser, currentUser, listOfUsers}) => {
+const LoginPage = () => {
 
     //Server Requests
     const [ username, setUsername ] = useState('');
     const [ password, setPassword ] = useState('');
+    // const { user } = useSelector(state => state.user);
+    const dispatch = useDispatch();
     // const [ listOfUsers, setListOfUsers ] = useState([]);
 
 	// useEffect(()=>{
@@ -25,7 +29,8 @@ const LoginPage = ({setCurrentUser, currentUser, listOfUsers}) => {
         Axios.post("http://localhost:3001/login", {username, password})
         .then((res) => {
             if(res.status === 200){
-                setCurrentUser(JSON.stringify(res.data));
+                // setCurrentUser(JSON.stringify(res.data));
+                dispatch(setUser(JSON.stringify(res.data)));
                 localStorage.setItem('currentUser', JSON.stringify(res.data))
                 navigate('/profile');
             }else{

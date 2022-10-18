@@ -6,11 +6,10 @@ import { useEffect } from 'react';
 import Axios from 'axios';
 import { current } from '@reduxjs/toolkit';
 
-function Navigation({currentUser}) {
-    let user = '';
-    if(currentUser) {
-        user = JSON.parse(currentUser);
-    }
+function Navigation() {
+    const tempUser = localStorage.getItem('currentUser')
+    const user = JSON.parse(tempUser);
+	console.log(user)
 
     return (
         <Navbar expand="lg">

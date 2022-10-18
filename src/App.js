@@ -10,31 +10,36 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import BusinessProfilePage from './pages/BusinessProfilePage';
 import Axios from 'axios';
+import { useSelector } from "react-redux";
 
 function App() {
-	const [currentUser, setCurrentUser] = useState();
+	// const [currentUser, setCurrentUser] = useState();
+	const { user } = useSelector(state => state.user);
 	const [ listOfUsers, setListOfUsers ] = useState([]);
-    const tempUser = localStorage.getItem('currentUser')
 
 	useEffect(()=>{
-        Axios.get("http://localhost:3001/getUsers")
-        .then((response) => {
-            setListOfUsers(response.data);
-        })
-		setCurrentUser(tempUser)
+		if(!user){
+			const tempUser = localStorage.getItem('currentUser')
+			Axios.get("http://localhost:3001/getUsers")
+			.then((response) => {
+				setListOfUsers(response.data);
+			})
+			// setCurrentUser(tempUser)
+		}
+
     }, [])
 
 
   	return (
   	  	<div className="App">
-			<Navigation currentUser={currentUser} listOfUsers={listOfUsers}/>
+			<Navigation />
 			<Routes>
 				<Route path='/' element={<HomePage />}/>
 				<Route path='/demo' element={<DemoPage />}/>
 				<Route path='/clockin' element={<ClockInPage />}/>
-				<Route path='/login' element={<LoginPage currentUser={currentUser} setCurrentUser={setCurrentUser} listOfUsers={listOfUsers}/>} />
+				<Route path='/login' element={<LoginPage />} />
 				<Route path='/register' element={<RegisterPage />} />
-				<Route path='/profile' element={<BusinessProfilePage currentUser={currentUser} listOfUsers={listOfUsers} setCurrentUser={setCurrentUser}/>} />
+				<Route path='/profile' element={<BusinessProfilePage />} />
 			</Routes>
 			
   	  	</div>

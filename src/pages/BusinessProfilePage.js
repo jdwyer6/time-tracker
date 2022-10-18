@@ -4,7 +4,7 @@ import SideBar from "../components/SideBar";
 import { useState, useEffect } from "react";
 import Axios from 'axios'
 
-const BusinessProfilePage = ({currentUser, setCurrentUser}) => {
+const BusinessProfilePage = () => {
 
     const handleShow = () => setShow(true);
     const [show, setShow] = useState(false);
@@ -50,11 +50,7 @@ const BusinessProfilePage = ({currentUser, setCurrentUser}) => {
                 )}
             </Row>
             <SideBar handleShow={handleShow} show={show} handleClose={handleClose}/>
-
-            {/* {employees.map((emp) => (
-                <h1>{emp.name}</h1>
-            ))} */}
-
+            
 
         </Container>
      );
