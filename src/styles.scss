@@ -198,6 +198,7 @@ html, body {
 
 .employee-card{
     text-align: center;
+    width: clamp(180px, 20vw, 250px);
     
     img{
         width: 10rem;

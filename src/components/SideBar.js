@@ -2,8 +2,24 @@ import React, { useState } from 'react';
 import {Button, Form} from 'react-bootstrap';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { FaUserAlt } from 'react-icons/fa';
+import Axios from 'axios';
 
 const SideBar = ({handleShow, show, handleClose}) => {
+
+    const [employeeName, setEmployeeName] = useState();
+    const [employeePin, setEmployeePin] = useState();
+    const [employeeImg, setEmployeeImg] = useState('images/demo-employees/default.png');
+
+    const tempUser = localStorage.getItem('currentUser');
+    const user = JSON.parse(tempUser);
+
+    function handleRegister(e){
+        // e.preventDefault();
+        Axios.post("http://localhost:3001/addEmployee", {userId: user._id, name: employeeName, pin: employeePin, img: employeeImg})
+        .then((response) => {
+            alert('An employee has been added to your busines profile.')
+        })
+    }
 
     return ( 
         <>
@@ -13,27 +29,18 @@ const SideBar = ({handleShow, show, handleClose}) => {
                     <Offcanvas.Title><FaUserAlt /> New Employee</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
-                    <Form>
+                    <Form onSubmit={handleRegister}>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
-                            <Form.Label>Username</Form.Label>
-                            <Form.Control placeholder="Enter username"/>
-                            <Form.Text className="text-muted">
-                            We'll never share your email with anyone else.
-                            </Form.Text>
+                            <Form.Label>Name</Form.Label>
+                            <Form.Control placeholder="Enter the employee's name" onChange={(e)=>setEmployeeName(e.target.value)}/>
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder="Password"/>
-                        </Form.Group>
-
-                        <Form.Group className="mb-3">
-                            <Form.Label>Business Name</Form.Label>
-                            <Form.Control placeholder="Enter your business name" />
-                        </Form.Group>
-
-                        <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                            <Form.Check type="checkbox" label="Keep me posted with email updates" />
+                            <Form.Label>Pin</Form.Label>
+                            <Form.Control type="password" placeholder="Enter a 4 digit pin" onChange={(e)=>setEmployeePin(e.target.value)}/>
+                            <Form.Text className="text-muted">
+                                Employees will sign in with their pin before posting hours.
+                            </Form.Text>
                         </Form.Group>
 
                         <Button className='button-main' variant="primary" type="submit">

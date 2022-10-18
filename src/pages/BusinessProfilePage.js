@@ -2,20 +2,33 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import EmployeeCard from "../components/EmployeeCard";
 import SideBar from "../components/SideBar";
 import { useState, useEffect } from "react";
+import Axios from 'axios'
 
 const BusinessProfilePage = ({currentUser, setCurrentUser}) => {
 
     const handleShow = () => setShow(true);
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
-
+    const [employees, setEmployees] = useState();
     
     const tempUser = localStorage.getItem('currentUser')
     const user = JSON.parse(tempUser);
 
-    console.log('currentUser = ' + currentUser)
-    console.log('local Storage = ' + localStorage.getItem('currentUser'))
-    console.log('user = ' + user)
+    function getEmployees(){
+        Axios.get(`http://localhost:3001/user/${user._id}`)
+        .then((res) => {
+            if(res.status === 200){
+                setEmployees(res.data.employees)
+            }else{
+                console.log('error')
+            }
+        })
+    }
+
+    useEffect(()=>{
+        getEmployees();
+    }, [])
+
 
     return ( 
         <Container fluid className='container-centered'>
@@ -38,6 +51,9 @@ const BusinessProfilePage = ({currentUser, setCurrentUser}) => {
             </Row>
             <SideBar handleShow={handleShow} show={show} handleClose={handleClose}/>
 
+            {/* {employees.map((emp) => (
+                <h1>{emp.name}</h1>
+            ))} */}
 
 
         </Container>

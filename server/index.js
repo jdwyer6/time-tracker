@@ -25,14 +25,14 @@ app.get("/getUsers", (req, res) => {
     })
 })
 
-app.get("/getUser", (req, res) => {
-    Users.findOne({_id: req.body}, (err, result) => {
-        if(err) {
-            res.json(err);
-        }else{
-            res.json(result)
-        }
+
+app.get('/user/:id', function(req, res){
+    Users.findById(req.params.id)
+    .then(userFound => {
+        if(!userFound) { return res.status(404).end(); }
+        return res.status(200).json(userFound)
     })
+    .catch(err => next(err));
 })
 
 // app.post('/createUser', async (req, res) => {
@@ -88,6 +88,20 @@ app.post("/login", async (req, res) => {
     })
         
 })
+
+
+app.post("/addEmployee", async (req, res) => {
+    const {userId, name, pin, img} = req.body;
+    await Users.findOneAndUpdate({
+        userId: userId
+    }, {
+        $push: {
+            employees: {name: name, pin: pin, img: img}
+        }
+    })
+})
+
+
 
 app.get("/profile", validateToken, (req, res) => {
     res.json("profile");

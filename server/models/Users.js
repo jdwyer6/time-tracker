@@ -23,10 +23,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    employees: {
-        type: Array,
-        required: false
-    }
+    employees: [Object]
 },{
     timestamps: true
 });
