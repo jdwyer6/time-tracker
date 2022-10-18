@@ -1,8 +1,20 @@
 import { useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
-const MessageModal = ({show, handleClose, name}) => {
-    const [pin, setPin] = useState();
+const MessageModal = ({show, handleClose, name, pin}) => {
+
+    const [enteredPin, setEnteredPin] = useState();
+    let navigate = useNavigate();
+
+    const validatePin = () => {
+        if(pin === enteredPin){
+            navigate('/employeeProfile');
+            
+        }else{
+            alert('Invalid pin')
+        }
+    }
 
     return ( 
         <>
@@ -13,14 +25,14 @@ const MessageModal = ({show, handleClose, name}) => {
                 </Modal.Header>
                 <Modal.Body>Hi {name}, please enter your pin to sign in.</Modal.Body>
                 <Form.Group className="mb-3 px-3" controlId="formBasicEmail">
-                    <Form.Control placeholder="Enter pin" type='password' onChange={(e)=>{setPin(e.target.value)}}/>
+                    <Form.Control placeholder="Enter pin" type='password' onChange={(e)=>{setEnteredPin(e.target.value)}}/>
                 </Form.Group>
                 <Modal.Footer>
                     <Button variant="secbutton-secondary" onClick={handleClose}>
                     Close
                     </Button>
-                    <Button className='button-main' onClick={handleClose}>
-                    Save Changes
+                    <Button className='button-main' onClick={validatePin}>
+                    Continue
                     </Button>
                 </Modal.Footer>
             </Modal>

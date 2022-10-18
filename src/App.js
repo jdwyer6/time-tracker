@@ -9,6 +9,7 @@ import ClockInPage from './pages/ClockInPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import BusinessProfilePage from './pages/BusinessProfilePage';
+import EmployeeProfilePage from './pages/EmployeeProfilePage';
 import Axios from 'axios';
 import { useSelector } from "react-redux";
 
@@ -40,6 +41,7 @@ function App() {
 				<Route path='/login' element={<LoginPage />} />
 				<Route path='/register' element={<RegisterPage />} />
 				<Route path='/profile' element={<BusinessProfilePage />} />
+				<Route path='/employeeProfile' element={<EmployeeProfilePage />} />
 			</Routes>
 			
   	  	</div>

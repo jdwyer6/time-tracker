@@ -6,21 +6,18 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import MessageModal from './MessageModal';
 
-const EmployeeCard = ({img, name, title, userID}) => {
+const EmployeeCard = ({img, name, employeeId, pin}) => {
     // const { user } = useSelector(state => state.user);
     // const dispatch = useDispatch();
-
+    const [currentEmployee, setCurrentEmployee] = useState();
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-    const [currentEmployee, setCurrentEmployee] = useState();
-
-    function handleClick(){
-        // dispatch(setUser(userID));
-        // localStorage.setItem('currentUser', JSON.stringify(userID));
-
+    const handleShow = () => {
+        // setCurrentEmployee(employeeId)
+        setShow(true);
     }
+
+
 
     // as={Link} to='/clockin'
 
@@ -30,7 +27,7 @@ const EmployeeCard = ({img, name, title, userID}) => {
                 <img src={img} className='hover-zoom' />
                 <h3>{name}</h3>
             </Col> 
-            <MessageModal handleShow={handleShow} show={show} handleClose={handleClose} name={name}/>
+            <MessageModal handleShow={handleShow} show={show} handleClose={handleClose} name={name} employeeId={employeeId} pin={pin}/>
         </>
 
     

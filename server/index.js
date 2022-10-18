@@ -7,6 +7,7 @@ const bycrypt = require('bcrypt');
 const cookieParser = require("cookie-parser");
 const {createTokens, validateToken} = require('./JWT');
 const cors = require('cors');
+const { v4: uuidv4 } = require('uuid');
 
 
 app.use(express.json());
@@ -92,11 +93,13 @@ app.post("/login", async (req, res) => {
 
 app.post("/addEmployee", async (req, res) => {
     const {userId, name, pin, img} = req.body;
+    const employeeId = uuidv4();
+    console.log(employeeId)
     await Users.findOneAndUpdate({
         userId: userId
     }, {
         $push: {
-            employees: {name: name, pin: pin, img: img}
+            employees: {employeeId: employeeId, name: name, pin: pin, img: img}
         }
     })
 })
