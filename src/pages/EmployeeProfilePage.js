@@ -45,6 +45,16 @@ const EmployeeProfilePage = () => {
             setTime(new Date().toLocaleTimeString())
             setShortTime(new Date().toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}));
         }, 1000)
+
+        Axios.get(`http://localhost:3001/employee/${user._id}/${employee.employeeId}`)
+        .then((res) => {
+            if(res.status === 200){
+                console.log(res.data)
+                setEmployee(res.data)
+            }else{
+                console.log('error')
+            }
+        })
     },[])
     
     useEffect(()=>{
@@ -73,6 +83,7 @@ const EmployeeProfilePage = () => {
         .then((res) => {
             if(res.status === 200){
                 alert('SUCCESS');
+                document.location.reload();
             }else{
                 console.log('There was an error')
             }
@@ -120,15 +131,15 @@ const EmployeeProfilePage = () => {
                         <tr className='d-flex flex-start align-items-center'>
                               <th className='p-4 border-0' scope="row">{months[current.getMonth()]} {calculateWeekOf()}</th>
                                 
-                                {/* {DEMOEMPLOYEES[employee.id].work ? (
-                                    DEMOEMPLOYEES[employee.id].work.map((entry, index) => {
+                                {employee.work ? (
+                                    employee.work.map((entry, index) => {
                                         return(
                                             <td key={index} className='border-0'>
                                                 <HoursCard day={weekday[current.getDay()]} month={months[current.getMonth()]} date={current.getDate()} hoursWorked={entry.hoursWorked} startTime={entry.startTime} endTime={entry.endTime}/>
                                             </td>
                                         )
                                     })
-                                ) : ('')} */}
+                                ) : ('')}
                         </tr>
                     </tbody>
                 </table>

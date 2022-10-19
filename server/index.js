@@ -103,12 +103,20 @@ app.post("/addEmployee", async (req, res) => {
     })
 })
 
+app.get('/employee/:id/:employeeId', function(req, res){
+    Users.findById(req.params.id)
+    .then(user => {
+        const currentEmployee = user.employees.find(employee => employee.employeeId == req.params.employeeId)
+        if(user){
+            return res.json(currentEmployee)
+        }
+    })
+})
 
 app.post('/updateEmployee/:id', function(req, res, next) {
     const {employeeId, info} = req.body;
     Users.findById(req.params.id)
     .then(user => {
-        console.log(user)
         const currentEmployee = user.employees.find(employee => employee.employeeId == employeeId)
     
         if(user) {
