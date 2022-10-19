@@ -14,7 +14,10 @@ import Axios from 'axios';
 
 const EmployeeProfilePage = () => {
 
-    const [employee, setEmployee] = useState(JSON.parse(localStorage.getItem('currentEmployee')))
+    const [isLoading, setLoading] = useState(true);
+    const [tempEmployee, setTempEmployee] = useState(JSON.parse(localStorage.getItem('currentEmployee')));
+    const [employee, setEmployee] = useState();
+    let loggedToday = false;
     const tempUser = localStorage.getItem('currentUser')
     const user = JSON.parse(tempUser);
 
@@ -41,20 +44,20 @@ const EmployeeProfilePage = () => {
     }
 
     useEffect(() => {
+
+        Axios.get(`http://localhost:3001/employee/${user._id}/${tempEmployee.employeeId}`)
+        .then((res) => {
+            if(res.status === 200){
+                setEmployee(res.data)
+                setLoading(false);
+            }
+        })
+
         setInterval(()=>{
             setTime(new Date().toLocaleTimeString())
             setShortTime(new Date().toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}));
         }, 1000)
 
-        Axios.get(`http://localhost:3001/employee/${user._id}/${employee.employeeId}`)
-        .then((res) => {
-            if(res.status === 200){
-                console.log(res.data)
-                setEmployee(res.data)
-            }else{
-                console.log('error')
-            }
-        })
     },[])
     
     useEffect(()=>{
@@ -68,8 +71,13 @@ const EmployeeProfilePage = () => {
     }, [info.end])
 
     function handleClockIn(){ 
-        setClockedIn(!clockedIn); 
-        setInfo({...info, start: current.getTime(), startTime: shortTime});
+        employee.work.forEach(element => {
+            element.date === current.getDate() ? loggedToday = true : loggedToday = false;
+        })
+        if(!loggedToday){
+            setClockedIn(!clockedIn); 
+            setInfo({...info, start: current.getTime(), startTime: shortTime});
+        }
     }
 
     function handleClockOut(){
@@ -90,6 +98,11 @@ const EmployeeProfilePage = () => {
         })
 
     }
+
+    if(isLoading){
+        return <h4>Loading...</h4>
+    }
+
     return ( 
         <Container>
             <Row className='mt-medium position-relative'>
