@@ -1,12 +1,22 @@
 const mongoose = require('mongoose');
 
 const EmployeeSchema = new mongoose.Schema({
+    employeeId:{
+        type: String
+    },
     name: {
         type: String,
     },
-    image: {
+    pin: {
+        type: String,
+        required: true
+    },
+    img: {
         data: Buffer,
         type: String
+    },
+    work: {
+        type: Array
     }
 })
 
@@ -23,7 +33,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    employees: [Object]
+    employees: [EmployeeSchema]
 },{
     timestamps: true
 });

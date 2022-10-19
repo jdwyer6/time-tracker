@@ -45,7 +45,7 @@ const BusinessProfilePage = () => {
 
             <Row className='mt-medium'>
                 {user.employees.map((employee)=>(
-                    <EmployeeCard key={employee.name} name={employee.name} img={employee.img} employeeId={employee.employeeId} pin={employee.pin}/>
+                    <EmployeeCard key={employee.employeeId} name={employee.name} img={employee.img} employeeId={employee.employeeId} pin={employee.pin} employee={employee}/>
                 )   
                 )}
             </Row>

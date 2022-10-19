@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import MessageModal from './MessageModal';
 
-const EmployeeCard = ({img, name, employeeId, pin}) => {
+const EmployeeCard = ({img, name, employeeId, pin, employee}) => {
     // const { user } = useSelector(state => state.user);
     // const dispatch = useDispatch();
     const [currentEmployee, setCurrentEmployee] = useState();
@@ -27,7 +27,7 @@ const EmployeeCard = ({img, name, employeeId, pin}) => {
                 <img src={img} className='hover-zoom' />
                 <h3>{name}</h3>
             </Col> 
-            <MessageModal handleShow={handleShow} show={show} handleClose={handleClose} name={name} employeeId={employeeId} pin={pin}/>
+            <MessageModal handleShow={handleShow} show={show} handleClose={handleClose} name={name} pin={pin} employee={employee}/>
         </>
 
     

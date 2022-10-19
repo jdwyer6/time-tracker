@@ -15,7 +15,7 @@ const SideBar = ({handleShow, show, handleClose}) => {
 
     function handleRegister(e){
         // e.preventDefault();
-        Axios.post("http://localhost:3001/addEmployee", {userId: user._id, name: employeeName, pin: employeePin, img: employeeImg})
+        Axios.post("http://localhost:3001/addEmployee", {userId: user._id, name: employeeName, pin: employeePin, img: employeeImg, work: []})
         .then((response) => {
             alert('An employee has been added to your busines profile.')
         })

@@ -9,7 +9,6 @@ import { current } from '@reduxjs/toolkit';
 function Navigation() {
     const tempUser = localStorage.getItem('currentUser')
     const user = JSON.parse(tempUser);
-	console.log(user)
 
     return (
         <Navbar expand="lg">

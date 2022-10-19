@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 const {createTokens, validateToken} = require('./JWT');
 const cors = require('cors');
 const { v4: uuidv4 } = require('uuid');
+const { current } = require("@reduxjs/toolkit");
 
 
 app.use(express.json());
@@ -84,7 +85,6 @@ app.post("/login", async (req, res) => {
             })
             const tempUser = {...user._doc, password: ''}
             res.json(tempUser);
-            console.log(tempUser)
         }
     })
         
@@ -92,19 +92,43 @@ app.post("/login", async (req, res) => {
 
 
 app.post("/addEmployee", async (req, res) => {
-    const {userId, name, pin, img} = req.body;
+    const {userId, name, pin, img, work} = req.body;
     const employeeId = uuidv4();
-    console.log(employeeId)
     await Users.findOneAndUpdate({
         userId: userId
     }, {
         $push: {
-            employees: {employeeId: employeeId, name: name, pin: pin, img: img}
+            employees: {employeeId: employeeId, name: name, pin: pin, img: img, work: work}
         }
     })
 })
 
 
+app.post('/updateEmployee/:id', function(req, res, next) {
+    const {employeeId, info} = req.body;
+    Users.findById(req.params.id)
+    .then(user => {
+        console.log(user)
+        const currentEmployee = user.employees.find(employee => employee.employeeId == employeeId)
+    
+        if(user) {
+            currentEmployee.work.push(info)
+            console.log(currentEmployee)
+            user.save()
+            .then(user => {
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'application/json');
+                res.json(user)
+            })
+            .catch(err => next(err));
+        }else{
+            err = new Error(`Could not update the employee with id ${employeeId}`);
+            err.status = 404;
+            return next(err);
+        }
+    })
+    .catch(err => next(err))
+})
 
 app.get("/profile", validateToken, (req, res) => {
     res.json("profile");

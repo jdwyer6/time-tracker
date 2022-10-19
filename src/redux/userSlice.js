@@ -12,6 +12,19 @@ const user = createSlice({
     }
 })
 
+const employee = createSlice({
+    name: 'currentEmployee',
+    initialState: {
+        employee: ''
+    },
+    reducers: {
+        setUser: (state, action) => {
+            state.employee = action.payload;
+        }
+    }
+})
+
 
 export const { setUser } = user.actions;
+export const { setEmployee } = employee.actions;
 export default user.reducer;
