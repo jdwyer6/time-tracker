@@ -242,6 +242,19 @@ html, body {
     box-shadow: $shadow;
     padding: 1rem;
     transition: all .4s;
+    position: relative;
+
+    .close-icon{
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        transition: all .4s;
+
+        &:hover{
+            transform: scale(1.05);
+            color: $green-dark;
+        }
+    }
 
     &:hover{
         cursor: pointer;

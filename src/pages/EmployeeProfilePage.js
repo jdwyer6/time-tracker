@@ -77,6 +77,8 @@ const EmployeeProfilePage = () => {
         if(!loggedToday){
             setClockedIn(!clockedIn); 
             setInfo({...info, start: current.getTime(), startTime: shortTime});
+        }else{
+
         }
     }
 
@@ -90,7 +92,6 @@ const EmployeeProfilePage = () => {
         Axios.post(`http://localhost:3001/updateEmployee/${user._id}`, {employeeId: employee.employeeId, info: info})
         .then((res) => {
             if(res.status === 200){
-                alert('SUCCESS');
                 document.location.reload();
             }else{
                 console.log('There was an error')

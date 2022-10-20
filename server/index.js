@@ -94,13 +94,25 @@ app.post("/login", async (req, res) => {
 app.post("/addEmployee", async (req, res) => {
     const {userId, name, pin, img, work} = req.body;
     const employeeId = uuidv4();
-    await Users.findOneAndUpdate({
-        userId: userId
-    }, {
-        $push: {
-            employees: {employeeId: employeeId, name: name, pin: pin, img: img, work: work}
+    Users.findById(userId)
+    .then(user => {
+        if(user){
+            user.employees.push({employeeId: employeeId, name: name, pin: pin, img: img, work: work})
+            user.save()
+            .then(user => {
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'application/json');
+                res.json(user)
+            })
+            .catch(err => next(err));
+        }else{
+            err = new Error(`Could not update the employee with id ${employeeId}`);
+            err.status = 404;
+            return next(err);
         }
     })
+    .catch(err => next(err))
+
 })
 
 app.get('/employee/:id/:employeeId', function(req, res){
@@ -121,7 +133,6 @@ app.post('/updateEmployee/:id', function(req, res, next) {
     
         if(user) {
             currentEmployee.work.push(info)
-            console.log(currentEmployee)
             user.save()
             .then(user => {
                 res.statusCode = 200;
@@ -142,6 +153,45 @@ app.get("/profile", validateToken, (req, res) => {
     res.json("profile");
     // res.render('../src/pages/DemoPage.js', {status: 'good'})
 })
+
+
+
+
+
+// app.get("/:businessId", (req, res, next) => {
+//     Campsite.findById(req.params.campsiteId)
+//     .populate('comments.author')
+//     .then(campsite => {
+//         res.statusCode = 200;
+//         res.setHeader('Content-Type', 'appliaction/json');
+//         res.json(campsite);
+//     })
+//     .catch(err => next(err));
+// })
+// .post("/:businessId", (req, res) => {
+//     res.statusCode = 403;
+//     res.end(`POST operation not supported on /campsites/${req.params.campsiteId}`)
+// })
+// .put("/:businessId", (req, res, next) => {
+//     Campsite.findByIdAndUpdate(req.params.campsiteId, {
+//         $set: req.body
+//     }, {new: true})
+//     .then(campsite => {
+//         res.statusCode = 200;
+//         res.setHeader('Content-Type', 'appliaction/json');
+//         res.json(campsite);
+//     })
+//     .catch(err => next(err));
+// })
+// .delete("/:businessId", (req, res, next) => {
+//     Campsite.findByIdAndDelete(req.params.campsiteId)
+//     .then(response => {
+//         res.statusCode = 200;
+//         res.setHeader('Content-Type', 'appliaction/json');
+//         res.json(response);
+//     })
+//     .catch(err => next(err));
+// });
 
 app.listen(3001, () => {
     console.log("Server is running on port 3001")

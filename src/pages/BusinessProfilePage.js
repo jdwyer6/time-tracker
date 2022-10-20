@@ -6,6 +6,7 @@ import Axios from 'axios'
 
 const BusinessProfilePage = () => {
 
+    const [isLoading, setLoading] = useState(true);
     const handleShow = () => setShow(true);
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -19,6 +20,7 @@ const BusinessProfilePage = () => {
         .then((res) => {
             if(res.status === 200){
                 setEmployees(res.data.employees)
+                setLoading(false);
             }else{
                 console.log('error')
             }
@@ -29,6 +31,9 @@ const BusinessProfilePage = () => {
         getEmployees();
     }, [])
 
+    if(isLoading){
+        return <h4>Loading...</h4>
+    }
 
     return ( 
         <Container fluid className='container-centered'>
@@ -44,7 +49,7 @@ const BusinessProfilePage = () => {
             </div>
 
             <Row className='mt-medium'>
-                {user.employees.map((employee)=>(
+                {employees.map((employee)=>(
                     <EmployeeCard key={employee.employeeId} name={employee.name} img={employee.img} employeeId={employee.employeeId} pin={employee.pin} employee={employee}/>
                 )   
                 )}

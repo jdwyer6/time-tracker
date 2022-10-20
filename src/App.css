@@ -198,6 +198,17 @@ html, body {
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   padding: 1rem;
   transition: all 0.4s;
+  position: relative;
+}
+.hours-card .close-icon {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  transition: all 0.4s;
+}
+.hours-card .close-icon:hover {
+  transform: scale(1.05);
+  color: #91AA9D;
 }
 .hours-card:hover {
   cursor: pointer;
