@@ -11,12 +11,15 @@ import _default from 'react-bootstrap/esm/Accordion';
 import { MdLunchDining } from 'react-icons/md';
 import { ImClock2, ImClock } from 'react-icons/im';
 import Axios from 'axios';
+import AlertModal from '../components/AlertModal';
 
 const EmployeeProfilePage = () => {
 
     const [isLoading, setLoading] = useState(true);
     const [tempEmployee, setTempEmployee] = useState(JSON.parse(localStorage.getItem('currentEmployee')));
     const [employee, setEmployee] = useState();
+    const [show, setShow] = useState(false);
+    const handleShow = () => setShow(true);
     let loggedToday = false;
     const tempUser = localStorage.getItem('currentUser')
     const user = JSON.parse(tempUser);
@@ -78,7 +81,7 @@ const EmployeeProfilePage = () => {
             setClockedIn(!clockedIn); 
             setInfo({...info, start: current.getTime(), startTime: shortTime});
         }else{
-
+            handleShow();
         }
     }
 
@@ -149,7 +152,16 @@ const EmployeeProfilePage = () => {
                                     employee.work.map((entry, index) => {
                                         return(
                                             <td key={index} className='border-0'>
-                                                <HoursCard day={weekday[current.getDay()]} month={months[current.getMonth()]} date={current.getDate()} hoursWorked={entry.hoursWorked} startTime={entry.startTime} endTime={entry.endTime}/>
+                                                <HoursCard 
+                                                    day={weekday[current.getDay()]} 
+                                                    month={months[current.getMonth()]} 
+                                                    date={current.getDate()} 
+                                                    hoursWorked={entry.hoursWorked} 
+                                                    startTime={entry.startTime} 
+                                                    endTime={entry.endTime} 
+                                                    user={user} 
+                                                    employee={employee}
+                                                />
                                             </td>
                                         )
                                     })
@@ -158,6 +170,7 @@ const EmployeeProfilePage = () => {
                     </tbody>
                 </table>
             </Row>
+            <AlertModal handleShow={handleShow} setShow={setShow} show={show}/>
         </Container>
     );
 }

@@ -125,6 +125,30 @@ app.get('/employee/:id/:employeeId', function(req, res){
     })
 })
 
+//Delete Hours
+app.delete('/:businessId/:employeeId', (req, res) => {
+    const {idx} = req.body;
+    Users.findById(req.params.businessId)
+    .then(user => {
+        const currentEmployee = user.employees.find(employee => employee.employeeId == req.params.employeeId)
+        if(user){
+            currentEmployee.work.splice(idx, 1);
+            user.save()
+            .then(user => {
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'application/json');
+                res.json(user)
+            })
+            .catch(err => next(err));
+        }else{
+            err = new Error(`Could not update the employee`);
+            err.status = 404;
+            return next(err);
+        }
+        
+    })
+})
+
 app.post('/updateEmployee/:id', function(req, res, next) {
     const {employeeId, info} = req.body;
     Users.findById(req.params.id)
