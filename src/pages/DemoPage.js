@@ -1,11 +1,10 @@
 import { Container, Row, Col, Button } from "react-bootstrap";
 import EmployeeCard from "../components/EmployeeCard";
+import { useEffect, useState } from "react";
 import { DEMOEMPLOYEES } from "../shared/DEMOEMPLOYEES";
 
 const DemoPage = () => {
-
-    //check state.user or state.setUser
-
+    
 
     return ( 
         <Container fluid className='container-centered'>

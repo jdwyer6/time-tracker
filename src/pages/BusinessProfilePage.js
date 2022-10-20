@@ -49,10 +49,19 @@ const BusinessProfilePage = () => {
             </div>
 
             <Row className='mt-medium'>
-                {employees.map((employee)=>(
+                {employees ? (
+                employees.map((employee)=>(
                     <EmployeeCard key={employee.employeeId} name={employee.name} img={employee.img} employeeId={employee.employeeId} pin={employee.pin} employee={employee}/>
-                )   
+                ))
+                ) : (
+                    <>
+                    <p>Looks like you haven't added any employees to your business yet. Click the '+ Add Employee' button to add some.</p>
+                    {console.log('no employees')}
+                    </>
+                    
+                    
                 )}
+
             </Row>
             <SideBar handleShow={handleShow} show={show} handleClose={handleClose}/>
             

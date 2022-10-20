@@ -15,6 +15,7 @@ export const DEMOEMPLOYEES = [
         name: 'Albert Pujols',
         title: 'Employee',
         image: albert,
+        pin: '1234',
         work: []
     },
     {
@@ -22,6 +23,7 @@ export const DEMOEMPLOYEES = [
         name: 'Bill Gates',
         title: 'Admin',
         image: bill,
+        pin: '1234',
         work: []
     },
     {
@@ -29,6 +31,7 @@ export const DEMOEMPLOYEES = [
         name: 'Elon Musk',
         title: 'Employee',
         image: elon,
+        pin: '1234',
         work: []
     },
     {
@@ -36,6 +39,7 @@ export const DEMOEMPLOYEES = [
         name: 'Jeff Bezos',
         title: 'Admin',
         image: jeff,
+        pin: '1234',
         work: []
     },
     {
@@ -43,6 +47,7 @@ export const DEMOEMPLOYEES = [
         name: 'Mark Zuckerberg',
         title: 'Employee',
         image: mark,
+        pin: '1234',
         work: []
     },
     {
@@ -50,6 +55,7 @@ export const DEMOEMPLOYEES = [
         name: 'Tony Stark',
         title: 'Employee',
         image: tony,
+        pin: '1234',
         work: []
     },
     {
@@ -57,6 +63,7 @@ export const DEMOEMPLOYEES = [
         name: 'Ava',
         title: 'Employee',
         image: ava,
+        pin: '1234',
         work: []
     },
     {
@@ -64,6 +71,7 @@ export const DEMOEMPLOYEES = [
         name: 'Richard Hendricks',
         title: 'Employee',
         image: richard,
+        pin: '1234',
         work: []
     },
     {
@@ -71,6 +79,7 @@ export const DEMOEMPLOYEES = [
         name: 'Steve Jobs',
         title: 'Admin',
         image: steve,
+        pin: '1234',
         work: []
     },
 ]

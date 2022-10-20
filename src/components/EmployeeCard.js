@@ -17,8 +17,6 @@ const EmployeeCard = ({img, name, employeeId, pin, employee}) => {
         setShow(true);
     }
 
-
-
     // as={Link} to='/clockin'
 
     return (

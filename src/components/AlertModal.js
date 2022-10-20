@@ -17,7 +17,7 @@ const AlertModal = ({handleShow, setShow, show}) => {
           </Modal.Header>
           <Modal.Body>
             <p>It looks like you've already posted hours for today.</p>
-            <p className='fst-italic'>(Support for multiple shifts comming soon)</p>
+            <p className='fst-italic'>(Support for multiple shifts coming soon)</p>
             </Modal.Body>
           <Modal.Footer>
             <Button style={{backgroundColor: '#91AA9D', color: 'white'}} onClick={handleClose}>

@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 const LoginPage = () => {
 
-    //Server Requests
     const [ username, setUsername ] = useState('');
     const [ password, setPassword ] = useState('');
     const dispatch = useDispatch();
@@ -19,7 +18,7 @@ const LoginPage = () => {
         Axios.post("http://localhost:3001/login", {username, password})
         .then((res) => {
             if(res.status === 200){
-                dispatch(setUser(JSON.stringify(res.data)));
+                // dispatch(setUser(JSON.stringify(res.data)));
                 localStorage.setItem('currentUser', JSON.stringify(res.data))
                 navigate('/profile');
             }else{
@@ -27,7 +26,6 @@ const LoginPage = () => {
             }
         })
     }
-    //Server requests
 
 
     return ( 

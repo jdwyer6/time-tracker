@@ -2,13 +2,13 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { increment, decrement, incrementByAmount } from '../redux/counterSlice';
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const HomePage = () => {
     const { count } = useSelector(state => state.counter);
     // const count = useSelector((state) => state.counter.count);
     const dispatch = useDispatch();
-
-
+    
 
     return ( 
         <Container fluid>
@@ -20,23 +20,36 @@ const HomePage = () => {
                 </Col>
             </Row>
             <Row className='home-button-group'>
-                    <Col md='4' className="button-container">
-                        <Link to='/login'>
-                            <Button className='button_xl' onClick={()=>dispatch(increment())}>Login</Button>
-                        </Link>
-                    </Col>
-                    <Col md='4' className="button-container">
-                        <Link to='demo'>
-                            <Button className='button_xl'>Demo</Button>
-                        </Link>
-                        
-                    </Col>
-                    <Col md='4' className="button-container">
-                        <Link to='/register'>
-                            <Button className='button_xl' onClick={()=>dispatch(decrement())}>Sign up free</Button>
-                        </Link>
-                        
-                    </Col>
+                {localStorage.getItem('currentUser') ? (
+                    <>
+                        <Col md='4' className="button-container">
+                            <Link to='/profile'>
+                                <Button className='button_xl' onClick={()=>dispatch(increment())}>My business profile</Button>
+                            </Link>
+                        </Col>
+                    </>
+                ) : (
+                    <>
+                        <Col md='4' className="button-container">
+                            <Link to='/login'>
+                                <Button className='button_xl' onClick={()=>dispatch(increment())}>Login</Button>
+                            </Link>
+                        </Col>
+                        <Col md='4' className="button-container">
+                            <Link to='demo'>
+                                <Button className='button_xl'>Demo</Button>
+                            </Link>
+                            
+                        </Col>
+                        <Col md='4' className="button-container">
+                            <Link to='/register'>
+                                <Button className='button_xl' onClick={()=>dispatch(decrement())}>Sign up free</Button>
+                            </Link>
+                            
+                        </Col>
+                    </>
+                )}
+
             </Row>
 
         </Container>

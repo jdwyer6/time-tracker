@@ -67,7 +67,6 @@ app.post("/register", (req, res) => {
 
 app.post("/login", async (req, res) => {
     const {username, password} = req.body;
-
     const user = await Users.findOne({username: username})
     if(!user){
         res.status(400).json({error: "User doesn't exist"});

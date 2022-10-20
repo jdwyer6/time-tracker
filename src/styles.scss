@@ -118,6 +118,11 @@ html, body {
 
 }
 
+nav a.active{
+    font-weight: 800;
+    text-shadow: $shadow;
+}
+
 //GENERAL CLASSES
 .container-centered{
     display: flex;
@@ -199,6 +204,7 @@ html, body {
 .employee-card{
     text-align: center;
     width: clamp(180px, 20vw, 250px);
+    padding: 1% 0;
     
     img{
         width: 10rem;

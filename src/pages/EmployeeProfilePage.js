@@ -47,7 +47,6 @@ const EmployeeProfilePage = () => {
     }
 
     useEffect(() => {
-
         Axios.get(`http://localhost:3001/employee/${user._id}/${tempEmployee.employeeId}`)
         .then((res) => {
             if(res.status === 200){
