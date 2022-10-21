@@ -17,6 +17,7 @@ app.use(cors());
 
 mongoose.connect('mongodb+srv://jdwyer6:hpYOr45SNY9s8jxq@cluster0.sv4ojpk.mongodb.net/time-tracker-data?retryWrites=true&w=majority')
 
+
 app.get("/getUsers", (req, res) => {
     Users.find({}, (err, result) => {
         if(err) {
@@ -65,27 +66,36 @@ app.post("/register", (req, res) => {
     })
 });
 
-app.post("/login", async (req, res) => {
+app.post("/login", async (req, res, next) => {
     const {username, password} = req.body;
-    const user = await Users.findOne({username: username})
-    if(!user){
-        res.status(400).json({error: "User doesn't exist"});
+    try{
+        const user = await Users.findOne({username: username})
+        const dbPassword = user.password;
+        bycrypt.compare(password, dbPassword).then((match) => {
+            if(!match){
+                res.status(400).json({error: "Oops...wrong username and password."})
+                console.log('no password')
+            }else{
+                const accessToken = createTokens(user)
+                res.statusCode = 200;
+                res.cookie("access-token", accessToken,{
+                    maxAge: 60*60*24*30*1000,
+                })
+                const tempUser = {...user._doc, password: ''}
+                res.json(tempUser);
+            }
+        })
     }
+    catch(err){
+        console.log(err);
+        res.status(400).send({message: 'Something went wrong'})
+    }
+    
+    // if(!user){
+    //     res.status(400).json({error: "User doesn't exist"});
+    // }
+    
 
-    const dbPassword = user.password
-    bycrypt.compare(password, dbPassword).then((match) => {
-        if(!match){
-            res.status(400).json({error: "Oops...wrong username and password."})
-        }else{
-            const accessToken = createTokens(user)
-            res.statusCode = 200;
-            res.cookie("access-token", accessToken,{
-                maxAge: 60*60*24*30*1000,
-            })
-            const tempUser = {...user._doc, password: ''}
-            res.json(tempUser);
-        }
-    })
         
 })
 

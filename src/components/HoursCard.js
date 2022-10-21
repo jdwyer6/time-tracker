@@ -14,6 +14,10 @@ const HoursCard = ({day, month, date, startTime, endTime, hoursWorked, employee}
         .then((response) => {
             document.location.reload()
         })
+        .catch(error => {
+            console.log(error.response)
+            alert('There was an issue deleting your hours. Please contact your admin for more information.')
+        })
     }
 
     return ( 

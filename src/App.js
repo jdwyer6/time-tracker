@@ -26,7 +26,10 @@ function App() {
 			.then((response) => {
 				setListOfUsers(response.data);
 			})
-			// setCurrentUser(tempUser)
+			.catch(error => {
+				console.log(error.response)
+			})
+
 		}
 
     }, [])

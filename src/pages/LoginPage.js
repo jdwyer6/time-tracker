@@ -9,6 +9,7 @@ const LoginPage = () => {
 
     const [ username, setUsername ] = useState('');
     const [ password, setPassword ] = useState('');
+    const [errMsg, setErrMsg] = useState(false);
     const dispatch = useDispatch();
     let navigate = useNavigate();
 
@@ -21,16 +22,19 @@ const LoginPage = () => {
                 // dispatch(setUser(JSON.stringify(res.data)));
                 localStorage.setItem('currentUser', JSON.stringify(res.data))
                 navigate('/profile');
-            }else{
-                console.log('Whoops...There was a problem logging in')
             }
+        })
+        .catch(error => {
+            console.log(error.response)
+            setErrMsg(true);
         })
     }
 
 
     return ( 
-        <Container>
+        <Container className='my-5'>
             <h1>Login</h1>
+            {errMsg ? (<p style={{color: 'red'}}>There was an issue with your username or password. Please try again.</p>) : ('')}
             <Form onSubmit={login}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Username</Form.Label>
@@ -43,9 +47,6 @@ const LoginPage = () => {
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Label>Password</Form.Label>
                     <Form.Control type="password" placeholder="Password" onChange={(e)=>{setPassword(e.target.value)}}/>
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="Keep me posted with email updates" />
                 </Form.Group>
                 <Button className='button-main' variant="primary" type="submit">
                     Login

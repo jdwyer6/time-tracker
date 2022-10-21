@@ -25,6 +25,9 @@ const BusinessProfilePage = () => {
                 console.log('error')
             }
         })
+        .catch(error => {
+            console.log(error.response)
+        })
     }
 
     useEffect(()=>{

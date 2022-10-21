@@ -54,6 +54,9 @@ const EmployeeProfilePage = () => {
                 setLoading(false);
             }
         })
+        .catch(error => {
+            console.log(error.response)
+        })
 
         setInterval(()=>{
             setTime(new Date().toLocaleTimeString())
@@ -98,6 +101,9 @@ const EmployeeProfilePage = () => {
             }else{
                 console.log('There was an error')
             }
+        })
+        .catch(error => {
+            console.log(error.response)
         })
 
     }

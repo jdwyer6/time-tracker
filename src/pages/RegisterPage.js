@@ -17,14 +17,17 @@ const RegisterPage = () => {
         .then((response) => {
             // alert('User added');
             navigate('/login');
-        });
+        })
+        .catch(error => {
+            console.log(error.response)
+        })
     }
     //Server requests
 
 //add type='email' to form control
 
     return ( 
-        <Container>
+        <Container className='my-5'>
             <h1>Register</h1>
             <Form onSubmit={createUser}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">

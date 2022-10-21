@@ -19,6 +19,9 @@ const SideBar = ({handleShow, show, handleClose}) => {
         .then((response) => {
             alert('An employee has been added to your busines profile.')
         })
+        .catch(error => {
+            console.log(error.response)
+        })
     }
 
     return ( 

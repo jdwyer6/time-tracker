@@ -1,8 +1,13 @@
+import {Spinner, Container} from 'react-bootstrap';
+
 const LogoutPage = () => {
     return ( 
-        <>
-            <p>you're logged out! Thanks for using ClockedIn.</p>
-        </> 
+        <Container className='d-flex justify-content-center my-5'>
+            <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </Spinner>
+            <p className='fs-5 mx-5'>Logging out</p>
+        </Container> 
     );
 }
  
