@@ -46,23 +46,24 @@ const BusinessProfilePage = () => {
             </div>
 
             <div className='search-bar'>
-                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                <input className="form-control me-2" type="search" placeholder="Search employees by name" aria-label="Search" />
                 <Button className='button-main'>Search</Button>
-                <Button className='button-main' onClick={handleShow}>+ Add Employee</Button>
+                {employees.length > 0 ? (
+                    <Button className='button-main' onClick={handleShow}>+ Add Employee</Button>
+                ) : ('')}
+                
             </div>
 
             <Row className='mt-medium'>
-                {employees ? (
+                {employees.length > 0 ? (
                 employees.map((employee)=>(
                     <EmployeeCard key={employee.employeeId} name={employee.name} img={employee.img} employeeId={employee.employeeId} pin={employee.pin} employee={employee}/>
                 ))
                 ) : (
-                    <>
-                    <p>Looks like you haven't added any employees to your business yet. Click the '+ Add Employee' button to add some.</p>
-                    {console.log('no employees')}
-                    </>
-                    
-                    
+                    <Col>
+                    <p>Looks like you haven't added any employees to your business yet. Click here to add some.</p>
+                    <Button className='button-main' onClick={handleShow}>+ Add Employee</Button>
+                    </Col>
                 )}
 
             </Row>

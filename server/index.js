@@ -129,7 +129,11 @@ app.post("/addEmployee", async (req, res) => {
             return next(err);
         }
     })
-    .catch(err => next(err))
+    .catch((err) => {
+        if(err){
+            res.status(400).json({error: err});
+        }
+    })
 
 })
 
@@ -139,6 +143,11 @@ app.get('/employee/:id/:employeeId', function(req, res){
         const currentEmployee = user.employees.find(employee => employee.employeeId == req.params.employeeId)
         if(user){
             return res.json(currentEmployee)
+        }
+    })
+    .catch((err) => {
+        if(err){
+            res.status(400).json({error: err});
         }
     })
 })
@@ -165,6 +174,11 @@ app.delete('/:businessId/:employeeId', (req, res) => {
         }
         
     })
+    .catch((err) => {
+        if(err){
+            res.status(400).json({error: err});
+        }
+    })
 })
 
 app.post('/updateEmployee/:id', function(req, res, next) {
@@ -188,7 +202,11 @@ app.post('/updateEmployee/:id', function(req, res, next) {
             return next(err);
         }
     })
-    .catch(err => next(err))
+    .catch((err) => {
+        if(err){
+            res.status(400).json({error: err});
+        }
+    })
 })
 
 app.get("/profile", validateToken, (req, res) => {
