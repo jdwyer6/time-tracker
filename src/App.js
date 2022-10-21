@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route } from "react-router-dom";
 import { useState, useEffect } from 'react';
+import 'filepond/dist/filepond.min.css';
 import './App.css';
 import HomePage from './pages/HomePage';
 import Navigation from './components/Navbar';

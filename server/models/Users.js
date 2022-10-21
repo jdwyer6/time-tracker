@@ -13,7 +13,7 @@ const EmployeeSchema = new mongoose.Schema({
     },
     img: {
         data: Buffer,
-        type: String
+        type: Array
     },
     work: {
         type: Array

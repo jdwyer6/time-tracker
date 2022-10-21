@@ -2,7 +2,7 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import EmployeeCard from "../components/EmployeeCard";
 import SideBar from "../components/SideBar";
 import { useState, useEffect } from "react";
-import Axios from 'axios'
+import Axios from 'axios';
 
 const BusinessProfilePage = () => {
 

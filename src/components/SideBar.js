@@ -1,14 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
 import {Button, Form} from 'react-bootstrap';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { FaUserAlt } from 'react-icons/fa';
 import Axios from 'axios';
+import { FilePond, registerPlugin } from 'react-filepond';
+import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import FilePondPluginImageResize from 'filepond-plugin-image-resize';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+import FilePondPluginFileEncode from 'filepond-plugin-file-encode';
+
+registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview, FilePondPluginFileEncode, FilePondPluginImageResize);
+
 
 const SideBar = ({handleShow, show, handleClose}) => {
 
     const [employeeName, setEmployeeName] = useState();
     const [employeePin, setEmployeePin] = useState();
-    const [employeeImg, setEmployeeImg] = useState('images/demo-employees/default.png');
+    // const [employeeImg, setEmployeeImg] = useState('images/demo-employees/default.png');
+    const [employeeImg, setEmployeeImg] = useState([]);
+    const [files, setFiles] = useState([]);
+    // FilePond.registerPlugin(FilePondPluginFileEncode);
+    
 
     const tempUser = localStorage.getItem('currentUser');
     const user = JSON.parse(tempUser);
@@ -23,6 +37,10 @@ const SideBar = ({handleShow, show, handleClose}) => {
             console.log(error.response)
         })
     }
+
+    useEffect(()=>{
+        console.log(employeeImg);
+    },[employeeImg])
 
     return ( 
         <>
@@ -44,6 +62,18 @@ const SideBar = ({handleShow, show, handleClose}) => {
                             <Form.Text className="text-muted">
                                 Employees will sign in with their pin before posting hours.
                             </Form.Text>
+                        </Form.Group>
+                        <Form.Group>
+                        <Form.Label>Image</Form.Label>
+                            <FilePond
+                                files={employeeImg}
+                                onupdatefiles={setEmployeeImg}
+                                allowMultiple={false}
+                                maxFiles={1}
+                                allowFileEncode={true}
+                                name="files"
+                                labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
+                            />
                         </Form.Group>
 
                         <Button className='button-main' variant="primary" type="submit">
