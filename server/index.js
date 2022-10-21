@@ -49,21 +49,30 @@ app.post("/register", (req, res) => {
     const password = req.body.password;
     const username = req.body.username;
     const businessName = req.body.businessName;
-    bycrypt.hash(password, 10)
-    .then((hash) => {
-        const newUser = new Users({username, password: hash, businessName});
-        newUser.save({
-            username: username,
-            password: hash,
-            businessName: businessName
-        }).then(() => {
-            res.json("USER REGISTERED")
-        }).catch((err) => {
-            if(err){
-                res.status(400).json({error: err});
-            }
-        })
+    Users.findOne({username: username})
+    .then(userFound => {
+        if(!userFound){
+            bycrypt.hash(password, 10)
+            .then((hash) => {
+                const newUser = new Users({username, password: hash, businessName});
+                newUser.save({
+                    username: username,
+                    password: hash,
+                    businessName: businessName
+                }).then(() => {
+                    res.json("USER REGISTERED")
+                })
+            })
+        }else{
+            return next(err);
+        }
     })
+    .catch((err) => {
+        if(err){
+            res.status(400).json({error: err});
+        }
+    })
+
 });
 
 app.post("/login", async (req, res, next) => {

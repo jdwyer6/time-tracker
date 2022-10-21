@@ -1,7 +1,8 @@
 const { sign, verify } = require('jsonwebtoken');
+require("dotenv").config();
 
 const createTokens = (user) => {
-    const accessToken = sign({ username: user.username, id: user._id }, "jwtsecretplschange");
+    const accessToken = sign({ username: user.username, id: user._id }, process.env.key);
     return accessToken;
 };
 
@@ -11,7 +12,7 @@ const validateToken = (req, res, next) => {
         return res.status(400).json({error: "User not Authenticated."});
     } 
     try{
-        const validToken = verify(accessToken, "jwtsecretplschange")
+        const validToken = verify(accessToken, process.env.key)
         if(validToken){
             req.authenticated = true
             return next()

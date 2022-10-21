@@ -2,6 +2,8 @@ import { Container, Row, Col, Button, FormLabel, InputGroup, Form } from 'react-
 import Axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import { userSchema } from '../Validations/UserValidation'; 
+import * as yup from 'yup';
 
 const RegisterPage = () => {
 
@@ -9,22 +11,44 @@ const RegisterPage = () => {
     const [ username, setUsername ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ businessName, setBusinessName ] = useState('');
+    const [errMsg, setErrMsg] = useState(false);
     let navigate = useNavigate();
+    const [valid, setValid] = useState(false);
+
+
+    const validateInfo = async (e) =>{
+        let formData = {
+            username: e.target[0].value,
+            password: e.target[1].value,
+            businessName: e.target[2].value
+        };
+        const isValid = await userSchema.isValid(formData)
+        userSchema.validate(formData)
+        .catch(function(err){
+            alert(`${err.name} \n ${err.errors}`)
+        })
+        isValid ? setValid(true) : setValid(false)
+        console.log(valid)
+    }
+
 
     const createUser = (e) => {
         e.preventDefault();
-        Axios.post("http://localhost:3001/register", {username, password, businessName})
-        .then((response) => {
-            // alert('User added');
-            navigate('/login');
-        })
-        .catch(error => {
-            console.log(error.response)
-        })
+        validateInfo(e)
+        if(valid){
+            Axios.post("http://localhost:3001/register", {username, password, businessName})    
+            .then((response) => {
+                alert('SUCCESS! New user created!')
+                navigate('/login');
+            })
+            .catch(error => {
+                console.log(error.response)
+                alert('Username already taken')
+            })
+        }
     }
-    //Server requests
 
-//add type='email' to form control
+
 
     return ( 
         <Container className='my-5'>
