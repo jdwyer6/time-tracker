@@ -2,7 +2,7 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { DEMOEMPLOYEES } from '../shared/DEMOEMPLOYEES';
 import { useEffect, useState } from 'react';
-import EmployeeCard from '../components/EmployeeCard';
+import DemoEmployeeCard from '../components/DemoEmployeeCard';
 import HoursCard from '../components/HoursCard';
 import Spinner from 'react-bootstrap/Spinner';
 import Timer from 'react-timer-wrapper';
@@ -38,7 +38,8 @@ const ClockInPage = () => {
     
     // const { user } = useSelector(state => state.user);
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('currentUser')))
-    const employee = DEMOEMPLOYEES.find(employee => employee.id === user);
+    // const employee = DEMOEMPLOYEES.find(employee => employee.id === user);
+    const employee = JSON.parse(localStorage.getItem('currentEmployee'))
     const [employees, setEmployees] = useState(DEMOEMPLOYEES);
 
     let current = new Date();
@@ -111,7 +112,7 @@ const ClockInPage = () => {
                 <button onClick={createUser}>submit</button>
             </div> */}
             <Row className='mt-medium'>
-                <EmployeeCard img={employee.image} name={employee.name} title={employee.title}/>
+                <DemoEmployeeCard img={employee.image} name={employee.name} title={employee.title}/>
                 <Col className='text-center d-flex flex-column justify-content-center align-items-center'>
                     <h1 className='fw-bold fs-2'>Today is {weekday[current.getDay()]}, {months[current.getMonth()]} {current.getDate()}</h1>
                     <p>{time}</p>

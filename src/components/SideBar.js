@@ -18,8 +18,8 @@ const SideBar = ({handleShow, show, handleClose}) => {
 
     const [employeeName, setEmployeeName] = useState();
     const [employeePin, setEmployeePin] = useState();
-    // const [employeeImg, setEmployeeImg] = useState('images/demo-employees/default.png');
-    const [employeeImg, setEmployeeImg] = useState([]);
+    const [employeeImg, setEmployeeImg] = useState('images/demo-employees/default.png');
+    // const [employeeImg, setEmployeeImg] = useState([]);
     const [files, setFiles] = useState([]);
     // FilePond.registerPlugin(FilePondPluginFileEncode);
     
@@ -38,9 +38,9 @@ const SideBar = ({handleShow, show, handleClose}) => {
         })
     }
 
-    useEffect(()=>{
-        console.log(employeeImg);
-    },[employeeImg])
+    // useEffect(()=>{
+    //     console.log(employeeImg);
+    // },[employeeImg])
 
     return ( 
         <>
@@ -63,8 +63,8 @@ const SideBar = ({handleShow, show, handleClose}) => {
                                 Employees will sign in with their pin before posting hours.
                             </Form.Text>
                         </Form.Group>
-                        <Form.Group>
-                        <Form.Label>Image</Form.Label>
+                        {/* <Form.Group> */}
+                        {/* <Form.Label>Image</Form.Label>
                             <FilePond
                                 files={employeeImg}
                                 onupdatefiles={setEmployeeImg}
@@ -74,7 +74,7 @@ const SideBar = ({handleShow, show, handleClose}) => {
                                 name="files"
                                 labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
                             />
-                        </Form.Group>
+                        </Form.Group> */}
 
                         <Button className='button-main' variant="primary" type="submit">
                             Register

@@ -38,12 +38,6 @@ app.get('/user/:id', function(req, res){
     .catch(err => next(err));
 })
 
-// app.post('/createUser', async (req, res) => {
-//     const user = req.body;
-//     const newUser = new Users(user);
-//     await newUser.save();
-//     res.json(user);
-// })
 
 app.post("/register", (req, res) => {
     const password = req.body.password;
@@ -99,12 +93,6 @@ app.post("/login", async (req, res, next) => {
         console.log(err);
         res.status(400).send({message: 'Something went wrong'})
     }
-    
-    // if(!user){
-    //     res.status(400).json({error: "User doesn't exist"});
-    // }
-    
-
         
 })
 
@@ -214,44 +202,6 @@ app.get("/profile", validateToken, (req, res) => {
     // res.render('../src/pages/DemoPage.js', {status: 'good'})
 })
 
-
-
-
-
-// app.get("/:businessId", (req, res, next) => {
-//     Campsite.findById(req.params.campsiteId)
-//     .populate('comments.author')
-//     .then(campsite => {
-//         res.statusCode = 200;
-//         res.setHeader('Content-Type', 'appliaction/json');
-//         res.json(campsite);
-//     })
-//     .catch(err => next(err));
-// })
-// .post("/:businessId", (req, res) => {
-//     res.statusCode = 403;
-//     res.end(`POST operation not supported on /campsites/${req.params.campsiteId}`)
-// })
-// .put("/:businessId", (req, res, next) => {
-//     Campsite.findByIdAndUpdate(req.params.campsiteId, {
-//         $set: req.body
-//     }, {new: true})
-//     .then(campsite => {
-//         res.statusCode = 200;
-//         res.setHeader('Content-Type', 'appliaction/json');
-//         res.json(campsite);
-//     })
-//     .catch(err => next(err));
-// })
-// .delete("/:businessId", (req, res, next) => {
-//     Campsite.findByIdAndDelete(req.params.campsiteId)
-//     .then(response => {
-//         res.statusCode = 200;
-//         res.setHeader('Content-Type', 'appliaction/json');
-//         res.json(response);
-//     })
-//     .catch(err => next(err));
-// });
 
 app.listen(3001, () => {
     console.log("Server is running on port 3001")
