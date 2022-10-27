@@ -13,10 +13,16 @@ const LoginPage = () => {
     const dispatch = useDispatch();
     let navigate = useNavigate();
 
+    const config = {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json',
+        }
+    }
 
     const login = (e) => {
         e.preventDefault();
-        Axios.post("https://clockedin.herokuapp.com/login", {username, password})
+        Axios.post("https://clockedin.herokuapp.com/login", {username, password}, config)
         .then((res) => {
             if(res.status === 200){
                 // dispatch(setUser(JSON.stringify(res.data)));

@@ -1,4 +1,5 @@
-const express = require("express")
+const express = require("express");
+const cors = require('cors');
 const app = express();
 const mongoose = require('mongoose');
 const Users = require('./models/Users');
@@ -6,15 +7,18 @@ const Users = require('./models/Users');
 const bcrypt = require('bcrypt');
 const cookieParser = require("cookie-parser");
 const {createTokens, validateToken} = require('./JWT');
-const cors = require('cors');
 const { v4: uuidv4 } = require('uuid');
 const { current } = require("@reduxjs/toolkit");
 require("dotenv").config();
 
-
+app.use(function(req, res, next){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-Width, Content-Type, Accept");
+    next();
+});
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+
 
 mongoose.connect('mongodb+srv://jdwyer6:hpYOr45SNY9s8jxq@cluster0.sv4ojpk.mongodb.net/time-tracker-data?retryWrites=true&w=majority')
 
