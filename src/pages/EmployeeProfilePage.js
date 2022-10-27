@@ -31,6 +31,8 @@ const EmployeeProfilePage = () => {
     const [shortTime, setShortTime] = useState(current.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}));
     const [info, setInfo] = useState({
         date: '',
+        month: '',
+        day: '',
         start: 0,
         end: 0,
         startTime: '',
@@ -89,7 +91,7 @@ const EmployeeProfilePage = () => {
 
     function handleClockOut(){
         setClockedIn(!clockedIn);
-        setInfo({...info, date: current.getDate(), end: current.getTime(), hoursWorked: ((current.getTime()-info.start)/60000).toFixed(2), endTime: shortTime});
+        setInfo({...info, date: current.getDate(), month: current.getMonth(), day: current.getDay(), end: current.getTime(), hoursWorked: ((current.getTime()-info.start)/60000).toFixed(2), endTime: shortTime});
     }
 
     const pushinfo = () => {
@@ -161,9 +163,9 @@ const EmployeeProfilePage = () => {
                                         return(
                                             <td key={index} className='border-0'>
                                                 <HoursCard 
-                                                    day={weekday[current.getDay()]} 
-                                                    month={months[current.getMonth()]} 
-                                                    date={current.getDate()} 
+                                                    day={weekday[entry.day]} 
+                                                    month={months[entry.month]} 
+                                                    date={entry.date} 
                                                     hoursWorked={entry.hoursWorked} 
                                                     startTime={entry.startTime} 
                                                     endTime={entry.endTime} 

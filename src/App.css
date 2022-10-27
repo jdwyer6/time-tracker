@@ -21,6 +21,7 @@ html, body {
   font-weight: 200;
   color: black;
   transition: all 0.4s;
+  z-index: 10;
 }
 .btn.button_xl {
   width: 100%;
