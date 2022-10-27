@@ -16,7 +16,7 @@ const BusinessProfilePage = () => {
     const user = JSON.parse(tempUser);
 
     function getEmployees(){
-        Axios.get(`http://localhost:3001/user/${user._id}`)
+        Axios.get(`https://clockedin.herokuapp.com/user/${user._id}`)
         .then((res) => {
             if(res.status === 200){
                 setEmployees(res.data.employees)

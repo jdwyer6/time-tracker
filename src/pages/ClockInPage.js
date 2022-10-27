@@ -14,27 +14,6 @@ import Axios from 'axios';
 
 const ClockInPage = () => {
 
-    /////////////////BackEnd Set-up Start
-    // const [ listOfUsers, setListOfUsers ] = useState([]);
-    // const [ name, setName ] = useState('');
-    // const [ admin, setAdmin ] = useState(false)
-
-    // useEffect(()=>{
-    //     Axios.get("http://localhost:3001/getUsers")
-    //     .then((response) => {
-    //         setListOfUsers(response.data);
-    //     })
-    // }, [])
-
-    // const createUser = () => {
-    //     Axios.post("http://localhost:3001/createUser", {name: name, admin: admin})
-    //     .then((response) => {
-    //         alert('User Added')
-    //         setListOfUsers([...listOfUsers, {name:name, admin:admin}])
-    //     })
-    // }
-    //////////////////BackEnd Set-up End
-
     
     // const { user } = useSelector(state => state.user);
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('currentUser')))

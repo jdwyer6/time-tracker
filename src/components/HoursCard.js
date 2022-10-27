@@ -10,7 +10,7 @@ const HoursCard = ({day, month, date, startTime, endTime, hoursWorked, employee}
 
     const deleteCard = () => {
         console.log('delete card')
-        Axios.delete(`http://localhost:3001/${user._id}/${employee.employeeId}`)
+        Axios.delete(`https://clockedin.herokuapp.com/${user._id}/${employee.employeeId}`)
         .then((response) => {
             document.location.reload()
         })

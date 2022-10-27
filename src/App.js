@@ -24,7 +24,7 @@ function App() {
 	useEffect(()=>{
 		if(!user){
 			const tempUser = localStorage.getItem('currentUser')
-			Axios.get("http://localhost:3001/getUsers")
+			Axios.get("https://clockedin.herokuapp.com/getUsers")
 			.then((response) => {
 				setListOfUsers(response.data);
 			})

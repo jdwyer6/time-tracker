@@ -16,7 +16,7 @@ const LoginPage = () => {
 
     const login = (e) => {
         e.preventDefault();
-        Axios.post("http://localhost:3001/login", {username, password})
+        Axios.post("https://clockedin.herokuapp.com/login", {username, password})
         .then((res) => {
             if(res.status === 200){
                 // dispatch(setUser(JSON.stringify(res.data)));

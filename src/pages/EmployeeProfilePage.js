@@ -47,7 +47,7 @@ const EmployeeProfilePage = () => {
     }
 
     useEffect(() => {
-        Axios.get(`http://localhost:3001/employee/${user._id}/${tempEmployee.employeeId}`)
+        Axios.get(`https://clockedin.herokuapp.com/employee/${user._id}/${tempEmployee.employeeId}`)
         .then((res) => {
             if(res.status === 200){
                 setEmployee(res.data)
@@ -94,7 +94,7 @@ const EmployeeProfilePage = () => {
 
     const pushinfo = () => {
  
-        Axios.post(`http://localhost:3001/updateEmployee/${user._id}`, {employeeId: employee.employeeId, info: info})
+        Axios.post(`https://clockedin.herokuapp.com/updateEmployee/${user._id}`, {employeeId: employee.employeeId, info: info})
         .then((res) => {
             if(res.status === 200){
                 document.location.reload();

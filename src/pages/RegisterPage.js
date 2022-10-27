@@ -36,7 +36,7 @@ const RegisterPage = () => {
         e.preventDefault();
         validateInfo(e)
         if(valid){
-            Axios.post("http://localhost:3001/register", {username, password, businessName})    
+            Axios.post("https://clockedin.herokuapp.com/register", {username, password, businessName})    
             .then((response) => {
                 alert('SUCCESS! New user created!')
                 navigate('/login');
