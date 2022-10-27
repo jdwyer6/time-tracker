@@ -54,7 +54,7 @@ const BusinessProfilePage = () => {
                 
             </div>
 
-            <Row className='mt-medium'>
+            <Row className='mt-medium d-flex justify-content-center'>
                 {employees.length > 0 ? (
                 employees.map((employee)=>(
                     <EmployeeCard 

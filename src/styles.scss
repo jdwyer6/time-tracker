@@ -16,7 +16,7 @@ $shadow: 2px 2px 5px rgba(0, 0, 0, .3);
 
 body{
     font-family: 'Inter', sans-serif;
-    position: relative
+    position: relative;
 }
 
 html, body {
@@ -83,7 +83,7 @@ html, body {
     }
 
     &.button-lg{
-        width: clamp(100px, 30%, 250px);
+        width: clamp(200px, 30%, 250px);
         background-color: $green-dark;
         font-weight: 600;
         color: white;
@@ -212,7 +212,7 @@ nav a.active{
 
 .employee-card{
     text-align: center;
-    width: clamp(180px, 20vw, 250px);
+    width: clamp(140px, 20vw, 250px);
     padding: 1% 0;
     
     img{
@@ -331,4 +331,13 @@ nav a.active{
         }
     }
 
+}
+
+@media only screen and (max-width: 992px){
+    .employee-card{
+        img{
+            width: clamp(5rem, 60%, 8rem);
+            height: auto;
+        }
+    }
 }

@@ -115,15 +115,18 @@ const EmployeeProfilePage = () => {
     return ( 
         <Container>
             <Row className='mt-medium position-relative'>
-                <Col>
+                <Col className='position-absolute d-none d-lg-inline'>
+                    <EmployeeCard img={employee.img} name={employee.name} title={employee.title}/>
+                </Col>
+                <Col className='d-inline d-lg-none d-flex justify-content-center'>
                     <EmployeeCard img={employee.img} name={employee.name} title={employee.title}/>
                 </Col>
                 
-                <Col md='12' className='text-center d-flex flex-column justify-content-center align-items-center position-absolute my-5'>
+                <Col md='12' className='text-center d-flex flex-column justify-content-center align-items-center my-5'>
                     <h1 className='fw-bold fs-2'>Today is {weekday[current.getDay()]}, {months[current.getMonth()]} {current.getDate()}</h1>
                     <p>{time}</p>
                     {clockedIn === false ? (
-                        <Button onClick={()=>handleClockIn()} className='button-lg'><ImClock className='mx-1'/>Clock in</Button>
+                        <Button onClick={()=>handleClockIn()} className='mx-1 button-lg'><ImClock className='mx-1'/>Clock in</Button>
                     ) : (
                         <>
                             <div className='d-flex w-100 justify-content-center'>

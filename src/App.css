@@ -59,7 +59,7 @@ html, body {
   border: 1px solid #91AA9D;
 }
 .btn.button-lg {
-  width: clamp(100px, 30%, 250px);
+  width: clamp(200px, 30%, 250px);
   background-color: #91AA9D;
   font-weight: 600;
   color: white;
@@ -170,7 +170,7 @@ nav a.active {
 
 .employee-card {
   text-align: center;
-  width: clamp(180px, 20vw, 250px);
+  width: clamp(140px, 20vw, 250px);
   padding: 1% 0;
 }
 .employee-card img {
@@ -265,6 +265,12 @@ nav a.active {
   }
   .employee-card P {
     font-size: 0.8rem;
+  }
+}
+@media only screen and (max-width: 992px) {
+  .employee-card img {
+    width: clamp(5rem, 60%, 8rem);
+    height: auto;
   }
 }
 
