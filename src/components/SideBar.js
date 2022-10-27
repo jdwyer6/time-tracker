@@ -4,6 +4,7 @@ import {Button, Form} from 'react-bootstrap';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { FaUserAlt } from 'react-icons/fa';
 import Axios from 'axios';
+import { useNavigate } from "react-router-dom";
 import { FilePond, registerPlugin } from 'react-filepond';
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
@@ -22,6 +23,7 @@ const SideBar = ({handleShow, show, handleClose}) => {
     // const [employeeImg, setEmployeeImg] = useState([]);
     const [files, setFiles] = useState([]);
     // FilePond.registerPlugin(FilePondPluginFileEncode);
+    let navigate = useNavigate();
     
 
     const tempUser = localStorage.getItem('currentUser');
@@ -31,7 +33,7 @@ const SideBar = ({handleShow, show, handleClose}) => {
         // e.preventDefault();
         Axios.post("https://clockedin.herokuapp.com/addEmployee", {userId: user._id, name: employeeName, pin: employeePin, img: employeeImg, work: []})
         .then((response) => {
-
+            navigate('/profile');
         })
         .catch(error => {
             console.log(error.response)
