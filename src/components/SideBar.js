@@ -31,7 +31,7 @@ const SideBar = ({handleShow, show, handleClose}) => {
         // e.preventDefault();
         Axios.post("https://clockedin.herokuapp.com/addEmployee", {userId: user._id, name: employeeName, pin: employeePin, img: employeeImg, work: []})
         .then((response) => {
-            alert('An employee has been added to your busines profile.')
+
         })
         .catch(error => {
             console.log(error.response)
