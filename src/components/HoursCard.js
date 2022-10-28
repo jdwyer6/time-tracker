@@ -8,16 +8,21 @@ const HoursCard = ({day, month, date, startTime, endTime, hoursWorked, employee}
     const tempUser = localStorage.getItem('currentUser')
     const user = JSON.parse(tempUser);
 
-    const deleteCard = () => {
-        console.log('delete card')
-        Axios.delete(`https://clockedin.herokuapp.com/${user._id}/${employee.employeeId}`)
-        .then((response) => {
-            document.location.reload()
-        })
-        .catch(error => {
-            console.log(error.response)
-            alert('There was an issue deleting your hours. Please contact your admin for more information.')
-        })
+    const deleteCard = (e) => {
+        if(user.username === 'demo'){
+            console.log(e.target.parentElement)
+            employee.work.splice(0, 1);
+        }else{
+            Axios.delete(`https://clockedin.herokuapp.com/${user._id}/${employee.employeeId}`)
+            .then((response) => {
+                document.location.reload()
+            })
+            .catch(error => {
+                console.log(error.response)
+                alert('There was an issue deleting your hours. Please contact your admin for more information.')
+            })
+        }
+
     }
 
     return ( 
