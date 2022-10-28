@@ -1,47 +1,46 @@
 import { Container } from "react-bootstrap";
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import BootstrapTable from 'react-bootstrap-table-next';
+import { useEffect, useState } from "react";
+import Axios from "axios";
 
 const ReportsPage = () => {
     const tempUser = localStorage.getItem('currentUser')
     const user = JSON.parse(tempUser);
+    const [isLoading, setLoading] = useState(true);
+    const [employees, setEmployees] = useState()
+    const getEmployeeData = async () =>{
+        try{
+            const data = await Axios.get(`https://clockedin.herokuapp.com/user/${user._id}`)
+            console.log(data.data.employees);
+            setEmployees(data.data.employees)
+            setLoading(false);
+        } catch(e){
+            console.log(e)
+        }
+    }
+
+    useEffect(()=>{
+        getEmployeeData();
+    }, []);
+
+
+    const columns = [
+        {dataField: "name", text: "Name"},
+        {dataField: "work[0].hoursWorked", text: "Total Hours"}
+    ]
+
+    if(isLoading){
+        return <h1>Loading...</h1>
+    }
+
     return ( 
     <Container className='my-5'>
-        <table className="table">
-        <thead>
-            <tr>
-                <th scope="col">Employee Name</th>
-                <th scope="col">Total Hours</th>
-            </tr>
-        </thead>
-            <tbody>
-                {user.employees.map((employee) => {
-                    <>
-              
-                    {/* <p>{employee.name}</p>
-                    {console.log(employee)}
-                            <th scope="row">{employee.name}</th>
-                            
-                            <td>{employee.employeeId}</td>
-                            <td>{employee}</td>
-                            <td>@mdo</td> */}
-   
-                    </>
-
-
-                })}
-
-                <tr>
-                <th scope="row">2</th>
-                <td>{user.employees[0].name}</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                </tr>
-                <tr>
-                <th scope="row">3</th>
-                <td colSpan="2">Larry the Bird</td>
-                <td>@twitter</td>
-                </tr>
-            </tbody>
-        </table>
+        <BootstrapTable 
+            keyField="employeeId"
+            data={employees}
+            columns={columns}
+        />
     </Container> );
 }
  
