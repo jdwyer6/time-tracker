@@ -3,7 +3,7 @@ import EmployeeCard from "../components/EmployeeCard";
 import SideBar from "../components/SideBar";
 import { useState, useEffect } from "react";
 import Axios from 'axios';
-import bill from '../images/demo-employees/bill.webp'
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const BusinessProfilePage = () => {
 
@@ -42,7 +42,12 @@ const BusinessProfilePage = () => {
     }, [])
 
     if(isLoading){
-        return <h4>Loading...</h4>
+        return (
+            <>
+                <LoadingSpinner />
+                <h4>Loading...</h4>
+            </>
+        )
     }
 
     return ( 

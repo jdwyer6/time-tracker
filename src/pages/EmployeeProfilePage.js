@@ -12,6 +12,7 @@ import { MdLunchDining } from 'react-icons/md';
 import { ImClock2, ImClock } from 'react-icons/im';
 import Axios from 'axios';
 import AlertModal from '../components/AlertModal';
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const EmployeeProfilePage = () => {
 
@@ -136,7 +137,12 @@ const EmployeeProfilePage = () => {
     }
 
     if(isLoading){
-        return <h4>Loading...</h4>
+        return (
+            <>
+                <LoadingSpinner />
+                <h4>Loading...</h4>
+            </>
+        )
     }
 
     return ( 

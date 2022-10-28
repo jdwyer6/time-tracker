@@ -12,13 +12,16 @@ const HomePage = () => {
     let navigate = useNavigate();
     const [errMsg, setErrMsg] = useState(false);
 
-    useEffect(()=>{
-    },[])
-
     const loginDemo = (e) => {
         e.preventDefault();
         localStorage.setItem('currentUser', JSON.stringify(demoUser))
         navigate('/profile');
+    }
+
+    function logout(){
+        localStorage.removeItem('currentUser')
+        navigate('/')
+        document.location.reload()
     }
     
 
@@ -37,6 +40,11 @@ const HomePage = () => {
                         <Col md='4' className="button-container">
                             <Link to='/profile'>
                                 <Button className='button_xl' onClick={()=>dispatch(increment())}>My business profile</Button>
+                            </Link>
+                        </Col>
+                        <Col md='4' className="button-container">
+                            <Link to='/'>
+                                <Button className='button_xl' onClick={logout}>Logout</Button>
                             </Link>
                         </Col>
                     </>

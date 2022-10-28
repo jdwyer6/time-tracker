@@ -20,7 +20,13 @@ const ReportsPage = () => {
     }
 
     useEffect(()=>{
-        getEmployeeData();
+        if(user.username === 'demo'){
+            setEmployees(user.employees)
+            setLoading(false);
+        }else{
+            getEmployeeData();
+        }
+
     }, []);
 
 
