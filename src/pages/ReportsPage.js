@@ -1,8 +1,7 @@
 import { Container } from "react-bootstrap";
-import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-import BootstrapTable from 'react-bootstrap-table-next';
 import { useEffect, useState } from "react";
 import Axios from "axios";
+import { MdConstruction } from 'react-icons/md'
 
 const ReportsPage = () => {
     const tempUser = localStorage.getItem('currentUser')
@@ -25,22 +24,24 @@ const ReportsPage = () => {
     }, []);
 
 
-    const columns = [
-        {dataField: "name", text: "Name"},
-        {dataField: "work[0].hoursWorked", text: "Total Hours"}
-    ]
+    // const columns = [
+    //     {dataField: "name", text: "Name"},
+    //     {dataField: "work[0].hoursWorked", text: "Total Hours"}
+    // ]
 
     if(isLoading){
         return <h1>Loading...</h1>
     }
 
     return ( 
-    <Container className='my-5'>
-        <BootstrapTable 
+    <Container className='my-5 d-flex align-items-center flex-column text-center'>
+        <MdConstruction className='w-25 h-25'/>
+        <h5>Page currently under construction...</h5>
+        {/* <BootstrapTable 
             keyField="employeeId"
             data={employees}
             columns={columns}
-        />
+        /> */}
     </Container> );
 }
  
