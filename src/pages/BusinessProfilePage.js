@@ -3,6 +3,7 @@ import EmployeeCard from "../components/EmployeeCard";
 import SideBar from "../components/SideBar";
 import { useState, useEffect } from "react";
 import Axios from 'axios';
+import bill from '../images/demo-employees/bill.webp'
 
 const BusinessProfilePage = () => {
 
@@ -31,7 +32,13 @@ const BusinessProfilePage = () => {
     }
 
     useEffect(()=>{
-        getEmployees();
+        if(user.username == 'demo'){
+            setEmployees(user.employees)
+            setLoading(false);
+        }else{
+            getEmployees();
+        }
+        
     }, [])
 
     if(isLoading){
@@ -44,7 +51,6 @@ const BusinessProfilePage = () => {
                 <h1 className="header_primary">{user.businessName}</h1>
                 <h2 className="header_secondary">Please select your name to clock in/out.</h2>
             </div>
-
             <div className='search-bar'>
                 <input className="form-control me-2" type="search" placeholder="Search employees by name" aria-label="Search" />
                 <Button className='button-main'>Search</Button>
@@ -53,7 +59,6 @@ const BusinessProfilePage = () => {
                 ) : ('')}
                 
             </div>
-
             <Row className='mt-medium d-flex justify-content-center'>
                 {employees.length > 0 ? (
                 employees.map((employee)=>(

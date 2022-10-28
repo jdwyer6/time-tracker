@@ -300,6 +300,15 @@ nav a.active{
     }
 }
 
+@media only screen and (max-width: 992px){
+    .employee-card{
+        img{
+            width: clamp(5rem, 5em, 8rem);
+            height: clamp(5rem, 5em, 8rem);
+        }
+    }
+}
+
 //SMALL BREAKPOINT///////////
 @media only screen and (max-width: 576px){
 
@@ -334,11 +343,3 @@ nav a.active{
 
 }
 
-@media only screen and (max-width: 992px){
-    .employee-card{
-        img{
-            width: clamp(5rem, 60%, 8rem);
-            height: auto;
-        }
-    }
-}

@@ -21,20 +21,20 @@ function App() {
 	const { user } = useSelector(state => state.user);
 	const [ listOfUsers, setListOfUsers ] = useState([]);
 
-	useEffect(()=>{
-		if(!user){
-			const tempUser = localStorage.getItem('currentUser')
-			Axios.get("https://clockedin.herokuapp.com/getUsers")
-			.then((response) => {
-				setListOfUsers(response.data);
-			})
-			.catch(error => {
-				console.log(error.response)
-			})
+	// useEffect(()=>{
+	// 	if(!user){
+	// 		const tempUser = localStorage.getItem('currentUser')
+	// 		Axios.get("https://clockedin.herokuapp.com/getUsers")
+	// 		.then((response) => {
+	// 			setListOfUsers(response.data);
+	// 		})
+	// 		.catch(error => {
+	// 			console.log(error.response)
+	// 		})
 
-		}
+	// 	}
 
-    }, [])
+    // }, [])
 
 
   	return (

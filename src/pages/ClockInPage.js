@@ -25,6 +25,9 @@ const ClockInPage = () => {
     const weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const [time, setTime] = useState(current.toLocaleTimeString());
+    let loggedToday = false;
+    const handleShow = () => setShow(true);
+    const [show, setShow] = useState(false);
     const [shortTime, setShortTime] = useState(current.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}));
     const [info, setInfo] = useState({
         date: '',
@@ -76,20 +79,6 @@ const ClockInPage = () => {
 
     return ( 
         <Container>
-            {/* {listOfUsers.map((user) => {
-                return (
-                    <div key={user._id}>
-                        <h3>{user.name}</h3>
-                        <p>{user.admin}</p>
-                        <img width="200px" src={user.image}></img>
-                    </div>
-                )
-            })}
-            <div>
-                <input type='text' placeholder='name' onChange={(e)=>{setName(e.target.value)}}/>
-                <input type='text' placeholder='Admin?' onChange={(e)=>{setAdmin(e.target.value)}}/>
-                <button onClick={createUser}>submit</button>
-            </div> */}
             <Row className='mt-medium'>
                 <DemoEmployeeCard img={employee.image} name={employee.name} title={employee.title}/>
                 <Col className='text-center d-flex flex-column justify-content-center align-items-center'>

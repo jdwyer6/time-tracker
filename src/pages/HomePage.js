@@ -1,13 +1,25 @@
 import { Container, Row, Col, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { increment, decrement, incrementByAmount } from '../redux/counterSlice';
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Axios from "axios"; 
+import { demoUser } from "../utilities/demoUser";
 
 const HomePage = () => {
     const { count } = useSelector(state => state.counter);
-    // const count = useSelector((state) => state.counter.count);
     const dispatch = useDispatch();
+    let navigate = useNavigate();
+    const [errMsg, setErrMsg] = useState(false);
+
+    useEffect(()=>{
+    },[])
+
+    const loginDemo = (e) => {
+        e.preventDefault();
+        localStorage.setItem('currentUser', JSON.stringify(demoUser))
+        navigate('/profile');
+    }
     
 
     return ( 
@@ -37,7 +49,7 @@ const HomePage = () => {
                         </Col>
                         <Col md='4' className="button-container">
                             <Link to='demo'>
-                                <Button className='button_xl'>Demo</Button>
+                                <Button className='button_xl' onClick={loginDemo}>Demo</Button>
                             </Link>
                             
                         </Col>

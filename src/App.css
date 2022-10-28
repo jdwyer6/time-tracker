@@ -248,6 +248,12 @@ nav a.active {
   font-weight: 900;
 }
 
+@media only screen and (max-width: 992px) {
+  .employee-card img {
+    width: clamp(5rem, 5em, 8rem);
+    height: clamp(5rem, 5em, 8rem);
+  }
+}
 @media only screen and (max-width: 576px) {
   .search-bar input {
     width: 100%;
@@ -266,12 +272,6 @@ nav a.active {
   }
   .employee-card P {
     font-size: 0.8rem;
-  }
-}
-@media only screen and (max-width: 992px) {
-  .employee-card img {
-    width: clamp(5rem, 60%, 8rem);
-    height: auto;
   }
 }
 

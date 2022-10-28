@@ -33,6 +33,7 @@ const EmployeeProfilePage = () => {
         date: '',
         month: '',
         day: '',
+        weekNumber: '',
         start: 0,
         end: 0,
         startTime: '',
@@ -48,24 +49,44 @@ const EmployeeProfilePage = () => {
         return (date - day) + 1;
     }
 
+    const getWeek = () => {
+        let currentDate = new Date();
+        let startDate = new Date(currentDate.getFullYear(), 0, 1);
+        var days = Math.floor((currentDate - startDate) /
+            (24 * 60 * 60 * 1000));
+        var weekNumber = Math.ceil(days / 7);  
+        return weekNumber  
+    }
+
     useEffect(() => {
-        Axios.get(`https://clockedin.herokuapp.com/employee/${user._id}/${tempEmployee.employeeId}`)
-        .then((res) => {
-            if(res.status === 200){
-                setEmployee(res.data)
-                setLoading(false);
-            }
-        })
-        .catch(error => {
-            console.log(error.response)
-        })
+        if(user.username == 'demo'){
+            console.log() 
+            setEmployee(JSON.parse(localStorage.getItem('currentEmployee')))
+            setLoading(false);
+        }else{
+            Axios.get(`https://clockedin.herokuapp.com/employee/${user._id}/${tempEmployee.employeeId}`)
+            .then((res) => {
+                if(res.status === 200){
+                    setEmployee(res.data)
+                    setLoading(false);
+                }
+            })
+            .catch(error => {
+                console.log(error.response)
+            })
+        }
+
 
         setInterval(()=>{
             setTime(new Date().toLocaleTimeString())
             setShortTime(new Date().toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}));
         }, 1000)
 
+        console.log(current)
+
     },[])
+
+
     
     useEffect(()=>{
         
@@ -91,22 +112,26 @@ const EmployeeProfilePage = () => {
 
     function handleClockOut(){
         setClockedIn(!clockedIn);
-        setInfo({...info, date: current.getDate(), month: current.getMonth(), day: current.getDay(), end: current.getTime(), hoursWorked: ((current.getTime()-info.start)/60000).toFixed(2), endTime: shortTime});
+        setInfo({...info, date: current.getDate(), month: current.getMonth(), day: current.getDay(), weekNumber: getWeek(), end: current.getTime(), hoursWorked: ((current.getTime()-info.start)/60000).toFixed(2), endTime: shortTime});
     }
 
     const pushinfo = () => {
- 
-        Axios.post(`https://clockedin.herokuapp.com/updateEmployee/${user._id}`, {employeeId: employee.employeeId, info: info})
-        .then((res) => {
-            if(res.status === 200){
-                document.location.reload();
-            }else{
-                console.log('There was an error')
-            }
-        })
-        .catch(error => {
-            console.log(error.response)
-        })
+        if(user.username === 'demo'){
+            employee.work.push(info)
+        }else{
+            Axios.post(`https://clockedin.herokuapp.com/updateEmployee/${user._id}`, {employeeId: employee.employeeId, info: info})
+            .then((res) => {
+                if(res.status === 200){
+                    document.location.reload();
+                }else{
+                    console.log('There was an error')
+                }
+            })
+            .catch(error => {
+                console.log(error.response)
+            })
+        }
+
 
     }
 
