@@ -5,12 +5,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Axios from "axios"; 
 import { demoUser } from "../utilities/demoUser";
+import userEvent from "@testing-library/user-event";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const HomePage = () => {
     const { count } = useSelector(state => state.counter);
     const dispatch = useDispatch();
     let navigate = useNavigate();
+    const [isLoading, setLoading] = useState(true);
     const [errMsg, setErrMsg] = useState(false);
+    const [logoutMessage, setLogoutMessage] = useState('Logout')
+    let user;
+
+    useState(()=>{
+        if(localStorage.getItem('currentUser')){
+            const tempUser = localStorage.getItem('currentUser')
+            user = JSON.parse(tempUser);
+            user.username === 'demo' ? setLogoutMessage('Logout of demo') : setLogoutMessage('Logout');
+        }
+        
+        setLoading(false);
+
+    }, [])
 
     const loginDemo = (e) => {
         e.preventDefault();
@@ -22,6 +38,15 @@ const HomePage = () => {
         localStorage.removeItem('currentUser')
         navigate('/')
         document.location.reload()
+    }
+
+    if(isLoading){
+        return (
+            <>
+                <LoadingSpinner />
+                <h4>Loading...</h4>
+            </>
+        )
     }
     
 
@@ -44,7 +69,7 @@ const HomePage = () => {
                         </Col>
                         <Col md='4' className="button-container">
                             <Link to='/'>
-                                <Button className='button_xl' onClick={logout}>Logout</Button>
+                                <Button className='button_xl' onClick={logout}>{logoutMessage}</Button>
                             </Link>
                         </Col>
                     </>

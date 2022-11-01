@@ -14,6 +14,7 @@ const RegisterPage = () => {
     const [errMsg, setErrMsg] = useState(false);
     let navigate = useNavigate();
     const [valid, setValid] = useState(false);
+    const [isLoading, setLoading] = useState(false);
 
 
     const validateInfo = async (e) =>{
@@ -28,7 +29,6 @@ const RegisterPage = () => {
             alert(`${err.name} \n ${err.errors}`)
         })
         isValid ? setValid(true) : setValid(false)
-        console.log(valid)
     }
 
 
@@ -36,9 +36,11 @@ const RegisterPage = () => {
         e.preventDefault();
         validateInfo(e)
         if(valid){
+            setLoading(true)
             Axios.post("https://clockedin.herokuapp.com/register", {username, password, businessName})    
             .then((response) => {
                 alert('SUCCESS! New user created!')
+                setLoading(false);
                 navigate('/login');
             })
             .catch(error => {
@@ -46,6 +48,12 @@ const RegisterPage = () => {
                 alert('Username already taken')
             })
         }
+    }
+
+    if(isLoading){
+        return (
+            <h1>Loading...</h1>
+        )
     }
 
 

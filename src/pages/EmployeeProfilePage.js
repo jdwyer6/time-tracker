@@ -1,5 +1,6 @@
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col, Button, Table } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { DEMOEMPLOYEES } from '../shared/DEMOEMPLOYEES';
 import EmployeeCard from '../components/EmployeeCard';
@@ -8,7 +9,8 @@ import Spinner from 'react-bootstrap/Spinner';
 import Timer from 'react-timer-wrapper';
 import Timecode from 'react-timecode';
 import _default from 'react-bootstrap/esm/Accordion';
-import { MdLunchDining } from 'react-icons/md';
+import { MdLunchDining, MdTranslate } from 'react-icons/md';
+import { AiFillBackward } from 'react-icons/ai';
 import { ImClock2, ImClock } from 'react-icons/im';
 import Axios from 'axios';
 import AlertModal from '../components/AlertModal';
@@ -24,6 +26,7 @@ const EmployeeProfilePage = () => {
     let loggedToday = false;
     const tempUser = localStorage.getItem('currentUser')
     const user = JSON.parse(tempUser);
+    const navigate = useNavigate();
 
     let current = new Date();
     const weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -155,6 +158,11 @@ const EmployeeProfilePage = () => {
 
     return ( 
         <Container>
+            <div className='d-flex justify-content-start flex-column hover' onClick={()=>navigate('/profile')}>
+                <AiFillBackward style={{width: '3em', height: '3em', color:'#91AA9D'}}/>
+                <p style={{marginTop: '-10px'}}>Go Back</p>
+            </div>
+            
             <Row className='mt-medium position-relative'>
                 <Col className='position-absolute d-none d-lg-inline'>
                     <EmployeeCard img={employee.img} name={employee.name} title={employee.title}/>
@@ -187,37 +195,37 @@ const EmployeeProfilePage = () => {
                 </Col>
             </Row>
             <Row className='calendar-container'>
-                <table className="table">
+                <Table className="table">
                     <thead>
-                        <tr className='border-bottom'>
-                            <th scope="col">Week of:</th>
+                        <tr className='border-bottom text-center'>
+                            {/* <th scope="col">Week of:</th> */}
+                            <th>Your hours</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr className='d-flex flex-start align-items-center'>
-                              <th className='p-4 border-0' scope="row">{months[current.getMonth()]} {calculateWeekOf()}</th>
-                                
+                        <tr className='d-flex flex-row'>
+                              {/* <th className='p-4 border-0' scope="row">{months[current.getMonth()]} {calculateWeekOf()}</th> */}
                                 {employee.work ? (
                                     employee.work.map((entry, index) => {
-                                        return(
-                                            <td key={index} className='border-0'>
-                                                <HoursCard 
-                                                    day={weekday[entry.day]} 
-                                                    month={months[entry.month]} 
-                                                    date={entry.date} 
-                                                    hoursWorked={JSON.parse(entry.hoursWorked)} 
-                                                    startTime={entry.startTime} 
-                                                    endTime={entry.endTime} 
-                                                    user={user} 
-                                                    employee={employee}
-                                                />
-                                            </td>
-                                        )
+                                            return(
+                                                <td key={index} className='border-0'>
+                                                    <HoursCard 
+                                                        day={weekday[entry.day]} 
+                                                        month={months[entry.month]} 
+                                                        date={entry.date} 
+                                                        hoursWorked={JSON.parse(entry.hoursWorked)} 
+                                                        startTime={entry.startTime} 
+                                                        endTime={entry.endTime} 
+                                                        user={user} 
+                                                        employee={employee}
+                                                    />
+                                                </td>
+                                            )
                                     })
                                 ) : ('')}
                         </tr>
                     </tbody>
-                </table>
+                </Table>
             </Row>
             <AlertModal handleShow={handleShow} setShow={setShow} show={show}/>
         </Container>
