@@ -205,7 +205,7 @@ const EmployeeProfilePage = () => {
                                                     day={weekday[entry.day]} 
                                                     month={months[entry.month]} 
                                                     date={entry.date} 
-                                                    hoursWorked={entry.hoursWorked} 
+                                                    hoursWorked={JSON.parse(entry.hoursWorked)} 
                                                     startTime={entry.startTime} 
                                                     endTime={entry.endTime} 
                                                     user={user} 

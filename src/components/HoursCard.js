@@ -1,12 +1,15 @@
 import { AiFillCloseCircle } from 'react-icons/ai';
 import ReactTooltip from 'react-tooltip';
 import Axios from 'axios';
+import { useEffect, useState } from 'react';
 
 const HoursCard = ({day, month, date, startTime, endTime, hoursWorked, employee}) => {
 
 
     const tempUser = localStorage.getItem('currentUser')
     const user = JSON.parse(tempUser);
+    const secondsWorked = (hoursWorked * 3600);
+    const minutesWorked = (hoursWorked * 60);
 
     const deleteCard = (e) => {
         if(user.username === 'demo'){
@@ -25,6 +28,8 @@ const HoursCard = ({day, month, date, startTime, endTime, hoursWorked, employee}
 
     }
 
+
+
     return ( 
         <div className='hours-card'>
                 <AiFillCloseCircle className='close-icon' data-tip="Delete shift" onClick={deleteCard}/>
@@ -32,7 +37,10 @@ const HoursCard = ({day, month, date, startTime, endTime, hoursWorked, employee}
             <h4>{day}</h4>
             <h5>{month} {date}</h5>
             <p className='start-end-times'>{startTime} - {endTime}</p>
-            <p className='hours-worked'>{hoursWorked} Hours</p>
+            <div className='hours-worked'>
+                {hoursWorked < 1 ? (<p>{minutesWorked.toFixed(0)} minutes <br></br> {secondsWorked.toFixed(0)} seconds</p>) : (<p>{hoursWorked.toFixed(2)} hours</p>)}
+                
+            </div>
         </div>
      );
 }
