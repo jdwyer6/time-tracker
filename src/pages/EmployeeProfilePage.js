@@ -172,7 +172,7 @@ const EmployeeProfilePage = () => {
                         <>
                             <div className='d-flex w-100 justify-content-center'>
                                 <Button onClick={()=>handleClockOut()} className='button-lg__alert'>Clock out <Timer style={{fontSize: '14px'}} active duration={null}><ImClock2 className='mx-1'/><Timecode /></Timer></Button>
-                                <Button className='button-lg__option'><MdLunchDining className='mx-2'/>Lunch</Button>
+                                {/* <Button className='button-lg__option'><MdLunchDining className='mx-2'/>Lunch</Button> */}
                             </div>
 
                             <div className='d-flex mt-1'>

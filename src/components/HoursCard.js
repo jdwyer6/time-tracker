@@ -10,6 +10,7 @@ const HoursCard = ({day, month, date, startTime, endTime, hoursWorked, employee}
     const user = JSON.parse(tempUser);
     const secondsWorked = (hoursWorked * 3600);
     const minutesWorked = (hoursWorked * 60);
+    
 
     const deleteCard = (e) => {
         if(user.username === 'demo'){
