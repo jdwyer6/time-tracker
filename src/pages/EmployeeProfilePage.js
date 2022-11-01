@@ -113,7 +113,15 @@ const EmployeeProfilePage = () => {
 
     function handleClockOut(){
         setClockedIn(!clockedIn);
-        setInfo({...info, date: current.getDate(), month: current.getMonth(), day: current.getDay(), weekNumber: getWeek(), end: current.getTime(), hoursWorked: ((current.getTime()-info.start)/60000).toFixed(2), endTime: shortTime});
+        setInfo({...info, 
+            date: current.getDate(), 
+            month: current.getMonth(), 
+            day: current.getDay(), 
+            weekNumber: getWeek(), 
+            end: current.getTime(), 
+            hoursWorked: ((current.getTime()-info.start)/3600000).toFixed(4), 
+            endTime: shortTime
+        });
     }
 
     const pushinfo = () => {
