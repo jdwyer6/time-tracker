@@ -76,38 +76,24 @@ users = [
         _id: '5523523SREHRRH1346',
         username: "",
         password: '',
+        admin: false,
         name: '',
         businessName: '',
-        demo: true,
-        employees: [
+        businessId: '', 
+        demo: false,
+        image: '',
+        hours: [
             {
-                name: 'Elon Musk',
-                admin: false,
-                image: '',
-                hours: [
-                    {
-                        date: '',
-                        timeIn: '',
-                        timeOut: '',
-                        total: 0
-                    }
-                ]
-            },
-            {
-                name: 'Jack Black',
-                admin: false,
-                image: '',
-                hours: [
-                    {
-                        date: '',
-                        timeIn: '',
-                        timeOut: '',
-                        total: 0
-                    }
-                ]
+                date: '',
+                timeIn: '',
+                timeOut: '',
+                total: 0
             }
-        ]
+        ],
     },
+
+
+    
     {
         //Business owner/User 2
         _id: '2345KLJH234K5H234HK',
