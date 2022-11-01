@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 // import pic from '../images/demo-employees/elon.jpg'
 import { useState } from 'react';
 import MessageModal from './MessageModal';
+import { useNavigate } from 'react-router-dom';
 
 const EmployeeCard = ({img, name, employeeId, pin, employee}) => {
     // const { user } = useSelector(state => state.user);
@@ -12,16 +13,22 @@ const EmployeeCard = ({img, name, employeeId, pin, employee}) => {
     const [currentEmployee, setCurrentEmployee] = useState();
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
+    let navigate = useNavigate();
     const handleShow = () => {
         // setCurrentEmployee(employeeId)
         setShow(true);
+    }
+
+    const handleClick = () => {
+        localStorage.setItem('currentEmployee', JSON.stringify(employee))
+        navigate('/employeeProfile');
     }
 
     // as={Link} to='/clockin'
 
     return (
         <>
-            <Col style={{color: 'black', textDecoration: 'none'}} xs='4' md='3' lg='3' xl='2' className='employee-card' onClick={handleShow}>
+            <Col style={{color: 'black', textDecoration: 'none'}} xs='4' md='3' lg='3' xl='2' className='employee-card' onClick={handleClick}>
                 <img src={img} className='hover-zoom' />
                 <h3>{name}</h3>
             </Col> 
