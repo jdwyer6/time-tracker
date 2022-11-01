@@ -11,6 +11,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import BusinessProfilePage from './pages/BusinessProfilePage';
 import EmployeeProfilePage from './pages/EmployeeProfilePage';
+import HomePageTemp from './pages/HomePageTemp';
 import ReportsPage from './pages/ReportsPage';
 import LogoutPage from './pages/LogoutPage';
 import Axios from 'axios';
@@ -21,25 +22,10 @@ function App() {
 	const { user } = useSelector(state => state.user);
 	const [ listOfUsers, setListOfUsers ] = useState([]);
 
-	// useEffect(()=>{
-	// 	if(!user){
-	// 		const tempUser = localStorage.getItem('currentUser')
-	// 		Axios.get("https://clockedin.herokuapp.com/getUsers")
-	// 		.then((response) => {
-	// 			setListOfUsers(response.data);
-	// 		})
-	// 		.catch(error => {
-	// 			console.log(error.response)
-	// 		})
-
-	// 	}
-
-    // }, [])
-
 
   	return (
   	  	<div className="App">
-			<Navigation />
+			{/* <Navigation /> */}
 			<Routes>
 				<Route path='/' element={<HomePage />}/>
 				<Route path='/demo' element={<DemoPage />}/>
@@ -50,6 +36,7 @@ function App() {
 				<Route path='/employeeProfile' element={<EmployeeProfilePage />} />
 				<Route path='/logout' element={<LogoutPage />} />
 				<Route path='/reports' element={<ReportsPage />} />
+				<Route path='hometemp' element={<HomePageTemp />}/>
 			</Routes>
 			
   	  	</div>
