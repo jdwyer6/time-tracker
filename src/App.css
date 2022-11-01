@@ -87,6 +87,10 @@ html, body {
   background-color: #7e968a;
 }
 
+.hover:hover {
+  cursor: pointer;
+}
+
 input.form-control {
   border-radius: 0px;
 }

@@ -12,6 +12,7 @@ const LoginPage = () => {
     const [errMsg, setErrMsg] = useState(false);
     const dispatch = useDispatch();
     let navigate = useNavigate();
+    const [isLoading, setLoading] = useState(false)
 
     const config = {
         headers: {
@@ -22,11 +23,13 @@ const LoginPage = () => {
 
     const login = (e) => {
         e.preventDefault();
+        setLoading(true);
         Axios.post("https://clockedin.herokuapp.com/login", {username, password}, config)
         .then((res) => {
             if(res.status === 200){
                 // dispatch(setUser(JSON.stringify(res.data)));
                 localStorage.setItem('currentUser', JSON.stringify(res.data))
+                setLoading(false);
                 navigate('/profile');
             }
         })
@@ -34,6 +37,12 @@ const LoginPage = () => {
             console.log(error.response)
             setErrMsg(true);
         })
+    }
+
+    if(isLoading){
+        return(
+            <h1>Loading...</h1>
+        )
     }
 
 

@@ -119,6 +119,12 @@ html, body {
 
 }
 
+.hover{
+    &:hover{
+        cursor: pointer;
+    }
+}
+
 input.form-control{
     border-radius: 0px;
 
