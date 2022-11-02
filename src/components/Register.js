@@ -12,10 +12,17 @@ const Register = ({handleClose, handleShow, show}) => {
     const [ name, setName ] = useState('')
     const [ businessName, setBusinessName ] = useState('');
     const [ admin, setAdmin ] = useState(true);
-    const [valid, setValid] = useState(false);
+    const [ image, setImage ] = useState('images/demo-employees/default.png');
     const [isLoading, setLoading] = useState(false);
+    const [errMsg, setErrMsg] = useState(false);
     let navigate = useNavigate();
 
+    const config = {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json',
+        }
+    }
 
     const validateInfo = async (e) =>{
         let formData = {
@@ -28,21 +35,39 @@ const Register = ({handleClose, handleShow, show}) => {
         .catch(function(err){
             alert(`${err.name} \n ${err.errors}`)
         })
-        isValid ? setValid(true) : setValid(false)
+        return isValid ? true : false 
     }
 
 
-    const createUser = (e) => {
+    const createUser = async (e) => {
         e.preventDefault();
-        console.log(username, password, name, businessName, admin)
-        validateInfo(e)
+        const valid = await validateInfo(e);
         if(valid){
             setLoading(true)
-            Axios.post("https://clockedin.herokuapp.com/register", {username, password, name, businessName, admin})    
+            Axios.post("https://clockedin.herokuapp.com/register", {
+                username: username, 
+                password: password, 
+                name: name, 
+                businessName: businessName, 
+                admin: admin, 
+                image: image
+            })    
             .then((response) => {
-                alert('SUCCESS! New user created!')
-                setLoading(false);
-                navigate('/login');
+                Axios.post("https://clockedin.herokuapp.com/login", {username, password}, config)
+                .then((res) => {
+                    if(res.status === 200){
+                        localStorage.setItem('currentUser', JSON.stringify(res.data));
+                        setLoading(false);
+                        console.log(localStorage.getItem('currentUser'))
+                        alert('SUCCESS! New user created!')
+                        navigate('/employeeprofiletemp');
+                    }
+                })
+                .catch(error => {
+                    console.log(error.response)
+                    setErrMsg(true);
+                })
+        
             })
             .catch(error => {
                 console.log(error.response)

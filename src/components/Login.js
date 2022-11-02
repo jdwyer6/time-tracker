@@ -27,10 +27,9 @@ const Login = () => {
         Axios.post("https://clockedin.herokuapp.com/login", {username, password}, config)
         .then((res) => {
             if(res.status === 200){
-                // dispatch(setUser(JSON.stringify(res.data)));
-                localStorage.setItem('currentUser', JSON.stringify(res.data))
+                localStorage.setItem('currentUser', JSON.stringify(res.data));
                 setLoading(false);
-                navigate('/profile');
+                navigate('/employeeprofiletemp');
             }
         })
         .catch(error => {
@@ -39,15 +38,18 @@ const Login = () => {
         })
     }
 
+
+
+
     if(isLoading){
         return(
-            <h1>Loading...</h1>
+            <h1 className='text-white'>Loading...</h1>
         )
     }
 
 
     return ( 
-        <div className='form-container'>
+        <div className='form-container' style={{borderRadius: '6px'}}>
             <h2>Log in</h2>
             <p>Enter your details below to continue</p>
             <form onSubmit={login}>
