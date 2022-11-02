@@ -19,6 +19,8 @@ $blue-primary: #002FD6;
 $blue-hover: #0229b8;
 $white: #fff;
 $black: #151515;
+$alert: #f56161;
+$alert-hover: #7e1c1c;
 
 
 body{
@@ -80,6 +82,25 @@ p{
     color: $blue-primary;
     background-color: transparent;
     border: none;
+}
+
+.btn-alert{
+    border-radius: 24px;
+    border: none;
+    background-color: $alert;
+    color: white;
+    padding: 5px 15px;
+    width: auto;
+    transition: all .3s;
+    position: relative;
+
+    &:hover{
+        background-color: $alert-hover;
+        color: white;
+        transform: scale(1.02);
+        transform: translateY(-1px);
+        box-shadow: 2px 2px 2px rgba($black, .3);
+    }
 }
 
 .bg-image{

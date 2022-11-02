@@ -19,8 +19,12 @@ const EmployeeProfileTemp = () => {
     const [show, setShow] = useState(false);
     const handleShow = () => setShow(true);
     const [clockedIn, setClockedIn] = useState(false);
+    const [reversedHours, setReversedHours] = useState();
+    const [progress, setProgress] = useState();
     let loggedToday = false;
     const navigate = useNavigate();
+    let i = 0;
+
 
     let current = new Date();
     const weekday = ['Sunday', 'Monday', 'Tuesday', 'Wed', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -57,25 +61,35 @@ const EmployeeProfileTemp = () => {
     }
 
     useEffect(() => {
-
+        console.log(isLoading)
         Axios.get(`https://clockedin.herokuapp.com/user/${user._id}`)
         .then((res) => {
             if(res.status === 200){
-                setUser(res.data)
+                setUser(res.data);
                 setLoading(false);
             }
+            
         })
         .catch(error => {
             console.log(error.response)
-        })
-
+        }) 
         setInterval(()=>{
             setTime(new Date().toLocaleTimeString())
             setShortTime(new Date().toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}));
         }, 1000)
 
+        console.log(calculateProgressBar())
+
     },[])
 
+    const calculateProgressBar = () => {
+        const totalWeeklyHours = user.hours.filter(entry => entry.weekNumber = getWeek());
+        let total = 0;
+        totalWeeklyHours.forEach((entry) =>{
+            total = total + (JSON.parse(entry.info.hoursWorked))
+        } )
+        setProgress((total/40) * 100)
+    }
 
     
     useEffect(()=>{
@@ -154,14 +168,15 @@ const EmployeeProfileTemp = () => {
                                             <button onClick={()=>handleClockIn()} className='btn-primary'><ImClock className='mx-1'/>Clock in</button>
                                         ) : (
                                             <>
-                                                <div className='d-flex w-100 justify-content-center'>
-                                                    <Button onClick={()=>handleClockOut()} className='button-lg__alert'>Clock out <Timer style={{fontSize: '14px'}} active duration={null}><ImClock2 className='mx-1'/><Timecode /></Timer></Button>
-                                                    <Button className='button-lg__option'><MdLunchDining className='mx-2'/>Lunch</Button>
+                                                <div className='d-flex justify-content-start'>
+
+                                                    <button onClick={()=>handleClockOut()} className='btn-alert d-flex align-items-center'><ImClock2 className='mx-1'/>Clock out <Timer className='mx-1' style={{fontSize: '14px'}} active duration={null}><Timecode /></Timer></button>
+                                                    <button className='btn-primary mx-2'><MdLunchDining className='mx-2'/>Break</button>
                                                 </div>
 
                                                 <div className='d-flex mt-1'>
                                                     <Spinner animation="grow" className='tracking-icon'/>
-                                                    <p style={{fontSize: '80%'}}>Tracking your time</p>
+                                                    <p style={{fontSize: '80%', color: 'white'}}>Tracking your time</p>
                                                 </div>
                                             </>
                                     )}
@@ -176,14 +191,13 @@ const EmployeeProfileTemp = () => {
                     <Row className='d-flex flex-column' style={{height: '90vh'}}>
                         <Col className='d-flex justify-content-center flex-column'>
                             <h3 className='text-white'>Recent Hours</h3>
-
-                            {user.hours.map((shift) => (
-                               <HoursCardTemp key={shift.info.start} day={shift.info.day} month={shift.info.month} date={shift.info.date} start={shift.info.start} end={shift.info.end} total={shift.info.hoursWorked}/>
-                            ))}
+                            {user.hours.map((shift) => {
+                                if(i < 3){
+                                    i++
+                                    return <HoursCardTemp key={shift.info.start} day={weekday[shift.info.day]} month={months[shift.info.month]} date={shift.info.date} start={shift.info.startTime} end={shift.info.endTime} total={shift.info.hoursWorked}/>
+                                }
+                            })}
                             
-                        </Col>
-                        <Col className='d-flex align-items-center'>
-                            <h1>Admin Account</h1>
                         </Col>
                     </Row>
                     
@@ -191,9 +205,16 @@ const EmployeeProfileTemp = () => {
             </Row>
             <Row className='mx-3'>
                 <div style={{backgroundColor: '#fff', height: '20px', borderRadius: '4px', position: 'relative'}}>
-                    <div style={{background: '#002FD6', height: '16px', width: '99%', borderRadius: '4px', position: 'absolute', top: '8%', transform: 'translateY(-50%)', left: '0', transform: 'translateX(.5%)'}}></div>
+                    <div style={{background: '#002FD6', height: '16px', width: `${progress}%`, borderRadius: '4px', position: 'absolute', top: '8%', transform: 'translateY(-50%)', left: '0', transform: 'translateX(.5%)'}}></div>
                 </div>
-                <p>Completed Hours bar</p>
+                <div className='px-0 py-1 d-flex justify-content-between'>
+                    <p className='font-small text-white'>Weekly progress
+                        <Spinner animation="grow" style={{color: 'white', width: '.1rem', height: '.1rem'}} className='mx-1'/>
+                        <Spinner animation="grow" style={{color: 'white', width: '.1rem', height: '.1rem'}} className='mx-1'/>
+                        <Spinner animation="grow" style={{color: 'white', width: '.1rem', height: '.1rem'}} className='mx-1'/>
+                    </p>
+                    <p className='font-small text-white'>40 hours</p>
+                </div>
             </Row>
         </Container>
      );
