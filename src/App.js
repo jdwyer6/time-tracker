@@ -15,6 +15,7 @@ import HomePageTemp from './pages/HomePageTemp';
 import ReportsPage from './pages/ReportsPage';
 import LogoutPage from './pages/LogoutPage';
 import EmployeeProfileTemp from './pages/EmployeeProfileTemp';
+import Reports from './pages/Reports';
 import Axios from 'axios';
 import { useSelector } from "react-redux";
 
@@ -36,9 +37,10 @@ function App() {
 				<Route path='/profile' element={<BusinessProfilePage />} />
 				<Route path='/employeeProfile' element={<EmployeeProfilePage />} />
 				<Route path='/logout' element={<LogoutPage />} />
-				<Route path='/reports' element={<ReportsPage />} />
+				{/* <Route path='/reports' element={<ReportsPage />} /> */}
 				<Route path='hometemp' element={<HomePageTemp />}/>
 				<Route path='employeeprofiletemp' element={<EmployeeProfileTemp />} />
+				<Route path='reports' element={<Reports />} />
 			</Routes>
 			
   	  	</div>

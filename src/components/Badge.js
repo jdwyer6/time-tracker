@@ -1,6 +1,14 @@
-
+import { useNavigate } from 'react-router-dom';
 
 const Badge = ({name, position, image}) => {
+    const navigate = useNavigate();
+
+    function logout(){
+        localStorage.removeItem('currentUser')
+        navigate('/hometemp')
+        document.location.reload()
+    }
+
     return ( 
     <div style={{borderRadius: '6px', backgroundColor:'white'}} className='d-flex p-4'>
         <div className='d-flex flex-column align-items-start'>
@@ -13,7 +21,7 @@ const Badge = ({name, position, image}) => {
                 <p className="font-small">Software Engineer</p>
             </div>
             <div className='text-end'>
-                <button className='btn-primary'>Sign out</button>
+                <button className='btn-primary' onClick={logout}>Sign out</button>
             </div>
 
            

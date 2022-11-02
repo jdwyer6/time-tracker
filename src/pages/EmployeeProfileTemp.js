@@ -28,7 +28,7 @@ const EmployeeProfileTemp = () => {
 
     let current = new Date();
     const weekday = ['Sunday', 'Monday', 'Tuesday', 'Wed', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'Nov', 'December'];
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const [time, setTime] = useState(current.toLocaleTimeString());
     const [shortTime, setShortTime] = useState(current.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}));
     const [info, setInfo] = useState({
@@ -42,8 +42,6 @@ const EmployeeProfileTemp = () => {
         endTime: null,
         hoursWorked: 0
     });
-
-    
 
     function calculateWeekOf(){
         let day = current.getDay();
