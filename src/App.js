@@ -14,6 +14,7 @@ import EmployeeProfilePage from './pages/EmployeeProfilePage';
 import HomePageTemp from './pages/HomePageTemp';
 import ReportsPage from './pages/ReportsPage';
 import LogoutPage from './pages/LogoutPage';
+import AdminPage from './pages/AdminPage';
 import Axios from 'axios';
 import { useSelector } from "react-redux";
 
@@ -37,6 +38,7 @@ function App() {
 				<Route path='/logout' element={<LogoutPage />} />
 				<Route path='/reports' element={<ReportsPage />} />
 				<Route path='hometemp' element={<HomePageTemp />}/>
+				<Route path='admin' element={<AdminPage />} />
 			</Routes>
 			
   	  	</div>

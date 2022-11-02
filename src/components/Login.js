@@ -57,7 +57,7 @@ const Login = () => {
                 </div>
                 <div className='d-flex align-items-center my-4'>
                     <RiLockPasswordLine />
-                    <Form.Control type='text' id='password' name='password' placeholder='Password' className='border-0 border-bottom' onChange={(e)=>{setPassword(e.target.value)}}/>
+                    <Form.Control type='password' id='password' name='password' placeholder='Password' className='border-0 border-bottom' onChange={(e)=>{setPassword(e.target.value)}}/>
                 </div>
                 <button className='btn-primary' type='submit'>Log in <MdOutlineLogin /></button>
                 <div className='d-flex justify-content-end py-0 my-0'>

@@ -83,6 +83,11 @@ button.btn-close:focus {
   padding: 10em;
 }
 
+.bg-dark {
+  height: 100vh;
+  background-color: #151515;
+}
+
 .container-fluid {
   padding-left: clamp(5px, 5vw, 100px);
   padding-right: clamp(5px, 5vw, 100px);
