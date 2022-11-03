@@ -25,6 +25,10 @@ p {
   font-weight: 300;
 }
 
+a:hover {
+  cursor: pointer;
+}
+
 .font-small {
   font-size: 12px;
 }

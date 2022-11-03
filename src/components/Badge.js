@@ -1,11 +1,16 @@
 import { useNavigate } from 'react-router-dom';
+import AddEmployees from './AddEmployees';
+import { useState } from 'react';
 
-const Badge = ({name, position, image}) => {
+const Badge = ({name, position, image, admin}) => {
     const navigate = useNavigate();
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     function logout(){
         localStorage.removeItem('currentUser')
-        navigate('/hometemp')
+        navigate('/')
         document.location.reload()
     }
 
@@ -18,7 +23,10 @@ const Badge = ({name, position, image}) => {
         <div className='d-flex flex-column space-between'>
             <div className='flex-grow-1'>
                 <h3 className='mb-0'>{name}</h3>
-                <p className="font-small">Software Engineer</p>
+                <p className="font-small my-0">Software Engineer</p>
+                {admin ? (
+                <button className='my-0 p-0 btn-tertiary' onClick={handleShow}>Add employees</button>
+            ) : ('')}
             </div>
             <div className='text-end'>
                 <button className='btn-primary' onClick={logout}>Sign out</button>
@@ -26,6 +34,7 @@ const Badge = ({name, position, image}) => {
 
            
         </div>
+        <AddEmployees show={show} handleClose={handleClose} handleShow={handleShow} setShow={setShow}/>
     </div> 
     );
 }

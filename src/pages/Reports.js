@@ -57,7 +57,7 @@ const Reports = () => {
                     <h1 className='text-white my-0'>Reports</h1>
                     <p className='text-white'>{user.name}</p>
                     <div>
-                        <button className='btn-primary' onClick={()=>navigate('/employeeprofiletemp')}>My profile</button>
+                        <button className='btn-primary' onClick={()=>navigate('/employeeprofile')}>My profile</button>
                     </div>
 
                 </Col>

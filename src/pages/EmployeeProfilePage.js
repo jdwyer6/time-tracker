@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { DEMOEMPLOYEES } from '../shared/DEMOEMPLOYEES';
 import EmployeeCard from '../components/EmployeeCard';
-import HoursCard from '../components/HoursCard';
+import HoursCard from '../components/HoursCard__OLD';
 import Spinner from 'react-bootstrap/Spinner';
 import Timer from 'react-timer-wrapper';
 import Timecode from 'react-timecode';

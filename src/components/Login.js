@@ -5,12 +5,16 @@ import { MdOutlineLogin } from 'react-icons/md';
 import { useState } from 'react';
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Popup from './Popup';
 
 const Login = () => {
 
     const [ username, setUsername ] = useState('');
     const [ password, setPassword ] = useState('');
     const [errMsg, setErrMsg] = useState(false);
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
     let navigate = useNavigate();
     const [isLoading, setLoading] = useState(false)
 
@@ -29,24 +33,22 @@ const Login = () => {
             if(res.status === 200){
                 localStorage.setItem('currentUser', JSON.stringify(res.data));
                 setLoading(false);
-                navigate('/employeeprofiletemp');
+                navigate('/employeeprofile');
             }
         })
         .catch(error => {
             console.log(error.response)
             setErrMsg(true);
+            alert('There was a problem with your username or password. Please try again.');
+            document.location.reload();
         })
     }
-
-
-
 
     if(isLoading){
         return(
             <h1 className='text-white'>Loading...</h1>
         )
     }
-
 
     return ( 
         <div className='form-container' style={{borderRadius: '6px'}}>
@@ -63,10 +65,12 @@ const Login = () => {
                 </div>
                 <button className='btn-primary' type='submit'>Log in <MdOutlineLogin /></button>
                 <div className='d-flex justify-content-end py-0 my-0'>
-                    <p className='font-small__blue'>Forgot password</p>
+                    <a className='text-decoration-none' onClick={handleShow}><p className='font-small'>Forgot password</p></a>
                 </div>
 
             </form>
+            <Popup show={show} handleClose={handleClose} setShow={setShow} handleShow={handleShow} title='Sorry about that...' message='Password recovery is still in development'/>
+
         </div>
     );
 }

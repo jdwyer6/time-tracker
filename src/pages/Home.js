@@ -4,7 +4,7 @@ import Login from '../components/Login';
 import Register from '../components/Register';
 import { useState } from 'react';
 
-const HomePageTemp = () => {
+const Home = () => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -29,4 +29,4 @@ const HomePageTemp = () => {
      );
 }
  
-export default HomePageTemp;
+export default Home;

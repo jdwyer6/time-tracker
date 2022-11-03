@@ -4,6 +4,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import { useNavigate } from 'react-router-dom';
 import { userSchema } from '../Validations/UserValidation'; 
 import Axios from 'axios';
+import uuid4 from "uuid4";
 
 const Register = ({handleClose, handleShow, show}) => {
 
@@ -11,6 +12,7 @@ const Register = ({handleClose, handleShow, show}) => {
     const [ password, setPassword ] = useState('');
     const [ name, setName ] = useState('')
     const [ businessName, setBusinessName ] = useState('');
+    const [ businessId, setBusinessId ] = useState(uuid4());
     const [ admin, setAdmin ] = useState(true);
     const [ image, setImage ] = useState('images/demo-employees/default.png');
     const [isLoading, setLoading] = useState(false);
@@ -49,6 +51,7 @@ const Register = ({handleClose, handleShow, show}) => {
                 password: password, 
                 name: name, 
                 businessName: businessName, 
+                businessId: businessId,
                 admin: admin, 
                 image: image,
             })    
@@ -58,9 +61,8 @@ const Register = ({handleClose, handleShow, show}) => {
                     if(res.status === 200){
                         localStorage.setItem('currentUser', JSON.stringify(res.data));
                         setLoading(false);
-                        console.log(localStorage.getItem('currentUser'))
                         alert('SUCCESS! New user created!')
-                        navigate('/employeeprofiletemp');
+                        navigate('/employeeprofile');
                     }
                 })
                 .catch(error => {

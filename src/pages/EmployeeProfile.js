@@ -11,10 +11,10 @@ import { ImClock2, ImClock } from 'react-icons/im';
 import Timer from 'react-timer-wrapper';
 import Timecode from 'react-timecode';
 import Spinner from 'react-bootstrap/Spinner';
-import HoursCardTemp from "../components/HoursCardTemp";
+import HoursCardTemp from "../components/HoursCard";
 import uuid4 from "uuid4";
 
-const EmployeeProfileTemp = () => {
+const EmployeeProfile = () => {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('currentUser')));
     const [isLoading, setLoading] = useState(true);
     const [show, setShow] = useState(false);
@@ -55,11 +55,11 @@ const EmployeeProfileTemp = () => {
             if(res.status === 200){
                 setUser(res.data);
                 setClockedIn(res.data.clockedIn);
+                setProgress(calculateProgressBar(res))
             }
             
         })
-        .then(()=>{
-            calculateProgressBar();
+        .then((res)=>{
             setLoading(false);
         })
         .catch(error => {
@@ -71,18 +71,20 @@ const EmployeeProfileTemp = () => {
         }, 1000)
     },[])
 
-    
-    const calculateProgressBar = () => {
-        const totalWeeklyHours = user.hours.filter(entry => entry.weekNumber = getWeek());
+    const calculateProgressBar = (res) => {
+        const totalWeeklyHours = res.data.hours.filter(entry => entry.info.weekNumber = getWeek());
         let total = 0;
         totalWeeklyHours.forEach((entry) =>{
             total = total + (JSON.parse(entry.info.hoursWorked))
-        } )
-        setProgress((total/40) * 100)
-        console.log('progress', progress)
+        })
+        let totalAsPercent = (total/40) * 100
+        if(totalAsPercent < 1){
+            return 2
+        }
+        return (total/40) * 100
         
     }
-    
+
     useEffect(()=>{
         
         if(info.end){
@@ -99,9 +101,6 @@ const EmployeeProfileTemp = () => {
     
 
     function handleClockIn(){ 
-        // user.hours.forEach(element => {
-        //     element.date === current.getDate() ? loggedToday = true : loggedToday = false;
-        // })
 
         setClockedIn(!clockedIn); 
         setInfo({...info, jobId: uuid4(), start: current.getTime(), startTime: shortTime, clockedIn: true});
@@ -113,7 +112,6 @@ const EmployeeProfileTemp = () => {
         .then((res) => {
             if(res.status === 200){
                 setClockedIn(res.data.clockedIn);
-                console.log('ClockedIn: ', clockedIn)
             }else{
                 console.log('There was an error')
             }
@@ -158,6 +156,7 @@ const EmployeeProfileTemp = () => {
                 <h4>Loading...</h4>
             </>
         )
+
     }
 
     return ( 
@@ -165,8 +164,9 @@ const EmployeeProfileTemp = () => {
             <Row>
                 <Col>
                     <Row className='d-flex flex-column' style={{height: '90vh'}}>
-                        <Col className='d-flex align-items-center'>
-                            <Badge name={user.name} position='Software Engineer' image={user.image}/>
+                        <Col className='d-flex align-items-start justify-content-center flex-column'>
+                            <Badge name={user.name} position='Software Engineer' image={user.image} admin={user.admin}/>
+                            
                         </Col>
                         <Col className="d-flex flex-column align-items-start justify-content-center">
                             <h1 className='text-white m-0'>{weekday[current.getDay()]} {months[current.getMonth()]} {current.getDate()}</h1>
@@ -197,12 +197,12 @@ const EmployeeProfileTemp = () => {
                     
                 </Col>
                 <Col>
-                    <Row className='d-flex flex-column' style={{height: '90vh'}}>
+                    <Row className='d-flex flex-column' style={{height: '60vh'}}>
                         <Col className='d-flex justify-content-center flex-column'>
                             <h3 className='text-white'>Recent Hours</h3>
                             {user.hours ? 
                                 user.hours.map((shift) => {
-                                    if(i < 3){
+                                    if(i < 2){
                                         i++
                                         return <HoursCardTemp key={shift.info.jobId} day={weekday[shift.info.day]} month={months[shift.info.month]} date={shift.info.date} start={shift.info.startTime} end={shift.info.endTime} total={shift.info.hoursWorked}/>
                                     }
@@ -215,7 +215,7 @@ const EmployeeProfileTemp = () => {
             </Row>
             <Row className='mx-3'>
                 <div style={{backgroundColor: '#fff', height: '20px', borderRadius: '4px', position: 'relative'}}>
-                    <div style={{background: '#002FD6', height: '16px', width: `${progress}%`, borderRadius: '4px', position: 'absolute', top: '8%', transform: 'translateY(-50%)', left: '0', transform: 'translateX(.5%)'}}></div>
+                    <div style={{background: '#002FD6', height: '16px', width: `${progress -1 }%`, borderRadius: '4px', position: 'absolute', top: '8%', transform: 'translateY(-50%)', left: '0', transform: 'translateX(.5%)'}}></div>
                 </div>
                 <div className='px-0 py-1 d-flex justify-content-between'>
                     <div className='font-small text-white'>Weekly progress
@@ -228,6 +228,7 @@ const EmployeeProfileTemp = () => {
             </Row>
         </Container>
      );
+                            
 }
  
-export default EmployeeProfileTemp;
+export default EmployeeProfile;
