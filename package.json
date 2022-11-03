@@ -33,6 +33,7 @@
     "sass": "^1.55.0",
     "uselocalstorage-react-hook": "^1.0.5",
     "uuid": "^9.0.0",
+    "uuid4": "^2.0.3",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },

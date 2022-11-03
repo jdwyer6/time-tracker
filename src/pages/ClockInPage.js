@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { DEMOEMPLOYEES } from '../shared/DEMOEMPLOYEES';
 import { useEffect, useState } from 'react';
 import DemoEmployeeCard from '../components/DemoEmployeeCard';
-import HoursCard from '../components/HoursCard';
+import HoursCard from '../components/HoursCard__OLD';
 import Spinner from 'react-bootstrap/Spinner';
 import Timer from 'react-timer-wrapper';
 import Timecode from 'react-timecode';
