@@ -13,7 +13,7 @@ const Badge = ({name, position, image}) => {
     <div style={{borderRadius: '6px', backgroundColor:'white'}} className='d-flex p-4'>
         <div className='d-flex flex-column align-items-start'>
             <img width='100rem' src={image} style={{borderRadius: '6px'}}/>
-            <button className='mt-2 p-0 btn-tertiary'>See all hours</button>
+            <button className='mt-2 p-0 btn-tertiary' onClick={()=>navigate('/reports')}>See all hours</button>
         </div>
         <div className='d-flex flex-column space-between'>
             <div className='flex-grow-1'>

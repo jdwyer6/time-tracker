@@ -50,7 +50,7 @@ const Register = ({handleClose, handleShow, show}) => {
                 name: name, 
                 businessName: businessName, 
                 admin: admin, 
-                image: image
+                image: image,
             })    
             .then((response) => {
                 Axios.post("https://clockedin.herokuapp.com/login", {username, password}, config)

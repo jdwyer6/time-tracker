@@ -12,6 +12,7 @@ import Timer from 'react-timer-wrapper';
 import Timecode from 'react-timecode';
 import Spinner from 'react-bootstrap/Spinner';
 import HoursCardTemp from "../components/HoursCardTemp";
+import uuid4 from "uuid4";
 
 const EmployeeProfileTemp = () => {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('currentUser')));
@@ -21,27 +22,17 @@ const EmployeeProfileTemp = () => {
     const [clockedIn, setClockedIn] = useState(false);
     const [reversedHours, setReversedHours] = useState();
     const [progress, setProgress] = useState();
+    const [status, setStatus] = useState();
     let loggedToday = false;
     const navigate = useNavigate();
     let i = 0;
-
 
     let current = new Date();
     const weekday = ['Sunday', 'Monday', 'Tuesday', 'Wed', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const [time, setTime] = useState(current.toLocaleTimeString());
     const [shortTime, setShortTime] = useState(current.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}));
-    const [info, setInfo] = useState({
-        date: '',
-        month: '',
-        day: '',
-        weekNumber: '',
-        start: 0,
-        end: 0,
-        startTime: '',
-        endTime: null,
-        hoursWorked: 0
-    });
+    const [info, setInfo] = useState({});
 
     function calculateWeekOf(){
         let day = current.getDay();
@@ -59,27 +50,28 @@ const EmployeeProfileTemp = () => {
     }
 
     useEffect(() => {
-        console.log(isLoading)
         Axios.get(`https://clockedin.herokuapp.com/user/${user._id}`)
         .then((res) => {
             if(res.status === 200){
                 setUser(res.data);
-                setLoading(false);
+                setClockedIn(res.data.clockedIn);
             }
             
         })
+        .then(()=>{
+            calculateProgressBar();
+            setLoading(false);
+        })
         .catch(error => {
-            console.log(error.response)
+            console.log(error)
         }) 
         setInterval(()=>{
             setTime(new Date().toLocaleTimeString())
             setShortTime(new Date().toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}));
         }, 1000)
-
-        console.log(calculateProgressBar())
-
     },[])
 
+    
     const calculateProgressBar = () => {
         const totalWeeklyHours = user.hours.filter(entry => entry.weekNumber = getWeek());
         let total = 0;
@@ -87,8 +79,9 @@ const EmployeeProfileTemp = () => {
             total = total + (JSON.parse(entry.info.hoursWorked))
         } )
         setProgress((total/40) * 100)
+        console.log('progress', progress)
+        
     }
-
     
     useEffect(()=>{
         
@@ -100,16 +93,34 @@ const EmployeeProfileTemp = () => {
 
     }, [info.end])
 
+    useEffect(() => {
+        saveStatus()
+    }, [clockedIn])
+    
+
     function handleClockIn(){ 
-        user.hours.forEach(element => {
-            element.date === current.getDate() ? loggedToday = true : loggedToday = false;
+        // user.hours.forEach(element => {
+        //     element.date === current.getDate() ? loggedToday = true : loggedToday = false;
+        // })
+
+        setClockedIn(!clockedIn); 
+        setInfo({...info, jobId: uuid4(), start: current.getTime(), startTime: shortTime, clockedIn: true});
+
+    }
+
+    function saveStatus(){
+        Axios.post(`https://clockedin.herokuapp.com/user/${user._id}/${clockedIn}`)
+        .then((res) => {
+            if(res.status === 200){
+                setClockedIn(res.data.clockedIn);
+                console.log('ClockedIn: ', clockedIn)
+            }else{
+                console.log('There was an error')
+            }
         })
-        if(!loggedToday){
-            setClockedIn(!clockedIn); 
-            setInfo({...info, start: current.getTime(), startTime: shortTime});
-        }else{
-            handleShow();
-        }
+        .catch(error => {
+            console.log(error.response)
+        })
     }
 
     function handleClockOut(){
@@ -120,13 +131,13 @@ const EmployeeProfileTemp = () => {
             day: current.getDay(), 
             weekNumber: getWeek(), 
             end: current.getTime(), 
-            hoursWorked: ((current.getTime()-info.start)/3600000).toFixed(4), 
-            endTime: shortTime
+            hoursWorked: JSON.parse(((current.getTime()-info.start)/3600000).toFixed(4)), 
+            endTime: shortTime,
+            clockedIn: false
         });
     }
 
-
-    const pushinfo = () => {
+    const pushinfo = (e) => {
         Axios.post(`https://clockedin.herokuapp.com/user/${user._id}`, {info: info})
         .then((res) => {
             if(res.status === 200){
@@ -189,13 +200,14 @@ const EmployeeProfileTemp = () => {
                     <Row className='d-flex flex-column' style={{height: '90vh'}}>
                         <Col className='d-flex justify-content-center flex-column'>
                             <h3 className='text-white'>Recent Hours</h3>
-                            {user.hours.map((shift) => {
-                                if(i < 3){
-                                    i++
-                                    return <HoursCardTemp key={shift.info.start} day={weekday[shift.info.day]} month={months[shift.info.month]} date={shift.info.date} start={shift.info.startTime} end={shift.info.endTime} total={shift.info.hoursWorked}/>
-                                }
-                            })}
-                            
+                            {user.hours ? 
+                                user.hours.map((shift) => {
+                                    if(i < 3){
+                                        i++
+                                        return <HoursCardTemp key={shift.info.jobId} day={weekday[shift.info.day]} month={months[shift.info.month]} date={shift.info.date} start={shift.info.startTime} end={shift.info.endTime} total={shift.info.hoursWorked}/>
+                                    }
+                                })
+                             : ('')}
                         </Col>
                     </Row>
                     
@@ -206,11 +218,11 @@ const EmployeeProfileTemp = () => {
                     <div style={{background: '#002FD6', height: '16px', width: `${progress}%`, borderRadius: '4px', position: 'absolute', top: '8%', transform: 'translateY(-50%)', left: '0', transform: 'translateX(.5%)'}}></div>
                 </div>
                 <div className='px-0 py-1 d-flex justify-content-between'>
-                    <p className='font-small text-white'>Weekly progress
+                    <div className='font-small text-white'>Weekly progress
                         <Spinner animation="grow" style={{color: 'white', width: '.1rem', height: '.1rem'}} className='mx-1'/>
                         <Spinner animation="grow" style={{color: 'white', width: '.1rem', height: '.1rem'}} className='mx-1'/>
                         <Spinner animation="grow" style={{color: 'white', width: '.1rem', height: '.1rem'}} className='mx-1'/>
-                    </p>
+                    </div>
                     <p className='font-small text-white'>40 hours</p>
                 </div>
             </Row>
