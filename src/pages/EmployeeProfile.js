@@ -21,13 +21,12 @@ const EmployeeProfile = () => {
     const [show, setShow] = useState(false);
     const handleShow = () => setShow(true);
     const [clockedIn, setClockedIn] = useState();
-    const firstUpdate = useRef(true);
-    const [reversedHours, setReversedHours] = useState();
+    const [ previousInfoSet, setPreviousInfo] = useState(false);
     const [progress, setProgress] = useState();
     let loggedToday = false;
     const navigate = useNavigate();
     let i = 0;
-
+    const [lastData, setLastData ] = useState();
     let current = new Date();
     const weekday = ['Sunday', 'Monday', 'Tuesday', 'Wed', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -41,21 +40,17 @@ const EmployeeProfile = () => {
         return (date - day) + 1;
     }
 
-    const checkLastLogged = async () =>{
-        const getInfo = await Axios.get(`https://clockedin.herokuapp.com/user/${tempUser._id}`)
-        const clockedInStatus = getInfo.data.lastLoggedInfo.info.clockedIn
-        console.log(6)
-        if(clockedInStatus === true){
-            setClockedIn(true);
-            console.log(7)
-        }else{
-            setClockedIn(false);
-            console.log(7.5)
-        }
-        console.log(8)
-        setLoading(false)
+    // const checkLastLogged = async () =>{
+    //     const getInfo = await Axios.get(`https://clockedin.herokuapp.com/user/${tempUser._id}`)
+    //     const clockedInStatus = getInfo.data.lastLoggedInfo.info.clockedIn
+    //     if(clockedInStatus === true){
+    //         setClockedIn(true);
+    //     }else{
+    //         setClockedIn(false);
+    //     }
+    //     setLoading(false)
 
-    }
+    // }
 
     const getWeek = () => {
         let currentDate = new Date();
@@ -71,11 +66,8 @@ const EmployeeProfile = () => {
         Axios.get(`https://clockedin.herokuapp.com/user/${tempUser._id}`)
         .then((res) => {
             if(res.status === 200){
-                console.log(2)
                 setUser(res.data);
-                console.log(3)
                 setProgress(calculateProgressBar(res))
-                console.log(4)
             }
         })
         .catch(error => {
@@ -90,12 +82,18 @@ const EmployeeProfile = () => {
 
     useEffect(()=>{
         if(user !== undefined){
-            // console.log(user.clockedIn)
-            // setClockedIn(user.clockedIn)
-            console.log(5)
-            console.log(user.clockedIn)
+            console.log(user)
             setClockedIn(user.clockedIn)
+            setLastData(user.hours.slice(-1))
+            // console.log(lastData[0].info.day)
+            if(user.clockedIn){
+                // setInfo(user.lastLoggedInfo.info)
+            }
+                
+                // setPreviousInfo(true)
             setLoading(false)
+
+            
         }
         
     }, [user])
@@ -194,10 +192,15 @@ const EmployeeProfile = () => {
 
     return ( 
         <Container fluid className='bg-dark'>
-            <Row>
+            <Row className='d-flex justify-content-end pt-5'>
+                <Col md='6'>
+                    <h3 className='text-white'>Recent</h3>
+                </Col>
+            </Row>
+            <Row style={{height: '80vh'}}>
                 <Col>
-                    <Row className='d-flex flex-column' style={{height: '90vh'}}>
-                        <Col className='d-flex align-items-start justify-content-center flex-column'>
+                    <Row className='d-flex flex-column h-100' >
+                        <Col className='d-flex align-items-start flex-column'>
                             <Badge name={user.name} position='Software Engineer' image={user.image} admin={user.admin}/>
                             
                         </Col>
@@ -230,30 +233,37 @@ const EmployeeProfile = () => {
                     
                 </Col>
                 <Col>
-                    <Row className='d-flex flex-column' style={{height: '60vh'}}>
+                    <Row className='d-flex flex-column'>
                         <Col className='d-flex justify-content-center flex-column'>
-                            <h3 className='text-white'>Recent Hours</h3>
                             {user.hours ? 
-                                user.hours.map((shift) => {
-                                    if(i < 2){
-                                        i++
-                                        return <HoursCardTemp key={shift.info.jobId} day={weekday[shift.info.day]} month={months[shift.info.month]} date={shift.info.date} start={shift.info.startTime} end={shift.info.endTime} total={shift.info.hoursWorked}/>
-                                    }
-                                })
+                                (
+                                    <HoursCardTemp 
+                                        key={lastData[0].info.jobId} 
+                                        day={weekday[lastData[0].info.day]} 
+                                        month={months[lastData[0].info.month]} 
+                                        date={lastData[0].info.date} 
+                                        start={lastData[0].info.startTime} 
+                                        end={lastData[0].info.endTime} 
+                                        total={lastData[0].info.hoursWorked}
+                                    />
+                                )
                              : ('')}
                         </Col>
                     </Row>
                     
                 </Col>
             </Row>
-            <Row className='mx-3'>
-                <div style={{backgroundColor: '#fff', height: '20px', borderRadius: '4px', position: 'relative'}}>
-                    <div style={{background: '#002FD6', height: '16px', width: `${progress -1 }%`, borderRadius: '4px', position: 'absolute', top: '8%', transform: 'translateY(-50%)', left: '0', transform: 'translateX(.5%)'}}></div>
-                </div>
-                <div className='px-0 py-1 d-flex justify-content-between'>
-                    <div className='font-small text-white'>Weekly progress</div>
-                    <p className='font-small text-white'>40 hours</p>
-                </div>
+            <Row>
+                <Col>
+                    <div style={{backgroundColor: '#fff', height: '20px', borderRadius: '4px', position: 'relative'}}>
+                        <div style={{background: '#002FD6', height: '16px', width: `${progress -1 }%`, borderRadius: '4px', position: 'absolute', top: '8%', transform: 'translateY(-50%)', left: '0', transform: 'translateX(.5%)'}}></div>
+                    </div>
+                    <div className='px-0 py-1 d-flex justify-content-between'>
+                        <div className='font-small text-white'>Weekly progress</div>
+                        <p className='font-small text-white'>40 hours</p>
+                    </div>
+                </Col>
+
             </Row>
         </Container>
      );
