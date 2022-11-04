@@ -6,7 +6,7 @@ import { userSchema } from '../Validations/UserValidation';
 import Axios from 'axios';
 import uuid4 from "uuid4";
 
-const Register = ({handleClose, handleShow, show}) => {
+const Register = ({handleCloseRegister, showRegister, setShowRegister}) => {
 
     const [ username, setUsername ] = useState('');
     const [ password, setPassword ] = useState('');
@@ -81,7 +81,7 @@ const Register = ({handleClose, handleShow, show}) => {
     return ( 
         <>
     
-            <Offcanvas show={show} onHide={handleClose}>
+            <Offcanvas show={showRegister} onHide={handleCloseRegister}>
             <Offcanvas.Header closeButton>
                 <Offcanvas.Title>Register your business</Offcanvas.Title>
             </Offcanvas.Header>

@@ -6,6 +6,7 @@ import { useState } from 'react';
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Popup from './Popup';
+import Register from './Register';
 
 const Login = () => {
 
@@ -15,6 +16,9 @@ const Login = () => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const [showRegister, setShowRegister] = useState(false);
+    const handleCloseRegister = () => setShowRegister(false);
+    const handleShowRegister = () => setShowRegister(true);
     let navigate = useNavigate();
     const [isLoading, setLoading] = useState(false)
 
@@ -63,13 +67,14 @@ const Login = () => {
                     <RiLockPasswordLine />
                     <Form.Control type='password' id='password' name='password' placeholder='Password' className='border-0 border-bottom' onChange={(e)=>{setPassword(e.target.value)}}/>
                 </div>
-                <button className='btn-primary' type='submit'>Log in <MdOutlineLogin /></button>
-                <div className='d-flex justify-content-end py-0 my-0'>
-                    <a className='text-decoration-none' onClick={handleShow}><p className='font-small'>Forgot password</p></a>
-                </div>
-
+                    <button className='btn-primary w-100 my-2' type='submit'>Log in <MdOutlineLogin /></button>
             </form>
+            <button className='btn-primary w-100 my-2' onClick={handleShowRegister}>Register a business</button>
+            <div className='d-flex justify-content-end py-0 mt-2'>
+                    <a className='text-decoration-none' onClick={handleShow}><p className='font-small'>Forgot password</p></a>
+            </div>
             <Popup show={show} handleClose={handleClose} setShow={setShow} handleShow={handleShow} title='Sorry about that...' message='Password recovery is still in development'/>
+            <Register showRegister={showRegister} handleCloseRegister={handleCloseRegister} handleShowRegister={handleShowRegister} setShowRegister={setShowRegister}/>
 
         </div>
     );

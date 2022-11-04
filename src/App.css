@@ -95,7 +95,7 @@ a:hover {
 
 .form-container {
   background-color: #fff;
-  width: clamp(300px, 25vw, 500px);
+  width: clamp(300px, 25vw, 350px);
   padding: 2rem;
 }
 
@@ -114,7 +114,7 @@ button.btn-close:focus {
 
 .pos-tr {
   height: 50vh;
-  padding: 10em;
+  padding: clamp(2rem, 10%, 10em);
 }
 
 .bg-dark {

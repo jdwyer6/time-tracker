@@ -5,9 +5,6 @@ import Register from '../components/Register';
 import { useState } from 'react';
 
 const Home = () => {
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
 
     return ( 
         <Container fluid className='px-0'>
@@ -20,11 +17,9 @@ const Home = () => {
                 <Col>
                         <h1 className='text-white'>ClockedIn</h1>
                         <p className='text-white'>Sign in made simple</p>
-                        <button className='btn-primary' onClick={handleShow}>Register your business</button>
                 </Col>
 
             </Row>
-            <Register show={show} handleClose={handleClose} handleShow={handleShow}/>
         </Container>
      );
 }
