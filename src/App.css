@@ -80,6 +80,19 @@ a:hover {
   box-shadow: 2px 2px 2px rgba(21, 21, 21, 0.3);
 }
 
+.btn-large {
+  border: none;
+  border-radius: 6px;
+  width: 75%;
+  padding: 1.5rem;
+  transition: all 0.4s;
+}
+.btn-large:hover {
+  background-color: rgb(219, 219, 219);
+  transform: translateY(-1px);
+  box-shadow: 2px 2px 2px rgba(21, 21, 21, 0.3);
+}
+
 .bg-image {
   width: 100vw;
   height: 100vh;

@@ -109,6 +109,20 @@ a{
     }
 }
 
+.btn-large{
+    border: none;
+    border-radius: 6px;
+    width: 75%; 
+    padding: 1.5rem;
+    transition: all .4s;
+
+    &:hover{
+        background-color: rgb(219, 219, 219);
+        transform: translateY(-1px);
+        box-shadow: 2px 2px 2px rgba($black, .3);
+    }
+}
+
 .bg-image{
     width: 100vw;
     height: 100vh;

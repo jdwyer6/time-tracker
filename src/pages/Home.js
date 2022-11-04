@@ -9,16 +9,16 @@ const Home = () => {
     return ( 
         <Container fluid className='px-0'>
             <div className='bg-image'></div>
-            <Row className='d-flex justify-content-end pos-tr'>
-                <Login />
-            </Row>
-            <Row className='pos-b'>
-                
-                <Col>
-                        <h1 className='text-white'>ClockedIn</h1>
-                        <p className='text-white'>Sign in made simple</p>
+            <Row style={{height: '100vh'}}>
+                <Col md='6' className='d-flex justify-content-end flex-column p-5'>
+                    <div className='p-5'>
+                        <h1 className='text-white mb-0'>ClockedIn</h1>
+                        <p className='text-white ps-2' style={{marginTop: '-15px'}}>Sign in made simple</p>
+                    </div>
                 </Col>
-
+                <Col className='d-flex align-items-center justify-content-center'>
+                    <Login />
+                </Col>
             </Row>
         </Container>
      );

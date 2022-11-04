@@ -1,7 +1,7 @@
 import Badge from "../components/Badge";
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import _default from 'react-bootstrap/esm/Accordion';
 import Axios from 'axios';
 import LoadingSpinner from "../components/LoadingSpinner";
@@ -13,6 +13,7 @@ import Timecode from 'react-timecode';
 import Spinner from 'react-bootstrap/Spinner';
 import HoursCardTemp from "../components/HoursCard";
 import uuid4 from "uuid4";
+import CurrentTime from "../components/CurrentTime";
 
 const EmployeeProfile = () => {
     const [tempUser, setTempUser] = useState(JSON.parse(localStorage.getItem('currentUser')));
@@ -21,8 +22,9 @@ const EmployeeProfile = () => {
     const [show, setShow] = useState(false);
     const handleShow = () => setShow(true);
     const [clockedIn, setClockedIn] = useState();
-    const [ previousInfoSet, setPreviousInfo] = useState(false);
+    const [ userFound, setUserFound] = useState(false);
     const [progress, setProgress] = useState();
+    const [weekNumber, setWeekNumber] = useState();
     let loggedToday = false;
     const navigate = useNavigate();
     let i = 0;
@@ -40,17 +42,10 @@ const EmployeeProfile = () => {
         return (date - day) + 1;
     }
 
-    // const checkLastLogged = async () =>{
-    //     const getInfo = await Axios.get(`https://clockedin.herokuapp.com/user/${tempUser._id}`)
-    //     const clockedInStatus = getInfo.data.lastLoggedInfo.info.clockedIn
-    //     if(clockedInStatus === true){
-    //         setClockedIn(true);
-    //     }else{
-    //         setClockedIn(false);
-    //     }
-    //     setLoading(false)
-
-    // }
+    useEffect(()=>{
+        getWeek();
+        console.log(lastData)
+    }, [])
 
     const getWeek = () => {
         let currentDate = new Date();
@@ -58,16 +53,19 @@ const EmployeeProfile = () => {
         var days = Math.floor((currentDate - startDate) /
             (24 * 60 * 60 * 1000));
         var weekNumber = Math.ceil(days / 7);  
-        return weekNumber  
+        setWeekNumber(weekNumber)
     }
 
     useEffect(() => {
-        console.log(1)
         Axios.get(`https://clockedin.herokuapp.com/user/${tempUser._id}`)
         .then((res) => {
             if(res.status === 200){
                 setUser(res.data);
-                setProgress(calculateProgressBar(res))
+                // calculateProgressBar();
+                if(res.data.lastLoggedInfo.clockedIn){
+                    console.log('last logged: ', res.data.lastLoggedInfo.info.clockedIn)
+                }
+                
             }
         })
         .catch(error => {
@@ -82,42 +80,33 @@ const EmployeeProfile = () => {
 
     useEffect(()=>{
         if(user !== undefined){
-            console.log(user)
             setClockedIn(user.clockedIn)
             setLastData(user.hours.slice(-1))
-            // console.log(lastData[0].info.day)
-            if(user.clockedIn){
-                // setInfo(user.lastLoggedInfo.info)
-            }
-                
-                // setPreviousInfo(true)
+            setUserFound(true);
             setLoading(false)
-
-            
         }
+        
         
     }, [user])
 
 
-    const calculateProgressBar = (res) => {
-        const totalWeeklyHours = res.data.hours.filter(entry => entry.info.weekNumber = getWeek());
+    const calculateProgressBar = () => {
+        const totalWeeklyHours = user.hours.filter(entry => entry.info.weekNumber = weekNumber);
         let total = 0;
         totalWeeklyHours.forEach((entry) =>{
             total = total + (JSON.parse(entry.info.hoursWorked))
         })
         let totalAsPercent = (total/40) * 100
-        if(totalAsPercent < 1){
-            return 2
+        if(totalAsPercent < 2){
+            setProgress(2)
         }
-        return (total/40) * 100
-        
+            setProgress((total/40) * 100)
     }
 
     useEffect(()=>{
         
         if(info.end && !isLoading){
             pushinfo()
-            console.log('infoPushed')
         }else{
             return
         }
@@ -127,9 +116,10 @@ const EmployeeProfile = () => {
 
     useEffect(() => {
         if(!isLoading){
-            console.log('saveStatus()')
             saveStatus()
+
         }
+
     }, [clockedIn])
     
 
@@ -165,9 +155,11 @@ const EmployeeProfile = () => {
             endTime: shortTime,
             clockedIn: false
         });
+        //// FIND A WAY TO RERENDER HERE
+        // pushinfo()
     }
 
-    const pushinfo = (e) => {
+    const pushinfo = () => {
         Axios.post(`https://clockedin.herokuapp.com/user/${user._id}`, {info: info})
         .then((res) => {
             if(res.status === 200){
@@ -233,9 +225,9 @@ const EmployeeProfile = () => {
                     
                 </Col>
                 <Col>
-                    <Row className='d-flex flex-column'>
-                        <Col className='d-flex justify-content-center flex-column'>
-                            {user.hours ? 
+                    <Row className= 'd-flex flex-column h-100'>
+                        <Col>
+                            {user.hours.length > 0 ? 
                                 (
                                     <HoursCardTemp 
                                         key={lastData[0].info.jobId} 
@@ -249,8 +241,17 @@ const EmployeeProfile = () => {
                                 )
                              : ('')}
                         </Col>
+                        <Col>
+          
+                            <h3 className='text-white'>Admin options</h3>
+                            <div>
+                                <button className='btn-large my-2'>Add employees</button>
+                                <button className='btn-large my-2'>View employee reports</button>
+                            </div>
+
+                        </Col>
                     </Row>
-                    
+
                 </Col>
             </Row>
             <Row>
