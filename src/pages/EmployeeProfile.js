@@ -73,9 +73,9 @@ const EmployeeProfile = () => {
             if(res.status === 200){
                 setUser(res.data);
                 // calculateProgressBar();
-                if(res.data.lastLoggedInfo.clockedIn){
-                    console.log('last logged: ', res.data.lastLoggedInfo.info.clockedIn)
-                }
+                // if(res.data.lastLoggedInfo.clockedIn){
+                //     console.log('last logged: ', res.data.lastLoggedInfo.info.clockedIn)
+                // }
                 
             }
         })
@@ -285,7 +285,7 @@ const EmployeeProfile = () => {
 
             </Row>
             <AddEmployees show={showAddEmployees} handleClose={handleCloseAddEmployees} handleShow={handleShowAddEmployees} setShow={setShowAddEmployees}/>
-            <ReportsBar show={showReports} handleClose={handleCloseReports} handleShow={handleShowReports} setShow={setShowReports} user={user}/>
+            <ReportsBar show={showReports} handleClose={handleCloseReports} handleShow={handleShowReports} setShow={setShowReports} user={user} isLoading={isLoading}/>
         </Container>
      );
 }

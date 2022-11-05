@@ -2,11 +2,23 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Table } from 'react-bootstrap';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import LoadingSpinner from './LoadingSpinner';
+import Axios from 'axios';
 
 const ReportsBar = ({show, handleClose, user}) => {
 
+    const [tempUser, setTempUser] = useState(JSON.parse(localStorage.getItem('currentUser')));
     const [ isLoading, setLoading] = useState(true);
-    const reversedHours = [...user.hours].reverse();
+    const [reversedHours, setReversedHours] = useState(); 
+
+
+    useEffect(()=>{
+        if(user){
+            setReversedHours([...user.hours].reverse());
+            console.log(reversedHours)
+            setLoading(false)
+        }
+    }, [user])
 
     const months = [
         'Jan', 
@@ -31,14 +43,14 @@ const ReportsBar = ({show, handleClose, user}) => {
         return weekNumber  
     }
 
-    // if(isLoading){
-    //     return (
-    //         <>
-    //             <LoadingSpinner />
-    //             <h4>Loading...</h4>
-    //         </>
-    //     )
-    // }
+    if(isLoading){
+        return (
+            <>
+                <LoadingSpinner />
+                <h4>Loading...</h4>
+            </>
+        )
+    }
 
     return ( 
         <>
