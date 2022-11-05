@@ -58,7 +58,7 @@ const AddEmployees = ({show, handleClose}) => {
                     if(res.status === 200){
                         setLoading(false);
                         alert('SUCCESS! New employee added!')
-                        navigate('/employeeprofile');
+                        document.location.reload();
                     }
                 })
                 .catch(error => {

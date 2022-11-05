@@ -18,6 +18,7 @@ import EmployeeProfile from './pages/EmployeeProfile';
 import Reports from './pages/Reports';
 import Axios from 'axios';
 import { useSelector } from "react-redux";
+import EmployeeReports from './pages/EmployeeReports';
 
 function App() {
 	// const [currentUser, setCurrentUser] = useState();
@@ -30,17 +31,18 @@ function App() {
 			{/* <Navigation /> */}
 			<Routes>
 				<Route path='/' element={<Home />}/>
-				<Route path='/demo' element={<DemoPage />}/>
-				<Route path='/clockin' element={<ClockInPage />}/>
-				<Route path='/login' element={<LoginPage />} />
-				<Route path='/register' element={<RegisterPage />} />
+				{/* <Route path='/demo' element={<DemoPage />}/> */}
+				{/* <Route path='/clockin' element={<ClockInPage />}/> */}
+				{/* <Route path='/login' element={<LoginPage />} /> */}
+				{/* <Route path='/register' element={<RegisterPage />} /> */}
 				{/* <Route path='/profile' element={<BusinessProfilePage />} /> */}
 				{/* <Route path='/employeeProfile' element={<EmployeeProfilePage />} /> */}
-				<Route path='/logout' element={<LogoutPage />} />
+				{/* <Route path='/logout' element={<LogoutPage />} /> */}
 				{/* <Route path='/reports' element={<ReportsPage />} /> */}
 				{/* <Route path='hometemp' element={<HomePageTemp />}/> */}
-				<Route path='employeeprofile' element={<EmployeeProfile />} />
-				<Route path='reports' element={<Reports />} />
+				<Route exact path='/employeeprofile' element={<EmployeeProfile />} />
+				{/* <Route path='reports' element={<Reports />} /> */}
+				<Route exact path='/employee-reports' element={<EmployeeReports />} />
 			</Routes>
 			
   	  	</div>

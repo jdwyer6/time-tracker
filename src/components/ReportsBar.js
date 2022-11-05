@@ -15,7 +15,6 @@ const ReportsBar = ({show, handleClose, user}) => {
     useEffect(()=>{
         if(user){
             setReversedHours([...user.hours].reverse());
-            console.log(reversedHours)
             setLoading(false)
         }
     }, [user])

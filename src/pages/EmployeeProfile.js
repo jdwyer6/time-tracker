@@ -1,6 +1,6 @@
 import Badge from "../components/Badge";
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useEffect, useState, useRef, useCallback } from 'react';
 import _default from 'react-bootstrap/esm/Accordion';
 import Axios from 'axios';
@@ -261,7 +261,10 @@ const EmployeeProfile = () => {
                                 <h3 className='text-white'>Admin options</h3>
                                 <div>
                                     <button className='btn-large my-2'  onClick={handleShowAddEmployees}><BsPeople className='mx-3'/>Add employees</button>
-                                    <button className='btn-large my-2'><TbReportSearch className='mx-3'/>View employee reports</button>
+                                    <Link to='/employee-reports'>
+                                        <button className='btn-large my-2'><TbReportSearch className='mx-3'/>View employee reports</button>
+                                    </Link>
+                                    
                                     <button className='btn-large my-2'><IoMdOptions className='mx-3' />Options</button>
                                 </div>
 
