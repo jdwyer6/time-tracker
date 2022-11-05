@@ -2,11 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import AddEmployees from './AddEmployees';
 import { useState } from 'react';
 
-const Badge = ({name, position, image, admin}) => {
+const Badge = ({name, showReports, image, admin}) => {
     const navigate = useNavigate();
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
 
     function logout(){
         localStorage.removeItem('currentUser')
@@ -18,14 +15,14 @@ const Badge = ({name, position, image, admin}) => {
     <div style={{borderRadius: '6px', backgroundColor:'white'}} className='d-flex p-4'>
         <div className='d-flex flex-column align-items-start'>
             <img width='100rem' src={image} style={{borderRadius: '6px'}}/>
-            <button className='mt-2 p-0 btn-tertiary' onClick={()=>navigate('/reports')}>See all hours</button>
+            <button className='mt-2 p-0 btn-tertiary' onClick={showReports}>See my hours</button>
         </div>
         <div className='d-flex flex-column space-between'>
             <div className='flex-grow-1'>
                 <h3 className='mb-0'>{name}</h3>
                 <p className="font-small my-0">Software Engineer</p>
                 {admin ? (
-                <button className='my-0 p-0 btn-tertiary' onClick={handleShow}>Add employees</button>
+                    <p className='font-small font-bold'>Admin account</p>
             ) : ('')}
             </div>
             <div className='text-end'>
@@ -34,7 +31,8 @@ const Badge = ({name, position, image, admin}) => {
 
            
         </div>
-        <AddEmployees show={show} handleClose={handleClose} handleShow={handleShow} setShow={setShow}/>
+        {/* <button className='my-0 p-0 btn-tertiary' onClick={handleShow}>Add employees</button> */}
+        {/* <AddEmployees show={show} handleClose={handleClose} handleShow={handleShow} setShow={setShow}/> */}
     </div> 
     );
 }
