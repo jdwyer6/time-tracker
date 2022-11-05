@@ -6,6 +6,9 @@ import _default from 'react-bootstrap/esm/Accordion';
 import Axios from 'axios';
 import LoadingSpinner from "../components/LoadingSpinner";
 import { MdLunchDining, MdTranslate } from 'react-icons/md';
+import { IoMdOptions } from 'react-icons/io';
+import { TbReportSearch } from 'react-icons/tb';
+import {BsPeople} from 'react-icons/bs';
 import { AiFillBackward } from 'react-icons/ai';
 import { ImClock2, ImClock } from 'react-icons/im';
 import Timer from 'react-timer-wrapper';
@@ -14,6 +17,8 @@ import Spinner from 'react-bootstrap/Spinner';
 import HoursCardTemp from "../components/HoursCard";
 import uuid4 from "uuid4";
 import CurrentTime from "../components/CurrentTime";
+import AddEmployees from "../components/AddEmployees";
+import ReportsBar from "../components/ReportsBar";
 
 const EmployeeProfile = () => {
     const [tempUser, setTempUser] = useState(JSON.parse(localStorage.getItem('currentUser')));
@@ -35,6 +40,12 @@ const EmployeeProfile = () => {
     const [time, setTime] = useState(current.toLocaleTimeString());
     const [shortTime, setShortTime] = useState(current.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}));
     const [info, setInfo] = useState({});
+    const [showAddEmployees, setShowAddEmployees] = useState(false);
+    const handleCloseAddEmployees = () => setShowAddEmployees(false);
+    const handleShowAddEmployees = () => setShowAddEmployees(true);
+    const [showReports, setShowReports] = useState(false);
+    const handleCloseReports = () => setShowReports(false);
+    const handleShowReports = () => setShowReports(true);
 
     function calculateWeekOf(){
         let day = current.getDay();
@@ -193,7 +204,7 @@ const EmployeeProfile = () => {
                 <Col>
                     <Row className='d-flex flex-column h-100' >
                         <Col className='d-flex align-items-start flex-column'>
-                            <Badge name={user.name} position='Software Engineer' image={user.image} admin={user.admin}/>
+                            <Badge name={user.name} position='Software Engineer' image={user.image} admin={user.admin} showReports={handleShowReports}/>
                             
                         </Col>
                         <Col className="d-flex flex-column align-items-start justify-content-center">
@@ -207,7 +218,10 @@ const EmployeeProfile = () => {
                                             <>
                                                 <div className='d-flex justify-content-start'>
 
-                                                    <button onClick={()=>handleClockOut()} className='btn-alert d-flex align-items-center'><ImClock2 className='mx-1'/>Clock out <Timer className='mx-1' style={{fontSize: '14px'}} active duration={null}><Timecode /></Timer></button>
+                                                    <button onClick={()=>handleClockOut()} className='btn-alert d-flex align-items-center'>
+                                                            <ImClock2 className='mx-1'/>Clock out <Timer className='mx-1' style={{fontSize: '14px'}} active duration={null}><Timecode />
+                                                            </Timer>
+                                                    </button>
                                                     <button className='btn-primary mx-2'><MdLunchDining className='mx-2'/>Break</button>
                                                 </div>
 
@@ -241,15 +255,19 @@ const EmployeeProfile = () => {
                                 )
                              : ('')}
                         </Col>
-                        <Col>
-          
-                            <h3 className='text-white'>Admin options</h3>
-                            <div>
-                                <button className='btn-large my-2'>Add employees</button>
-                                <button className='btn-large my-2'>View employee reports</button>
-                            </div>
+                        {user.admin ? (
+                            <Col>
+            
+                                <h3 className='text-white'>Admin options</h3>
+                                <div>
+                                    <button className='btn-large my-2'  onClick={handleShowAddEmployees}><BsPeople className='mx-3'/>Add employees</button>
+                                    <button className='btn-large my-2'><TbReportSearch className='mx-3'/>View employee reports</button>
+                                    <button className='btn-large my-2'><IoMdOptions className='mx-3' />Options</button>
+                                </div>
 
-                        </Col>
+                            </Col>
+                        ):('')}
+
                     </Row>
 
                 </Col>
@@ -266,6 +284,8 @@ const EmployeeProfile = () => {
                 </Col>
 
             </Row>
+            <AddEmployees show={showAddEmployees} handleClose={handleCloseAddEmployees} handleShow={handleShowAddEmployees} setShow={setShowAddEmployees}/>
+            <ReportsBar show={showReports} handleClose={handleCloseReports} handleShow={handleShowReports} setShow={setShowReports} user={user}/>
         </Container>
      );
 }

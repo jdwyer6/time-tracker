@@ -37,6 +37,10 @@ a:hover {
   color: #002FD6;
 }
 
+.font-bold {
+  font-weight: 800;
+}
+
 .btn-primary {
   border-radius: 24px;
   border: none;
