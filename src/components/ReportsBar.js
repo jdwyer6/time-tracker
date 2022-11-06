@@ -69,7 +69,7 @@ const ReportsBar = ({show, handleClose, user}) => {
                                 </thead>
                                 <tbody className='table-group-divider'>
                                     {reversedHours.map((entry) => (
-                                        <tr key={entry.info.start} className={getWeek() % 2 === 0 ? 'bg-transparent' : 'bg-secondary'}>
+                                        <tr key={entry.info.start} className={getWeek() % 2 === 0 ? 'bg-transparent' : 'bg-light'}>
                                             <td className='text-center font-small'>{months[entry.info.month]} {entry.info.date}</td>
                                             <td className='text-center font-small'>{entry.info.startTime}</td>
                                             <td className='text-center font-small'>{entry.info.endTime}</td>

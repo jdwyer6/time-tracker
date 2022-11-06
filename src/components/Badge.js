@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import AddEmployees from './AddEmployees';
 import { useState } from 'react';
 
-const Badge = ({name, showReports, image, admin}) => {
+const Badge = ({name, showReports, image, admin, position}) => {
     const navigate = useNavigate();
 
     function logout(){
@@ -12,27 +12,25 @@ const Badge = ({name, showReports, image, admin}) => {
     }
 
     return ( 
-    <div style={{borderRadius: '6px', backgroundColor:'white'}} className='d-flex p-4'>
-        <div className='d-flex flex-column align-items-start'>
-            <img width='100rem' src={image} style={{borderRadius: '6px'}}/>
-            <button className='mt-2 p-0 btn-tertiary' onClick={showReports}>See my hours</button>
-        </div>
-        <div className='d-flex flex-column space-between'>
-            <div className='flex-grow-1'>
-                <h3 className='mb-0'>{name}</h3>
-                <p className="font-small my-0">Software Engineer</p>
-                {admin ? (
-                    <p className='font-small font-bold'>Admin account</p>
-            ) : ('')}
+    <div style={{borderRadius: '6px', backgroundColor:'white', width: 'clamp(250px, 100%, 400px)'}} className='p-3 p-md-4 my-4 my-md-0 d-flex justify-content-between'>
+        <div className='d-flex'>
+            <div className='d-md-flex flex-column align-items-start d-none'>
+                <img width='100rem' src={image} style={{borderRadius: '6px'}}/>  
             </div>
-            <div className='text-end'>
-                <button className='btn-primary' onClick={logout}>Sign out</button>
+            <div className='d-flex flex-column px-md-2 px-0 justify-content-between'>
+                <div>
+                    <h3 className='mb-0'>{name}</h3>
+                    <p className="font-small my-0">{position}</p>
+                    {admin ? (
+                        <p className='font-small font-bold my-0'>Admin account</p>
+                    ) : ('')}
+                </div>
+                <button className='p-0 m-0 text-start btn-tertiary' onClick={showReports}>See my hours</button>
             </div>
-
-           
         </div>
-        {/* <button className='my-0 p-0 btn-tertiary' onClick={handleShow}>Add employees</button> */}
-        {/* <AddEmployees show={show} handleClose={handleClose} handleShow={handleShow} setShow={setShow}/> */}
+        <div className='d-flex flex-column text-end justify-content-end align-items-end'>
+            <button className='btn-primary' onClick={logout}>Sign out</button>
+        </div>
     </div> 
     );
 }

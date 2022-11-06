@@ -18,7 +18,7 @@ $shadow: 2px 2px 5px rgba(0, 0, 0, .3);
 $blue-primary: #002FD6; 
 $blue-hover: #0229b8;
 $white: #fff;
-$black: #151515;
+$black: #212529;
 $alert: #f56161;
 $alert-hover: #7e1c1c;
 
@@ -27,11 +27,16 @@ body{
     font-family: 'Inter', sans-serif;
     position: relative;
     overflow-x: hidden;
+    background-color: $black;
+}
+
+html{
+    overflow-x: hidden;
 }
 
 h1{
     font-weight: 700;
-    font-size: 98px;
+    font-size: clamp(48px, 7vw, 120px);
 }
 
 h2{
@@ -53,6 +58,11 @@ a{
     &:hover{
         cursor: pointer;
     }
+}
+
+.h1-reduced{
+    font-weight: 700;
+    font-size: clamp(36px, 7vw, 100px);
 }
 
 .font-small{
@@ -120,6 +130,8 @@ a{
     padding: 1.5rem;
     transition: all .4s;
 
+    width: clamp(250px, 100%, 500px);
+
     &:hover{
         background-color: rgb(219, 219, 219);
         transform: translateY(-1px);
@@ -182,11 +194,21 @@ button.btn-close:focus{
     background-color: $black;
 }
 
+.mobile-container{
+    height: 100vh;
+}
 
 
 
+@media only screen and (max-width: 768px){
+    .mobile-container{
+        height: auto;
+    }
 
-
+    .btn-large{
+        padding: .5rem;
+    }
+}
 
 
 

@@ -15,6 +15,7 @@ const Register = ({handleCloseRegister, showRegister, setShowRegister}) => {
     const [ businessId, setBusinessId ] = useState(uuid4());
     const [ admin, setAdmin ] = useState(true);
     const [ image, setImage ] = useState('images/demo-employees/default.png');
+    const [ position, setPosition ] = useState('');
     const [isLoading, setLoading] = useState(false);
     const [errMsg, setErrMsg] = useState(false);
     let navigate = useNavigate();
@@ -25,6 +26,7 @@ const Register = ({handleCloseRegister, showRegister, setShowRegister}) => {
             'Content-Type': 'application/json',
         }
     }
+
 
     const validateInfo = async (e) =>{
         let formData = {
@@ -54,6 +56,7 @@ const Register = ({handleCloseRegister, showRegister, setShowRegister}) => {
                 businessId: businessId,
                 admin: admin, 
                 image: image,
+                position: position
             })    
             .then((response) => {
                 Axios.post("https://clockedin.herokuapp.com/login", {username, password}, config)
@@ -98,6 +101,9 @@ const Register = ({handleCloseRegister, showRegister, setShowRegister}) => {
                     </div>
                     <div className='d-flex align-items-center my-4'>
                         <Form.Control type='text' id='business' name='business' placeholder='Enter the name of your business' className='border-0 border-bottom' onChange={(e)=>{setBusinessName(e.target.value)}}/>
+                    </div>
+                    <div className='d-flex align-items-center my-4'>
+                        <Form.Control type='text' id='position' name='position' placeholder='Enter your position' className='border-0 border-bottom' onChange={(e)=>{setPosition(e.target.value)}}/>
                     </div>
                     <button className='btn-primary' type='submit'>Register</button>
                     <div className='d-flex justify-content-end py-0 my-0'>

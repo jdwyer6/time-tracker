@@ -53,11 +53,6 @@ const EmployeeProfile = () => {
         return (date - day) + 1;
     }
 
-    useEffect(()=>{
-        getWeek();
-        console.log(lastData)
-    }, [])
-
     const getWeek = () => {
         let currentDate = new Date();
         let startDate = new Date(currentDate.getFullYear(), 0, 1);
@@ -72,11 +67,6 @@ const EmployeeProfile = () => {
         .then((res) => {
             if(res.status === 200){
                 setUser(res.data);
-                // calculateProgressBar();
-                // if(res.data.lastLoggedInfo.clockedIn){
-                //     console.log('last logged: ', res.data.lastLoggedInfo.info.clockedIn)
-                // }
-                
             }
         })
         .catch(error => {
@@ -87,6 +77,7 @@ const EmployeeProfile = () => {
             setShortTime(new Date().toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}));
         }, 1000)
 
+        getWeek();
     },[])
 
     useEffect(()=>{
@@ -94,12 +85,19 @@ const EmployeeProfile = () => {
             setClockedIn(user.clockedIn)
             setLastData(user.hours.slice(-1))
             setUserFound(true);
+            calculateProgressBar();
             setLoading(false)
         }
         
-        
     }, [user])
 
+    useEffect(()=>{
+
+        if(clockedIn){
+            // setInfo(user.lastLoggedInfo.info)
+            // console.log(user.lastLoggedInfo.info)
+        }
+    }, [clockedIn])
 
     const calculateProgressBar = () => {
         const totalWeeklyHours = user.hours.filter(entry => entry.info.weekNumber = weekNumber);
@@ -110,8 +108,10 @@ const EmployeeProfile = () => {
         let totalAsPercent = (total/40) * 100
         if(totalAsPercent < 2){
             setProgress(2)
-        }
+        }else{
             setProgress((total/40) * 100)
+        }
+         
     }
 
     useEffect(()=>{
@@ -128,7 +128,6 @@ const EmployeeProfile = () => {
     useEffect(() => {
         if(!isLoading){
             saveStatus()
-
         }
 
     }, [clockedIn])
@@ -194,21 +193,21 @@ const EmployeeProfile = () => {
     }
 
     return ( 
-        <Container fluid className='bg-dark'>
-            <Row className='d-flex justify-content-end pt-5'>
+        <Container fluid className='mobile-container'>
+            <Row className='justify-content-end pt-5 d-none d-md-flex'>
                 <Col md='6'>
-                    <h3 className='text-white'>Recent</h3>
+                    <h5 className='text-white'>Recent hours</h5>
                 </Col>
             </Row>
-            <Row style={{height: '80vh'}}>
-                <Col>
+            <Row className='h-75'>
+                <Col xs='12' md='6'>
                     <Row className='d-flex flex-column h-100' >
                         <Col className='d-flex align-items-start flex-column'>
-                            <Badge name={user.name} position='Software Engineer' image={user.image} admin={user.admin} showReports={handleShowReports}/>
+                            <Badge name={user.name} position={user.position} image={user.image} admin={user.admin} showReports={handleShowReports}/>
                             
                         </Col>
-                        <Col className="d-flex flex-column align-items-start justify-content-center">
-                            <h1 className='text-white m-0'>{weekday[current.getDay()]} {months[current.getMonth()]} {current.getDate()}</h1>
+                        <Col  className="d-flex flex-column align-items-start justify-content-center order-first order-md-last mt-3 my-md-0">
+                            <h1 className='text-white m-0 h1-reduced'>{weekday[current.getDay()]} {months[current.getMonth()]} {current.getDate()}</h1>
                             <div style={{display: 'flex', width: '100%', justifyContent: 'start', flexDirection: 'column'}}>
                                 <p className='text-white text-start m-0'>{time}</p>
                                 <div className='my-1'>
@@ -217,14 +216,12 @@ const EmployeeProfile = () => {
                                         ) : (
                                             <>
                                                 <div className='d-flex justify-content-start'>
-
                                                     <button onClick={()=>handleClockOut()} className='btn-alert d-flex align-items-center'>
                                                             <ImClock2 className='mx-1'/>Clock out <Timer className='mx-1' style={{fontSize: '14px'}} active duration={null}><Timecode />
                                                             </Timer>
                                                     </button>
                                                     <button className='btn-primary mx-2'><MdLunchDining className='mx-2'/>Break</button>
                                                 </div>
-
                                                 <div className='d-flex mt-1'>
                                                     <Spinner animation="grow" className='tracking-icon'/>
                                                     <p style={{fontSize: '80%', color: 'white'}}>Tracking your time</p>
@@ -240,7 +237,7 @@ const EmployeeProfile = () => {
                 </Col>
                 <Col>
                     <Row className= 'd-flex flex-column h-100'>
-                        <Col>
+                        <Col className='d-none d-md-block'>
                             {user.hours.length > 0 ? 
                                 (
                                     <HoursCardTemp 
@@ -256,16 +253,16 @@ const EmployeeProfile = () => {
                              : ('')}
                         </Col>
                         {user.admin ? (
-                            <Col>
+                            <Col className='d-flex flex-column'>
             
                                 <h3 className='text-white'>Admin options</h3>
-                                <div>
-                                    <button className='btn-large my-2'  onClick={handleShowAddEmployees}><BsPeople className='mx-3'/>Add employees</button>
+                                <div className='d-flex flex-column'>
+                                    <button className='btn-large my-1 my-md-2'  onClick={handleShowAddEmployees}><BsPeople className='mx-3'/>Add employees</button>
                                     <Link to='/employee-reports'>
-                                        <button className='btn-large my-2'><TbReportSearch className='mx-3'/>View employee reports</button>
+                                        <button className='btn-large my-1 my-md-2'><TbReportSearch className='mx-3'/>View employee reports</button>
                                     </Link>
                                     
-                                    <button className='btn-large my-2'><IoMdOptions className='mx-3' />Options</button>
+                                    <button className='btn-large my-1 my-md-2'><IoMdOptions className='mx-3' />Options</button>
                                 </div>
 
                             </Col>
@@ -275,7 +272,7 @@ const EmployeeProfile = () => {
 
                 </Col>
             </Row>
-            <Row>
+            <Row className='d-md-block mt-3'>
                 <Col>
                     <div style={{backgroundColor: '#fff', height: '20px', borderRadius: '4px', position: 'relative'}}>
                         <div style={{background: '#002FD6', height: '16px', width: `${progress -1 }%`, borderRadius: '4px', position: 'absolute', top: '8%', transform: 'translateY(-50%)', left: '0', transform: 'translateX(.5%)'}}></div>

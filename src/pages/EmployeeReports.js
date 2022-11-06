@@ -40,7 +40,7 @@ const EmployeeReports = () => {
 
     useEffect(()=>{
         if(employees){
-            console.log(employees[0])
+            console.log(employees)
             setCurrent(employees[0])
 
             
@@ -88,7 +88,7 @@ const EmployeeReports = () => {
     }
 
     return ( 
-        <Container fluid className='bg-dark'>
+        <Container fluid style={{height: '100vh'}}>
             <Row className='pt-5 pb-0'>
                 <Col>
                     <h3 className='text-white mb-0'>My employees</h3>

@@ -14,6 +14,7 @@ const AddEmployees = ({show, handleClose}) => {
     const [ businessId, setBusinessId ] = useState(user.businessId);
     const [ admin, setAdmin ] = useState(false);
     const [ image, setImage ] = useState('images/demo-employees/default.png');
+    const [ position, setPosition ] = useState('');
     const [isLoading, setLoading] = useState(false);
     const [errMsg, setErrMsg] = useState(false);
     let navigate = useNavigate();
@@ -51,6 +52,7 @@ const AddEmployees = ({show, handleClose}) => {
                 businessId: user.businessId,
                 admin: admin, 
                 image: image,
+                position: position
             })    
             .then((response) => {
                 Axios.post("https://clockedin.herokuapp.com/login", {username, password}, config)
@@ -90,6 +92,9 @@ const AddEmployees = ({show, handleClose}) => {
                         </div>
                         <div className='d-flex align-items-center my-4'>
                             <Form.Control type='text' id='name' name='name' placeholder="Enter the employee's name" className='border-0 border-bottom' onChange={(e)=>{setName(e.target.value)}}/>
+                        </div>
+                        <div className='d-flex align-items-center my-4'>
+                            <Form.Control type='text' id='position' name='position' placeholder="Enter the employee's position" className='border-0 border-bottom' onChange={(e)=>{setPosition(e.target.value)}}/>
                         </div>
                         <button className='btn-primary' type='submit'>Register</button>
                         <div className='d-flex justify-content-end py-0 my-0'>
