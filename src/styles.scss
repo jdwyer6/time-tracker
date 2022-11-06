@@ -129,6 +129,8 @@ a{
     width: 75%; 
     padding: 1.5rem;
     transition: all .4s;
+    background-color: white;
+    color: black;
 
     width: clamp(250px, 100%, 500px);
 
@@ -206,7 +208,7 @@ button.btn-close:focus{
     }
 
     .btn-large{
-        padding: .5rem;
+        padding: 1rem;
     }
 }
 

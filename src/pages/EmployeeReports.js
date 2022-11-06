@@ -13,6 +13,7 @@ const EmployeeReports = () => {
     const [ isLoading, setLoading ] = useState(true);
     const [ current, setCurrent ] = useState();
     const [reversedHours, setReversedHours] = useState(); 
+    const [ weekNumber, setWeekNumber ] = useState();
 
     useEffect(() => {
         axios.get(`https://clockedin.herokuapp.com/user/${tempUser._id}`)
@@ -25,6 +26,8 @@ const EmployeeReports = () => {
         .catch(error => {
             console.log(error)
         }) 
+
+        getWeek();
     },[])
 
     const getAllUsers = async () => {
@@ -76,6 +79,7 @@ const EmployeeReports = () => {
         var days = Math.floor((currentDate - startDate) /
             (24 * 60 * 60 * 1000));
         var weekNumber = Math.ceil(days / 7);  
+        setWeekNumber(weekNumber)
         return weekNumber  
     }
 
@@ -108,7 +112,7 @@ const EmployeeReports = () => {
                 </Col>
 
             </Row>
-            <Row style={{height: '100vh'}}>
+            <Row>
                 <Col>
                     <div>
                         {employees.map((employee)=> (
@@ -124,9 +128,9 @@ const EmployeeReports = () => {
                                 <div className='d-flex flex-column align-items-end'>
                                     <p className='m-0 font-small'>STATUS:</p>
                                     {employee.clockedIn ? (
-                                        <p className='m-0 font-small text-success'>clocked in</p>
+                                        <p className='m-0 font-small text-success fw-bold'>clocked in</p>
                                     ) : (
-                                        <p className='m-0 font-small text-secondary'>clocked out</p>
+                                        <p className='m-0 font-small text-danger'>clocked out</p>
                                     )}
                                 </div>
 

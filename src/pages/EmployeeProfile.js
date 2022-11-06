@@ -77,7 +77,10 @@ const EmployeeProfile = () => {
             setShortTime(new Date().toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}));
         }, 1000)
 
+       
         getWeek();
+        
+        
     },[])
 
     useEffect(()=>{
@@ -85,21 +88,17 @@ const EmployeeProfile = () => {
             setClockedIn(user.clockedIn)
             setLastData(user.hours.slice(-1))
             setUserFound(true);
-            calculateProgressBar();
+            if(user.hours){
+                calculateProgressBar();
+            }
+            
             setLoading(false)
         }
         
     }, [user])
 
-    useEffect(()=>{
-
-        if(clockedIn){
-            // setInfo(user.lastLoggedInfo.info)
-            // console.log(user.lastLoggedInfo.info)
-        }
-    }, [clockedIn])
-
     const calculateProgressBar = () => {
+
         const totalWeeklyHours = user.hours.filter(entry => entry.info.weekNumber = weekNumber);
         let total = 0;
         totalWeeklyHours.forEach((entry) =>{
@@ -111,6 +110,8 @@ const EmployeeProfile = () => {
         }else{
             setProgress((total/40) * 100)
         }
+        
+
          
     }
 
@@ -127,23 +128,28 @@ const EmployeeProfile = () => {
 
     useEffect(() => {
         if(!isLoading){
-            saveStatus()
+            //WAS MESSING UP SERVER
+            // saveStatus()
         }
 
     }, [clockedIn])
     
-
     function handleClockIn(){ 
 
         setClockedIn(!clockedIn); 
         setInfo({...info, jobId: uuid4(), start: current.getTime(), startTime: shortTime, clockedIn: true});
+        Axios.post(`https://clockedin.herokuapp.com/user/${user._id}/${current.getTime()}`)
+        .then((res) => {
+        })
+        .catch(error => {
+            console.log(error.response)
+        })
     }
 
     function saveStatus(){
         Axios.post(`https://clockedin.herokuapp.com/user/${tempUser._id}/${clockedIn}`)
         .then((res) => {
             if(res.status === 200){
-                // setClockedIn(res.data.clockedIn);
             }else{
                 console.log('There was an error')
             }
@@ -165,7 +171,7 @@ const EmployeeProfile = () => {
             endTime: shortTime,
             clockedIn: false
         });
-        //// FIND A WAY TO RERENDER HERE
+        //// RERENDER HERE
         // pushinfo()
     }
 
@@ -255,7 +261,8 @@ const EmployeeProfile = () => {
                         {user.admin ? (
                             <Col className='d-flex flex-column'>
             
-                                <h3 className='text-white'>Admin options</h3>
+                                <h3 className='text-white d-none d-md-block'>Admin options</h3>
+                                <p className='text-white d-md-none my-0'>Admin options</p>
                                 <div className='d-flex flex-column'>
                                     <button className='btn-large my-1 my-md-2'  onClick={handleShowAddEmployees}><BsPeople className='mx-3'/>Add employees</button>
                                     <Link to='/employee-reports'>
