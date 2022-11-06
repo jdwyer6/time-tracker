@@ -2,6 +2,7 @@ import { Container, Row, Col, Table } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import LoadingSpinner from "../components/LoadingSpinner";
+import { Link } from "react-router-dom";
 
 const EmployeeReports = () => {
 
@@ -93,9 +94,17 @@ const EmployeeReports = () => {
                 <Col>
                     <h3 className='text-white mb-0'>My employees</h3>
                     <p className='font-small text-white'>Click employee to view logged hours</p>
+                    <Link to='/employeeprofile'>
+                        <button className='btn-primary'>Back to profile</button>
+                    </Link>
+                   
                 </Col>
-                <Col className='d-flex justify-content-end text-end'>
-                    <div className='text-white'>Showing data for: <h4>{current.name}</h4></div>
+                <Col className='d-flex justify-content-start text-start'>
+                    <div className='text-white d-flex justify-content-center align-items-center'>
+                        <p className='text-white my-0'>Showing data for: </p>    
+                        <h4 className='mx-2'>{current.name}</h4>
+                    </div>
+                    
                 </Col>
 
             </Row>
