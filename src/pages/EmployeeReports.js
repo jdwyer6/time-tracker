@@ -144,11 +144,11 @@ const EmployeeReports = () => {
                         </thead>
                         <tbody className='table-group-divider'>
                             {reversedHours.map((entry) => (
-                                <tr key={entry.info.start} className={getWeek() % 2 === 0 ? 'bg-transparent' : 'bg-secondary'}>
-                                    <td className='text-center font-small text-white'>{months[entry.info.month]} {entry.info.date}</td>
-                                    <td className='text-center font-small text-white'>{entry.info.startTime}</td>
-                                    <td className='text-center font-small text-white'>{entry.info.endTime}</td>
-                                    <td className='text-center font-small text-white'>{entry.info.hoursWorked}</td>
+                                <tr key={entry.start} className={getWeek() % 2 === 0 ? 'bg-transparent' : 'bg-secondary'}>
+                                    <td className='text-center font-small text-white'>{months[entry.month]} {entry.date}</td>
+                                    <td className='text-center font-small text-white'>{entry.startTime}</td>
+                                    <td className='text-center font-small text-white'>{entry.endTime}</td>
+                                    <td className='text-center font-small text-white'>{entry.hoursWorked}</td>
                                 </tr>
                             ))}
                         </tbody>

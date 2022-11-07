@@ -148,7 +148,7 @@ const EmployeeProfile = () => {
         Axios.post(`https://clockedin.herokuapp.com/user/${user._id}`, {data: data, currentlyClockedIn: currentlyClockedIn})
         .then((res) => {
             if(res.status === 200){
-
+                document.location.reload();
             }else{
                 console.log('There was an error')
             }
@@ -161,6 +161,7 @@ const EmployeeProfile = () => {
 
     function handleClockOut(){
         // setClockedIn(!clockedIn);
+    
         const data = {
             date: current.getDate(), 
             month: current.getMonth(), 
@@ -288,7 +289,7 @@ const EmployeeProfile = () => {
 
             </Row>
             <AddEmployees show={showAddEmployees} handleClose={handleCloseAddEmployees} handleShow={handleShowAddEmployees} setShow={setShowAddEmployees}/>
-            {/* <ReportsBar show={showReports} handleClose={handleCloseReports} handleShow={handleShowReports} setShow={setShowReports} user={user} isLoading={isLoading}/> */}
+            <ReportsBar show={showReports} handleClose={handleCloseReports} handleShow={handleShowReports} setShow={setShowReports} user={user} isLoading={isLoading}/>
         </Container>
      );
 }
