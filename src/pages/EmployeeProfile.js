@@ -5,7 +5,7 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import _default from 'react-bootstrap/esm/Accordion';
 import Axios from 'axios';
 import LoadingSpinner from "../components/LoadingSpinner";
-import { MdLunchDining, MdSentimentSatisfied, MdTranslate } from 'react-icons/md';
+import { MdLunchDining, MdSentimentSatisfied, MdTranslate, MdConstruction } from 'react-icons/md';
 import { IoMdOptions } from 'react-icons/io';
 import { TbReportSearch } from 'react-icons/tb';
 import {BsPeople} from 'react-icons/bs';
@@ -19,6 +19,7 @@ import uuid4 from "uuid4";
 import CurrentTime from "../components/CurrentTime";
 import AddEmployees from "../components/AddEmployees";
 import ReportsBar from "../components/ReportsBar";
+import Popup from '../components/Popup';
 
 const EmployeeProfile = () => {
     const [tempUser, setTempUser] = useState(JSON.parse(localStorage.getItem('currentUser')));
@@ -27,6 +28,7 @@ const EmployeeProfile = () => {
     const [show, setShow] = useState(false);
     const handleShow = () => setShow(true);
     const [clockedIn, setClockedIn] = useState();
+    const [ amountOfTimeClockedIn, setAmountOfTimeClockedIn ] = useState(0);
     const [ userFound, setUserFound] = useState(false);
     const [progress, setProgress] = useState();
     const [weekNumber, setWeekNumber] = useState();
@@ -46,6 +48,9 @@ const EmployeeProfile = () => {
     const [showReports, setShowReports] = useState(false);
     const handleCloseReports = () => setShowReports(false);
     const handleShowReports = () => setShowReports(true);
+    const [showPopup, setShowPopup] = useState(false);
+    const handleClosePopup = () => setShowPopup(false);
+    const handleShowPopup = () => setShowPopup(true);
 
     function calculateWeekOf(){
         let day = current.getDay();
@@ -67,6 +72,7 @@ const EmployeeProfile = () => {
         .then((res) => {
             if(res.status === 200){
                 setUser(res.data);
+                getWeek();
             }
         })
         .catch(error => {
@@ -76,10 +82,6 @@ const EmployeeProfile = () => {
             setTime(new Date().toLocaleTimeString())
             setShortTime(new Date().toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}));
         }, 1000)
-
-       
-        getWeek();
-        
         
     },[])
 
@@ -89,9 +91,11 @@ const EmployeeProfile = () => {
             setLastData(user.hours.slice(-1))
             setInfo(user.hours.slice(-1))
             setUserFound(true);
-            console.log(lastData)
-            if(user.hours){
-                // calculateProgressBar();
+            if(user.hours.length > 1){
+                calculateProgressBar();
+            }
+            if(JSON.parse(user.clockedIn)){
+                setAmountOfTimeClockedIn((current.getTime() - user.hours.at(-1).start))
             }
             
             setLoading(false)
@@ -100,11 +104,13 @@ const EmployeeProfile = () => {
     }, [user])
 
     const calculateProgressBar = () => {
-
-        const totalWeeklyHours = user.hours.filter(entry => entry.info.weekNumber = weekNumber);
+        const totalWeeklyHours = user.hours.filter(entry => entry.weekNumber = weekNumber);
         let total = 0;
         totalWeeklyHours.forEach((entry) =>{
-            total = total + (JSON.parse(entry.info.hoursWorked))
+            if(entry.hoursWorked){
+                total = total + (JSON.parse(entry.hoursWorked))
+            }
+            
         })
         let totalAsPercent = (total/40) * 100
         if(totalAsPercent < 2){
@@ -112,29 +118,7 @@ const EmployeeProfile = () => {
         }else{
             setProgress((total/40) * 100)
         }
-        
-
-         
     }
-
-    // useEffect(()=>{
-        
-    //     if(info.end && !isLoading){
-    //         pushinfo()
-    //     }else{
-    //         return
-    //     }
-
-    // }, [info.end])
-
-
-    // useEffect(() => {
-    //     if(!isLoading){
-
-    //         saveStatus()
-    //     }
-
-    // }, [clockedIn])
     
     function handleClockIn(){ 
         const data = {
@@ -160,7 +144,6 @@ const EmployeeProfile = () => {
     }
 
     function handleClockOut(){
-        // setClockedIn(!clockedIn);
     
         const data = {
             date: current.getDate(), 
@@ -220,10 +203,10 @@ const EmployeeProfile = () => {
                                             <>
                                                 <div className='d-flex justify-content-start'>
                                                     <button onClick={()=>handleClockOut()} className='btn-alert d-flex align-items-center'>
-                                                            <ImClock2 className='mx-1'/>Clock out <Timer className='mx-1' style={{fontSize: '14px'}} active duration={null}><Timecode />
+                                                            <ImClock2 className='mx-1'/>Clock out <Timer className='mx-1' style={{fontSize: '14px'}} active duration={null}  time={amountOfTimeClockedIn}><Timecode />
                                                             </Timer>
                                                     </button>
-                                                    <button className='btn-primary mx-2'><MdLunchDining className='mx-2'/>Break</button>
+                                                    <button className='btn-primary mx-2' onClick={()=>handleShowPopup()}><MdLunchDining className='mx-2'/>Break</button>
                                                 </div>
                                                 <div className='d-flex mt-1'>
                                                     <Spinner animation="grow" className='tracking-icon'/>
@@ -266,7 +249,7 @@ const EmployeeProfile = () => {
                                         <button className='btn-large my-1 my-md-2'><TbReportSearch className='mx-3'/>View employee reports</button>
                                     </Link>
                                     
-                                    <button className='btn-large my-1 my-md-2'><IoMdOptions className='mx-3' />Options</button>
+                                    <button className='btn-large my-1 my-md-2' onClick={handleShowPopup}><IoMdOptions className='mx-3' />Options</button>
                                 </div>
 
                             </Col>
@@ -290,6 +273,7 @@ const EmployeeProfile = () => {
             </Row>
             <AddEmployees show={showAddEmployees} handleClose={handleCloseAddEmployees} handleShow={handleShowAddEmployees} setShow={setShowAddEmployees}/>
             <ReportsBar show={showReports} handleClose={handleCloseReports} handleShow={handleShowReports} setShow={setShowReports} user={user} isLoading={isLoading}/>
+            <Popup show={showPopup} handleClose={handleClosePopup} handleShow={handleShowPopup} setShow={setShowPopup} title="Working on it!"  message='This feature is coming soon!' image={<MdConstruction />}/>
         </Container>
      );
 }

@@ -1,4 +1,4 @@
-import { Button, Offcanvas, Form} from 'react-bootstrap';
+import { Button, Offcanvas, Form, Col} from 'react-bootstrap';
 import { useState } from 'react';
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -18,6 +18,7 @@ const AddEmployees = ({show, handleClose}) => {
     const [isLoading, setLoading] = useState(false);
     const [errMsg, setErrMsg] = useState(false);
     let navigate = useNavigate();
+    const [help, setHelp] = useState(false);
 
     const validateInfo = async (e) =>{
         let formData = {
@@ -97,11 +98,35 @@ const AddEmployees = ({show, handleClose}) => {
                             <Form.Control type='text' id='position' name='position' placeholder="Enter the employee's position" className='border-0 border-bottom' onChange={(e)=>{setPosition(e.target.value)}}/>
                         </div>
                         <button className='btn-primary' type='submit'>Register</button>
-                        <div className='d-flex justify-content-end py-0 my-0'>
-                            <p className='font-small__blue'>Need help?</p>
-                        </div>
+
 
                     </Form>
+
+                    {help ? (
+                        <>
+                            <div className='d-flex justify-content-end py-0 my-3'>
+                                <button className='btn-tertiary' onClick={()=>setHelp(false)}>Close help</button>
+                            </div>
+                            <Col>
+                                <h5 className='border-bottom'>How it works</h5>
+                                <ol className='px-4'>
+                                    <li className='my-1'>Create an account for each employee.</li>
+                                    <li className='my-1'>Give them a username and password.</li>
+                                    <li className='my-1'>Employees are automatically linked to your business and can now clock in and out.</li>
+                                    <li className='my-1'>Their hours and reports are automatically sent to you.</li>
+                                    <li className='my-1'>As the admin, only you can see all employee information and make corrections.</li>
+                                    <li className='my-1'>If there is a problem, employees can submit an adjustment request.</li>
+                                </ol>
+                            </Col>
+                        </>
+
+                    ) : (
+                        <div className='d-flex justify-content-end py-0 my-3'>
+                            <button className='btn-tertiary' onClick={()=>setHelp(true)}>Need help?</button>
+                        </div>
+                    )}
+
+                    
                 </Offcanvas.Body>
             </Offcanvas>
         </> 
