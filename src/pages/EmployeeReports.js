@@ -13,7 +13,6 @@ const EmployeeReports = () => {
     const [ isLoading, setLoading ] = useState(true);
     const [ current, setCurrent ] = useState();
     const [reversedHours, setReversedHours] = useState(); 
-    const [ weekNumber, setWeekNumber ] = useState();
 
     useEffect(() => {
         axios.get(`https://clockedin.herokuapp.com/user/${tempUser._id}`)
@@ -26,8 +25,6 @@ const EmployeeReports = () => {
         .catch(error => {
             console.log(error)
         }) 
-
-        getWeek();
     },[])
 
     const getAllUsers = async () => {
@@ -44,10 +41,7 @@ const EmployeeReports = () => {
 
     useEffect(()=>{
         if(employees){
-            console.log(employees)
             setCurrent(employees[0])
-
-            
         }
     }, [employees])
 
@@ -79,7 +73,6 @@ const EmployeeReports = () => {
         var days = Math.floor((currentDate - startDate) /
             (24 * 60 * 60 * 1000));
         var weekNumber = Math.ceil(days / 7);  
-        setWeekNumber(weekNumber)
         return weekNumber  
     }
 

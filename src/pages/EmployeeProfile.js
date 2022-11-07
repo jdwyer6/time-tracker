@@ -5,7 +5,7 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import _default from 'react-bootstrap/esm/Accordion';
 import Axios from 'axios';
 import LoadingSpinner from "../components/LoadingSpinner";
-import { MdLunchDining, MdTranslate } from 'react-icons/md';
+import { MdLunchDining, MdSentimentSatisfied, MdTranslate } from 'react-icons/md';
 import { IoMdOptions } from 'react-icons/io';
 import { TbReportSearch } from 'react-icons/tb';
 import {BsPeople} from 'react-icons/bs';
@@ -85,11 +85,13 @@ const EmployeeProfile = () => {
 
     useEffect(()=>{
         if(user !== undefined){
-            setClockedIn(user.clockedIn)
+            setClockedIn(JSON.parse(user.clockedIn))
             setLastData(user.hours.slice(-1))
+            setInfo(user.hours.slice(-1))
             setUserFound(true);
+            console.log(lastData)
             if(user.hours){
-                calculateProgressBar();
+                // calculateProgressBar();
             }
             
             setLoading(false)
@@ -115,68 +117,62 @@ const EmployeeProfile = () => {
          
     }
 
-    useEffect(()=>{
+    // useEffect(()=>{
         
-        if(info.end && !isLoading){
-            pushinfo()
-        }else{
-            return
-        }
+    //     if(info.end && !isLoading){
+    //         pushinfo()
+    //     }else{
+    //         return
+    //     }
 
-    }, [info.end])
+    // }, [info.end])
 
 
-    useEffect(() => {
-        if(!isLoading){
-            //WAS MESSING UP SERVER
-            // saveStatus()
-        }
+    // useEffect(() => {
+    //     if(!isLoading){
 
-    }, [clockedIn])
+    //         saveStatus()
+    //     }
+
+    // }, [clockedIn])
     
     function handleClockIn(){ 
+        const data = {
+            jobId: uuid4(), 
+            start: current.getTime(), 
+            startTime: shortTime, 
+        }
+        const currentlyClockedIn = true;
+        setClockedIn(true)
 
-        setClockedIn(!clockedIn); 
-        setInfo({...info, jobId: uuid4(), start: current.getTime(), startTime: shortTime, clockedIn: true});
-        Axios.post(`https://clockedin.herokuapp.com/user/${user._id}/${current.getTime()}`)
-        .then((res) => {
-        })
-        .catch(error => {
-            console.log(error.response)
-        })
-    }
-
-    function saveStatus(){
-        Axios.post(`https://clockedin.herokuapp.com/user/${tempUser._id}/${clockedIn}`)
+        Axios.post(`https://clockedin.herokuapp.com/user/${user._id}`, {data: data, currentlyClockedIn: currentlyClockedIn})
         .then((res) => {
             if(res.status === 200){
+
             }else{
                 console.log('There was an error')
             }
         })
         .catch(error => {
-            console.log(error)
+            console.log(error.response)
         })
+
     }
 
     function handleClockOut(){
-        setClockedIn(!clockedIn);
-        setInfo({...info, 
+        // setClockedIn(!clockedIn);
+        const data = {
             date: current.getDate(), 
             month: current.getMonth(), 
             day: current.getDay(), 
             weekNumber: getWeek(), 
             end: current.getTime(), 
-            hoursWorked: JSON.parse(((current.getTime()-info.start)/3600000).toFixed(4)), 
+            hoursWorked: JSON.parse(((current.getTime()-lastData[0].start)/3600000).toFixed(4)), 
             endTime: shortTime,
-            clockedIn: false
-        });
-        //// RERENDER HERE
-        // pushinfo()
-    }
+        }
+        setClockedIn(false)
 
-    const pushinfo = () => {
-        Axios.post(`https://clockedin.herokuapp.com/user/${user._id}`, {info: info})
+        Axios.put(`https://clockedin.herokuapp.com/user/${user._id}`, {data: data})
         .then((res) => {
             if(res.status === 200){
                 document.location.reload();
@@ -247,13 +243,13 @@ const EmployeeProfile = () => {
                             {user.hours.length > 0 ? 
                                 (
                                     <HoursCardTemp 
-                                        key={lastData[0].info.jobId} 
-                                        day={weekday[lastData[0].info.day]} 
-                                        month={months[lastData[0].info.month]} 
-                                        date={lastData[0].info.date} 
-                                        start={lastData[0].info.startTime} 
-                                        end={lastData[0].info.endTime} 
-                                        total={lastData[0].info.hoursWorked}
+                                        key={lastData[0].jobId} 
+                                        day={weekday[lastData[0].day]} 
+                                        month={months[lastData[0].month]} 
+                                        date={lastData[0].date} 
+                                        start={lastData[0].startTime} 
+                                        end={lastData[0].endTime} 
+                                        total={lastData[0].hoursWorked}
                                     />
                                 )
                              : ('')}
@@ -292,7 +288,7 @@ const EmployeeProfile = () => {
 
             </Row>
             <AddEmployees show={showAddEmployees} handleClose={handleCloseAddEmployees} handleShow={handleShowAddEmployees} setShow={setShowAddEmployees}/>
-            <ReportsBar show={showReports} handleClose={handleCloseReports} handleShow={handleShowReports} setShow={setShowReports} user={user} isLoading={isLoading}/>
+            {/* <ReportsBar show={showReports} handleClose={handleCloseReports} handleShow={handleShowReports} setShow={setShowReports} user={user} isLoading={isLoading}/> */}
         </Container>
      );
 }
