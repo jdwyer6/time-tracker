@@ -3,7 +3,7 @@ body {
   font-family: "Inter", sans-serif;
   position: relative;
   overflow-x: hidden;
-  background-color: #212529;
+  background-color: #090C0D;
 }
 
 html {
@@ -11,23 +11,71 @@ html {
 }
 
 h1 {
-  font-weight: 700;
+  font-weight: 200;
   font-size: clamp(48px, 7vw, 120px);
+  color: rgb(235, 235, 235);
 }
 
 h2 {
-  font-size: 36px;
-  font-weight: 400;
+  font-size: 24px;
+  font-weight: 700;
+  color: rgb(235, 235, 235);
 }
 
 h3 {
   font-size: 24px;
-  font-weight: 400;
+  font-weight: 500;
+  color: rgb(235, 235, 235);
 }
 
 p {
   font-size: 16px;
-  font-weight: 300;
+  font-weight: 400;
+  color: rgb(235, 235, 235);
+}
+
+.btn-1 {
+  border-radius: 6px;
+  border: 1px solid rgb(235, 235, 235);
+  height: clamp(100px, 35vh, 450px);
+  display: flex;
+  align-items: end;
+  position: relative;
+  background-color: #161C1C;
+  transition: all 500ms;
+}
+.btn-1 img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.btn-1:hover {
+  cursor: pointer;
+  transform: scale(1.01);
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 8px rgba(162, 188, 218, 0.2);
+}
+.btn-1:hover::before {
+  opacity: 1;
+}
+
+.btn-1::before {
+  border-radius: inherit;
+  background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.06), transparent 40%);
+  content: "";
+  height: 100%;
+  left: 0px;
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 500ms;
+}
+
+.clockedIn-color {
+  background-color: rgba(216, 105, 105, 0.5);
 }
 
 a:hover {

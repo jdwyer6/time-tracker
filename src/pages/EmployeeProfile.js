@@ -11,6 +11,8 @@ import { TbReportSearch } from 'react-icons/tb';
 import {BsPeople} from 'react-icons/bs';
 import { AiFillBackward } from 'react-icons/ai';
 import { ImClock2, ImClock } from 'react-icons/im';
+import {GiChart} from 'react-icons/gi';
+import{BiLogOut} from 'react-icons/bi';
 import Timer from 'react-timer-wrapper';
 import Timecode from 'react-timecode';
 import Spinner from 'react-bootstrap/Spinner';
@@ -20,6 +22,12 @@ import CurrentTime from "../components/CurrentTime";
 import AddEmployees from "../components/AddEmployees";
 import ReportsBar from "../components/ReportsBar";
 import Popup from '../components/Popup';
+import Button_1 from "../components/Button_1";
+import reportsIcon from '../images/ReportsIcon.png';
+import signOutIcon from '../images/signOutIcon.png';
+import groupIcon from '../images/groupIcon.png';
+
+import clockIcon from '../images/clockIcon.png';
 
 const EmployeeProfile = () => {
     const [tempUser, setTempUser] = useState(JSON.parse(localStorage.getItem('currentUser')));
@@ -169,6 +177,7 @@ const EmployeeProfile = () => {
         })
     }
 
+
     if(isLoading){
         return (
             <>
@@ -179,8 +188,64 @@ const EmployeeProfile = () => {
     }
 
     return ( 
-        <Container fluid className='mobile-container'>
-            <Row className='justify-content-end pt-5 d-none d-md-flex'>
+        <Container className='mobile-container' style={{height: '100vh'}}>
+            <Row className='d-flex flex-row bg-red pt-3'>
+                <h3 className='mb-0'>{user.businessName}</h3>
+                <p className=''>{user.name} {user.admin ? ('(admin)') : ('(employee)')}</p>
+            </Row>
+            <Row className='text-center border-bottom'>
+                <h1>{weekday[current.getDay()]} {months[current.getMonth()]} {current.getDate()}</h1>
+                
+            </Row>
+            <p>{time}</p>
+            <Row>
+
+            </Row>
+            <Row>
+                <Col md='6' className='p-2'>
+                    <Button_1 
+                        image={clockIcon}
+                        title='Clock in'
+                        description='Start my shift.'
+                        icon={<ImClock className='me-2'/>}
+                        imageSize='50%'
+                        bgColor={user.clockedIn ? 'clockedIn-color' : ''}
+                        onClick={handleClockIn}
+                    />
+                </Col>
+                <Col md='6'  className='p-2'>
+                    <Button_1 
+                        image={groupIcon}
+                        title='My Employees'
+                        description='Change status, see hours/reports'
+                        icon={<BsPeople className='me-2'/>}
+                        imageSize='50%'
+                    />
+                </Col>
+                <Col  className='p-2'>
+                    <Button_1 
+                            image={reportsIcon}
+                            title='My Hours'
+                            description='Start my shift.'
+                            icon={<GiChart className='me-2'/>}
+                        />
+                </Col>
+                <Col  className='p-2'>
+                    <Button_1 
+                            image={signOutIcon}
+                            title='Sign out'
+                            description='Start my shift.'
+                            icon={<BiLogOut className='me-2'/>}
+                            imageSize='50%'
+                        />
+                </Col>
+            </Row>
+
+
+
+
+
+            {/* <Row className='justify-content-end pt-5 d-none d-md-flex'>
                 <Col md='6'>
                     <h5 className='text-white'>Recent hours</h5>
                 </Col>
@@ -273,7 +338,7 @@ const EmployeeProfile = () => {
             </Row>
             <AddEmployees show={showAddEmployees} handleClose={handleCloseAddEmployees} handleShow={handleShowAddEmployees} setShow={setShowAddEmployees}/>
             <ReportsBar show={showReports} handleClose={handleCloseReports} handleShow={handleShowReports} setShow={setShowReports} user={user} isLoading={isLoading}/>
-            <Popup show={showPopup} handleClose={handleClosePopup} handleShow={handleShowPopup} setShow={setShowPopup} title="Working on it!"  message='This feature is coming soon!' image={<MdConstruction />}/>
+            <Popup show={showPopup} handleClose={handleClosePopup} handleShow={handleShowPopup} setShow={setShowPopup} title="Working on it!"  message='This feature is coming soon!' image={<MdConstruction />}/> */}
         </Container>
      );
 }
