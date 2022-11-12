@@ -12,7 +12,7 @@ html {
 
 h1 {
   font-weight: 200;
-  font-size: clamp(48px, 7vw, 120px);
+  font-size: clamp(48px, 5vw, 120px);
   color: rgb(235, 235, 235);
 }
 
@@ -74,8 +74,53 @@ p {
   transition: opacity 500ms;
 }
 
+.btn-2 {
+  border: 1px solid white;
+  background-color: transparent;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 400;
+  color: rgb(235, 235, 235);
+  background-image: linear-gradient(to left, rgba(162, 188, 218, 0.5), transparent);
+  width: fit-content;
+  padding: 0.5rem;
+}
+
 .clockedIn-color {
   background-color: rgba(216, 105, 105, 0.5);
+}
+
+.side-bar {
+  background-color: #161C1C;
+}
+
+.btn-close {
+  opacity: 1;
+  fill: white;
+  color: white;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.employee-list-item {
+  border-radius: 6px;
+  border: 1px solid rgb(235, 235, 235);
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  background-color: #161C1C;
+}
+
+.hours-list-item {
+  border: 1px solid rgb(235, 235, 235);
+  border-radius: 6px;
+  background-color: #161C1C;
+  color: white;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
 }
 
 a:hover {

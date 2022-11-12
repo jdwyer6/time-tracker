@@ -3,6 +3,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { Link } from "react-router-dom";
+import {IoIosArrowDropleft} from 'react-icons/io';
+import {BsPeople, BsPersonCircle, BsPerson} from 'react-icons/bs';
+import { TbRadiusBottomLeft } from "react-icons/tb";
 
 const EmployeeReports = () => {
 
@@ -86,8 +89,81 @@ const EmployeeReports = () => {
     }
 
     return ( 
-        <Container fluid style={{height: '100vh'}}>
-            <Row className='pt-5 pb-0'>
+        <Container style={{height: '100vh'}}>
+            <Row className='mt-5'>
+                <Link to='/employeeprofile' style={{textDecoration: 'none'}}>
+                    <button className='btn-2 d-flex'><IoIosArrowDropleft style={{fontSize: '1.5rem', marginRight: '.5rem'}}/> Back to dashboard</button>
+                </Link>
+                
+            </Row>
+            <Row className='mt-5'>
+                <Col>
+                    <h2><BsPeople className='me-2' />My Employees</h2>
+                    <div className='mt-5'>
+                        {employees.map((employee)=> (
+                            <div key={employee._id} className='employee-list-item' onClick={()=>setCurrent(employee)} style={{borderRadius: '6px', maxWidth: '600px'}}>
+                               
+                                <div className='d-flex'>
+                                    <BsPersonCircle className='text-white' style={{width: '40px', height: '40px'}}/>
+                                    <div className='mx-3'>
+                                        <p className='my-0'>{employee.name}</p>
+                                        <p className='font-small my-0'>{user.position}</p>
+                                    </div>
+     
+                                </div>
+                                <div className='d-flex flex-column align-items-end'>
+                                    <p className='m-0 font-small'>STATUS:</p>
+                                    {employee.clockedIn ? (
+                                        <p className='m-0 font-small text-success fw-bold'>clocked in</p>
+                                    ) : (
+                                        <p className='m-0 font-small text-danger'>clocked out</p>
+                                    )}
+                                </div>
+
+                            </div>
+                            
+                        ))}
+                    </div>
+                </Col>
+                <Col>
+                    <h2><BsPerson className='me-2' />{current.name}</h2>
+                    <Table className='mt-5' variant="dark" striped hover responsive>
+                            <thead>
+                                <tr className=''>
+                                    <th className='text-center text-white'><p className='mb-0'>Date</p></th>
+                                    <th className='text-center text-white'><p className='mb-0'>Start time</p></th>
+                                    <th className='text-center text-white'><p className='mb-0'>End time</p></th>
+                                    <th className='text-center text-white'><p className='mb-0'>Total</p></th>
+                                </tr>
+                            </thead>
+                            <tbody className='table-group-divider'>
+                                {reversedHours.map((entry) => (
+                                    <tr key={entry.start} className='hours-list-item'>
+                                        <td className=''>{months[entry.month]} {entry.date}</td>
+                                        <td className=''>{entry.startTime}</td>
+                                        <td className=''>{entry.endTime}</td>
+                                        <td className=''>{entry.hoursWorked}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+                </Col>
+            </Row>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            {/* <Row className='pt-5 pb-0'>
                 <Col>
                     <h3 className='text-white mb-0'>My employees</h3>
                     <p className='font-small text-white'>Click employee to view logged hours</p>
@@ -154,7 +230,7 @@ const EmployeeReports = () => {
                         </tbody>
                     </Table>
                 </Col>
-            </Row>
+            </Row> */}
         </Container> 
     );
 }

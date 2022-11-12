@@ -44,7 +44,7 @@ html{
 
 h1{
     font-weight: 200;
-    font-size: clamp(48px, 7vw, 120px);
+    font-size: clamp(48px, 5vw, 120px);
     color: $off-white;
 }
 
@@ -110,9 +110,60 @@ p{
     transition: opacity 500ms;
 }
 
+.btn-2{
+    border: 1px solid white;
+    background-color: transparent;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 400;
+    color: $off-white;
+    background-image: linear-gradient(to left, rgba($clear-lake, .5), transparent);
+    width: fit-content;
+    padding: .5rem;
+}
+
 .clockedIn-color{
     background-color: rgba($coral, .5);
 }
+
+.side-bar{
+    background-color: $black-light;
+}
+
+.btn-close{
+    opacity: 1;
+    fill: white; 
+    color: white;
+}
+
+.clickable{
+    cursor: pointer;
+}
+
+.employee-list-item{
+    border-radius: 6px;
+    border: 1px solid $off-white;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    background-color: $black-light;
+}
+
+.hours-list-item{
+    border: 1px solid $off-white;
+    border-radius: 6px;
+    background-color: $black-light;
+    color: white;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+
+
+
+
+
 
 
 

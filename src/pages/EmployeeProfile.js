@@ -127,6 +127,12 @@ const EmployeeProfile = () => {
             setProgress((total/40) * 100)
         }
     }
+
+    function logout(){
+        localStorage.removeItem('currentUser')
+        navigate('/')
+        document.location.reload()
+    }
     
     function handleClockIn(){ 
         const data = {
@@ -188,10 +194,10 @@ const EmployeeProfile = () => {
     }
 
     return ( 
-        <Container className='mobile-container' style={{height: '100vh'}}>
-            <Row className='d-flex flex-row bg-red pt-3'>
-                <h3 className='mb-0'>{user.businessName}</h3>
-                <p className=''>{user.name} {user.admin ? ('(admin)') : ('(employee)')}</p>
+        <Container className='' style={{height: '100vh'}}>
+            <Row className='d-flex flex-row pt-3'>
+                <h3 className='mb-0 d-inline'>{user.businessName}</h3>
+                <p className='d-inline'>{user.name} {user.admin ? ('(admin)') : ('(employee)')}</p>
             </Row>
             <Row className='text-center border-bottom'>
                 <h1>{weekday[current.getDay()]} {months[current.getMonth()]} {current.getDate()}</h1>
@@ -205,12 +211,14 @@ const EmployeeProfile = () => {
                 <Col md='6' className='p-2'>
                     <Button_1 
                         image={clockIcon}
-                        title='Clock in'
-                        description='Start my shift.'
+                        title={user.clockedIn ? 'Clock out' : 'Clock in'}
+                        description={user.clockedIn ? 'Tracking your time. Click to end shift.' : 'Start my shift'}
                         icon={<ImClock className='me-2'/>}
                         imageSize='50%'
                         bgColor={user.clockedIn ? 'clockedIn-color' : ''}
-                        onClick={handleClockIn}
+                        clickAction = {user.clockedIn ? handleClockOut : handleClockIn}
+                        time={user.clockedIn ? <Timer className='mx-1 text-white' style={{fontSize: '14px'}} active duration={null}  time={amountOfTimeClockedIn}><Timecode />
+                        </Timer> : ''}
                     />
                 </Col>
                 <Col md='6'  className='p-2'>
@@ -220,6 +228,8 @@ const EmployeeProfile = () => {
                         description='Change status, see hours/reports'
                         icon={<BsPeople className='me-2'/>}
                         imageSize='50%'
+                        clickAction = {()=>navigate('/employee-reports')}
+                        
                     />
                 </Col>
                 <Col  className='p-2'>
@@ -228,6 +238,7 @@ const EmployeeProfile = () => {
                             title='My Hours'
                             description='Start my shift.'
                             icon={<GiChart className='me-2'/>}
+                            clickAction = {setShowReports}
                         />
                 </Col>
                 <Col  className='p-2'>
@@ -237,6 +248,7 @@ const EmployeeProfile = () => {
                             description='Start my shift.'
                             icon={<BiLogOut className='me-2'/>}
                             imageSize='50%'
+                            clickAction={logout}
                         />
                 </Col>
             </Row>
@@ -335,10 +347,10 @@ const EmployeeProfile = () => {
                     </div>
                 </Col>
 
-            </Row>
+            </Row>*/}
             <AddEmployees show={showAddEmployees} handleClose={handleCloseAddEmployees} handleShow={handleShowAddEmployees} setShow={setShowAddEmployees}/>
             <ReportsBar show={showReports} handleClose={handleCloseReports} handleShow={handleShowReports} setShow={setShowReports} user={user} isLoading={isLoading}/>
-            <Popup show={showPopup} handleClose={handleClosePopup} handleShow={handleShowPopup} setShow={setShowPopup} title="Working on it!"  message='This feature is coming soon!' image={<MdConstruction />}/> */}
+            <Popup show={showPopup} handleClose={handleClosePopup} handleShow={handleShowPopup} setShow={setShowPopup} title="Working on it!"  message='This feature is coming soon!' image={<MdConstruction />}/> 
         </Container>
      );
 }

@@ -53,23 +53,24 @@ const ReportsBar = ({show, handleClose, user}) => {
 
     return ( 
         <>
-            <Offcanvas show={show} onHide={handleClose}>
-                <Offcanvas.Header closeButton>
-                    <Offcanvas.Title>My hours</Offcanvas.Title>
+            <Offcanvas show={show} onHide={handleClose} className='side-bar'>
+                <Offcanvas.Header closeButton className='btn-close-white'>
+                    <Offcanvas.Title><h2 className='text-black'>My hours</h2></Offcanvas.Title>
                 </Offcanvas.Header>
+                
                 <Offcanvas.Body>
-                    <Table striped hover style={{borderRadius: '12px'}}>
+                    <Table striped hover variant='dark' style={{borderRadius: '12px'}}>
                                 <thead>
                                     <tr className=''>
-                                        <th className='text-center'>Date</th>
-                                        <th className='text-center'>Start Time</th>
-                                        <th className='text-center'>End Time</th>
-                                        <th className='text-center'>Total</th>
+                                        <th className='text-center text-white'>Date</th>
+                                        <th className='text-center text-white'>Start Time</th>
+                                        <th className='text-center text-white'>End Time</th>
+                                        <th className='text-center text-white'>Total</th>
                                     </tr>
                                 </thead>
                                 <tbody className='table-group-divider'>
                                     {reversedHours.map((entry) => (
-                                        <tr key={entry.start} className={getWeek() % 2 === 0 ? 'bg-transparent' : 'bg-light'}>
+                                        <tr key={entry.start} className='clickable'>
                                             <td className='text-center font-small'>{months[entry.month]} {entry.date}</td>
                                             <td className='text-center font-small'>{entry.startTime}</td>
                                             <td className='text-center font-small'>{entry.endTime}</td>
