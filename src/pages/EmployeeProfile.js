@@ -50,9 +50,6 @@ const EmployeeProfile = () => {
     const [time, setTime] = useState(current.toLocaleTimeString());
     const [shortTime, setShortTime] = useState(current.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}));
     const [info, setInfo] = useState({});
-    // const [showAddEmployees, setShowAddEmployees] = useState(false);
-    // const handleCloseAddEmployees = () => setShowAddEmployees(false);
-    // const handleShowAddEmployees = () => setShowAddEmployees(true);
     const [showReports, setShowReports] = useState(false);
     const handleCloseReports = () => setShowReports(false);
     const handleShowReports = () => setShowReports(true);
@@ -254,103 +251,6 @@ const EmployeeProfile = () => {
                         />
                 </Col>
             </Row>
-
-
-
-
-
-            {/* <Row className='justify-content-end pt-5 d-none d-md-flex'>
-                <Col md='6'>
-                    <h5 className='text-white'>Recent hours</h5>
-                </Col>
-            </Row>
-            <Row className='h-75'>
-                <Col xs='12' md='6'>
-                    <Row className='d-flex flex-column h-100' >
-                        <Col className='d-flex align-items-start flex-column'>
-                            <Badge name={user.name} position={user.position} image={user.image} admin={user.admin} showReports={handleShowReports}/>
-                            
-                        </Col>
-                        <Col  className="d-flex flex-column align-items-start justify-content-center order-first order-md-last mt-3 my-md-0">
-                            <h1 className='text-white m-0 h1-reduced'>{weekday[current.getDay()]} {months[current.getMonth()]} {current.getDate()}</h1>
-                            <div style={{display: 'flex', width: '100%', justifyContent: 'start', flexDirection: 'column'}}>
-                                <p className='text-white text-start m-0'>{time}</p>
-                                <div className='my-1'>
-                                    {clockedIn === false ? (
-                                            <button onClick={()=>handleClockIn()} className='btn-primary'><ImClock className='mx-1'/>Clock in</button>
-                                        ) : (
-                                            <>
-                                                <div className='d-flex justify-content-start'>
-                                                    <button onClick={()=>handleClockOut()} className='btn-alert d-flex align-items-center'>
-                                                            <ImClock2 className='mx-1'/>Clock out <Timer className='mx-1' style={{fontSize: '14px'}} active duration={null}  time={amountOfTimeClockedIn}><Timecode />
-                                                            </Timer>
-                                                    </button>
-                                                    <button className='btn-primary mx-2' onClick={()=>handleShowPopup()}><MdLunchDining className='mx-2'/>Break</button>
-                                                </div>
-                                                <div className='d-flex mt-1'>
-                                                    <Spinner animation="grow" className='tracking-icon'/>
-                                                    <p style={{fontSize: '80%', color: 'white'}}>Tracking your time</p>
-                                                </div>
-                                            </>
-                                    )}
-                                </div>
-                            </div>
-                        </Col>
-                    </Row>
-                   
-                    
-                </Col>
-                <Col>
-                    <Row className= 'd-flex flex-column h-100'>
-                        <Col className='d-none d-md-block'>
-                            {user.hours.length > 0 ? 
-                                (
-                                    <HoursCardTemp 
-                                        key={lastData[0].jobId} 
-                                        day={weekday[lastData[0].day]} 
-                                        month={months[lastData[0].month]} 
-                                        date={lastData[0].date} 
-                                        start={lastData[0].startTime} 
-                                        end={lastData[0].endTime} 
-                                        total={lastData[0].hoursWorked}
-                                    />
-                                )
-                             : ('')}
-                        </Col>
-                        {user.admin ? (
-                            <Col className='d-flex flex-column'>
-            
-                                <h3 className='text-white d-none d-md-block'>Admin options</h3>
-                                <p className='text-white d-md-none my-0'>Admin options</p>
-                                <div className='d-flex flex-column'>
-                                    <button className='btn-large my-1 my-md-2'  onClick={handleShowAddEmployees}><BsPeople className='mx-3'/>Add employees</button>
-                                    <Link to='/employee-reports'>
-                                        <button className='btn-large my-1 my-md-2'><TbReportSearch className='mx-3'/>View employee reports</button>
-                                    </Link>
-                                    
-                                    <button className='btn-large my-1 my-md-2' onClick={handleShowPopup}><IoMdOptions className='mx-3' />Options</button>
-                                </div>
-
-                            </Col>
-                        ):('')}
-
-                    </Row>
-
-                </Col>
-            </Row>
-            <Row className='d-md-block mt-3'>
-                <Col>
-                    <div style={{backgroundColor: '#fff', height: '20px', borderRadius: '4px', position: 'relative'}}>
-                        <div style={{background: '#002FD6', height: '16px', width: `${progress -1 }%`, borderRadius: '4px', position: 'absolute', top: '8%', transform: 'translateY(-50%)', left: '0', transform: 'translateX(.5%)'}}></div>
-                    </div>
-                    <div className='px-0 py-1 d-flex justify-content-between'>
-                        <div className='font-small text-white'>Weekly progress</div>
-                        <p className='font-small text-white'>40 hours</p>
-                    </div>
-                </Col>
-
-            </Row>*/}
-            {/* <AddEmployees show={showAddEmployees} handleClose={handleCloseAddEmployees} handleShow={handleShowAddEmployees} setShow={setShowAddEmployees}/> */}
             <ReportsBar show={showReports} handleClose={handleCloseReports} handleShow={handleShowReports} setShow={setShowReports} user={user} isLoading={isLoading}/>
             <Popup show={showPopup} handleClose={handleClosePopup} handleShow={handleShowPopup} setShow={setShowPopup} title="Working on it!"  message='This feature is coming soon!' image={<MdConstruction />}/> 
         </Container>
