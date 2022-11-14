@@ -1,32 +1,23 @@
-import Badge from "../components/Badge";
-import { Container, Row, Col, Button } from 'react-bootstrap';
-import { useNavigate, Link } from 'react-router-dom';
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 import _default from 'react-bootstrap/esm/Accordion';
+import { useNavigate, Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import Axios from 'axios';
-import LoadingSpinner from "../components/LoadingSpinner";
-import { MdLunchDining, MdSentimentSatisfied, MdTranslate, MdConstruction } from 'react-icons/md';
-import { IoMdOptions } from 'react-icons/io';
-import { TbReportSearch } from 'react-icons/tb';
+import { MdConstruction } from 'react-icons/md';
 import {BsPeople} from 'react-icons/bs';
-import { AiFillBackward } from 'react-icons/ai';
-import { ImClock2, ImClock } from 'react-icons/im';
+import { ImClock } from 'react-icons/im';
 import {GiChart} from 'react-icons/gi';
 import{BiLogOut} from 'react-icons/bi';
 import Timer from 'react-timer-wrapper';
 import Timecode from 'react-timecode';
-import Spinner from 'react-bootstrap/Spinner';
-import HoursCardTemp from "../components/HoursCard";
 import uuid4 from "uuid4";
-import CurrentTime from "../components/CurrentTime";
-import AddEmployees from "../components/AddEmployees";
 import ReportsBar from "../components/ReportsBar";
 import Popup from '../components/Popup';
 import Button_1 from "../components/Button_1";
+import LoadingSpinner from "../components/LoadingSpinner";
 import reportsIcon from '../images/ReportsIcon.png';
 import signOutIcon from '../images/signOutIcon.png';
 import groupIcon from '../images/groupIcon.png';
-
 import clockIcon from '../images/clockIcon.png';
 
 const EmployeeProfile = () => {
