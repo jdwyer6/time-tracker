@@ -12,12 +12,12 @@ html {
 
 h1 {
   font-weight: 200;
-  font-size: clamp(48px, 5vw, 120px);
+  font-size: clamp(40px, 5vw, 120px);
   color: rgb(235, 235, 235);
 }
 
 h2 {
-  font-size: 24px;
+  font-size: clamp(18px, 4vw, 24px);
   font-weight: 700;
   color: rgb(235, 235, 235);
 }
@@ -60,6 +60,21 @@ p {
   opacity: 1;
 }
 
+@media only screen and (max-width: 576px) {
+  .btn-1 {
+    border-radius: 6px;
+    border: 1px solid rgb(235, 235, 235);
+    height: clamp(100px, 20vh, 450px);
+    display: flex;
+    align-items: end;
+    position: relative;
+    background-color: #161C1C;
+    transition: all 500ms;
+  }
+  .btn-1 img {
+    filter: opacity(0.3);
+  }
+}
 .btn-1::before {
   border-radius: inherit;
   background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.06), transparent 40%);
@@ -75,20 +90,25 @@ p {
 }
 
 .btn-2 {
-  border: 1px solid white;
-  background-color: transparent;
+  background-color: #A2BCDA;
+  border: none;
   border-radius: 6px;
   font-size: 16px;
   font-weight: 400;
-  color: rgb(235, 235, 235);
-  background-image: linear-gradient(to left, rgba(162, 188, 218, 0.5), transparent);
+  color: #090C0D;
   width: fit-content;
   padding: 0.5rem;
 }
 
-.modal-content {
-  background: rgb(235, 235, 235);
+.modal-content, .offcanvas {
+  background-image: linear-gradient(to left, rgba(162, 188, 218, 0.5), transparent);
+  background-color: #161C1C;
+  border: 1px solid white;
   border-radius: 6px;
+}
+
+.offcanvas {
+  border: none;
 }
 
 .clockedIn-color {
@@ -119,6 +139,15 @@ p {
   font-size: 16px;
   font-weight: 400;
   color: rgb(235, 235, 235);
+  transition: all 0.6s;
+  border-radius: 6px;
+}
+.btn-no-style:hover {
+  background-image: linear-gradient(to left, rgba(162, 188, 218, 0.5), transparent);
+  background-color: rgba(216, 105, 105, 0.5);
+  border-radius: 6px;
+  padding: 5px 10px;
+  transform: translateY(-5px);
 }
 
 .clickable {
@@ -188,6 +217,10 @@ th:last-child {
 
 th:first-child {
   border-bottom-left-radius: 6px;
+}
+
+.active {
+  background-color: rgba(235, 235, 235, 0.2);
 }
 
 .items-container {

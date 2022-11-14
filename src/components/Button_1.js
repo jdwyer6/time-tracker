@@ -15,7 +15,7 @@ const Button_1 = ({image, icon, title, description, imageSize, bgColor, clickAct
         <div className={`btn-1 ${bgColor}`} onMouseMove={(e)=>handleOnMouseMove(e)} onClick={clickAction}>
         <img width={imageSize} src={image}/>
         <div className='px-4 w-100'>
-            <h2>{icon}{title}</h2>
+            <h2 style={{zIndex: '5', position: 'relative'}}>{icon}{title}</h2>
             <p>{description}</p>
             <div>{time}</div>
         </div>

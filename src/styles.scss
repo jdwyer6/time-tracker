@@ -45,12 +45,12 @@ html{
 
 h1{
     font-weight: 200;
-    font-size: clamp(48px, 5vw, 120px);
+    font-size: clamp(40px, 5vw, 120px);
     color: $off-white;
 }
 
 h2{
-    font-size: 24px;
+    font-size: clamp(18px, 4vw, 24px);
     font-weight: 700;
     color: $off-white;
 }
@@ -97,6 +97,23 @@ p{
     }
 }
 
+@media only screen and (max-width: 576px) {
+    .btn-1{
+        border-radius: 6px;
+        border: 1px solid $off-white;
+        height: clamp(100px, 20vh, 450px);
+        display: flex;
+        align-items: end;
+        position: relative;
+        background-color: $black-light;
+        transition: all 500ms;
+
+        img{
+            filter: opacity(.3);
+        }
+    }
+}
+
 .btn-1::before{
     border-radius: inherit;
     background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, .06), transparent 40%);
@@ -112,21 +129,30 @@ p{
 }
 
 .btn-2{
-    border: 1px solid white;
-    background-color: transparent;
+    // border: 1px solid white;
+    // background-color: transparent;
+    background-color: $clear-lake;
+    border: none;
     border-radius: 6px;
     font-size: 16px;
     font-weight: 400;
-    color: $off-white;
-    background-image: linear-gradient(to left, rgba($clear-lake, .5), transparent);
+    color: $black-dark;
+    // background-image: linear-gradient(to left, rgba($clear-lake, .5), transparent);
     width: fit-content;
     padding: .5rem;
 }
 
-.modal-content{
-    background: $off-white;
+.modal-content, .offcanvas{
+    background-image: linear-gradient(to left, rgba($clear-lake, .5), transparent);
+    background-color: $black-light;
+    border: 1px solid white;
     border-radius: 6px;
 }
+
+.offcanvas{
+    border: none;
+}
+
 .clockedIn-color{
     background-image: linear-gradient(to left, rgba($green, .5), transparent);
 }
@@ -155,6 +181,16 @@ p{
     font-size: 16px;
     font-weight: 400;
     color: $off-white;
+    transition: all .6s;
+    border-radius: 6px;
+
+    &:hover{
+        background-image: linear-gradient(to left, rgba($clear-lake, .5), transparent);
+        background-color: rgba($coral, .5);
+        border-radius: 6px;
+        padding: 5px 10px;
+        transform: translateY(-5px);
+    }
 }
 
 .clickable{
@@ -173,6 +209,7 @@ p{
     &:hover{
         cursor: pointer;
     }
+
 }
 
 .hours-list-item{
@@ -228,7 +265,9 @@ th:first-child{
     border-bottom-left-radius: 6px;
 }
 
-
+.active{
+    background-color: rgba($off-white, .2);
+}
 
 // table tr th:first-child,
 // table tr td:first-child {

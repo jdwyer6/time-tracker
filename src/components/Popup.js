@@ -9,17 +9,17 @@ const Popup = ({show, handleClose, setShow, image, title, message}) => {
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                 <Modal.Title className='d-flex'>
-                    <div>
+                    <div className='text-white'>
                         {title}
                     </div>
-                    <div className='mx-3'>
+                    <div className='mx-3 text-white'>
                         {image}
                     </div>
                 </Modal.Title>
                 </Modal.Header>
-                <Modal.Body>{message}</Modal.Body>
+                <Modal.Body className='text-white'>{message}</Modal.Body>
                 <Modal.Footer>
-                    <button className='btn-primary' onClick={handleClose}>
+                    <button className='btn-no-style' onClick={handleClose}>
                         Close
                     </button>
                 </Modal.Footer>

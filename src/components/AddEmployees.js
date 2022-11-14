@@ -81,7 +81,7 @@ const AddEmployees = ({show, handleClose}) => {
         <>
             <Offcanvas show={show} onHide={handleClose}>
                 <Offcanvas.Header closeButton>
-                <Offcanvas.Title>Add Employee</Offcanvas.Title>
+                <Offcanvas.Title className='text-white'>Add Employee</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                     <Form onSubmit={createUser}>
@@ -97,7 +97,7 @@ const AddEmployees = ({show, handleClose}) => {
                         <div className='d-flex align-items-center my-4'>
                             <Form.Control type='text' id='position' name='position' placeholder="Enter the employee's position" className='border-0 border-bottom' onChange={(e)=>{setPosition(e.target.value)}}/>
                         </div>
-                        <button className='btn-primary' type='submit'>Register</button>
+                        <button className='btn-no-style' type='submit'>Register</button>
 
 
                     </Form>
@@ -105,24 +105,24 @@ const AddEmployees = ({show, handleClose}) => {
                     {help ? (
                         <>
                             <div className='d-flex justify-content-end py-0 my-3'>
-                                <button className='btn-tertiary' onClick={()=>setHelp(false)}>Close help</button>
+                                <button className='btn-tertiary text-white' onClick={()=>setHelp(false)}>Close help</button>
                             </div>
                             <Col>
-                                <h5 className='border-bottom'>How it works</h5>
+                                <h5 className='border-bottom text-white'>How it works</h5>
                                 <ol className='px-4'>
-                                    <li className='my-1'>Create an account for each employee.</li>
-                                    <li className='my-1'>Give them a username and password.</li>
-                                    <li className='my-1'>Employees are automatically linked to your business and can now clock in and out.</li>
-                                    <li className='my-1'>Their hours and reports are automatically sent to you.</li>
-                                    <li className='my-1'>As the admin, only you can see all employee information and make corrections.</li>
-                                    <li className='my-1'>If there is a problem, employees can submit an adjustment request.</li>
+                                    <li className='my-1 text-white'>Create an account for each employee.</li>
+                                    <li className='my-1 text-white'>Give them a username and password.</li>
+                                    <li className='my-1 text-white'>Employees are automatically linked to your business and can now clock in and out.</li>
+                                    <li className='my-1 text-white'>Their hours and reports are automatically sent to you.</li>
+                                    <li className='my-1 text-white'>As the admin, only you can see all employee information and make corrections.</li>
+                                    <li className='my-1 text-white'>If there is a problem, employees can submit an adjustment request.</li>
                                 </ol>
                             </Col>
                         </>
 
                     ) : (
                         <div className='d-flex justify-content-end py-0 my-3'>
-                            <button className='btn-tertiary' onClick={()=>setHelp(true)}>Need help?</button>
+                            <button className='btn-tertiary text-white' onClick={()=>setHelp(true)}>Need help?</button>
                         </div>
                     )}
 

@@ -233,16 +233,17 @@ const EmployeeProfile = () => {
                         
                     />
                 </Col>
-                <Col  className='p-2'>
+                <Col  md='6' className='p-2'>
                     <Button_1 
                             image={reportsIcon}
                             title='My Hours'
                             description='Start my shift.'
                             icon={<GiChart className='me-2'/>}
                             clickAction = {setShowReports}
+                            imageSize='75%'
                         />
                 </Col>
-                <Col  className='p-2'>
+                <Col md='6' className='p-2'>
                     <Button_1 
                             image={signOutIcon}
                             title='Sign out'
