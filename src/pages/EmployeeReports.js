@@ -184,12 +184,12 @@ const EmployeeReports = () => {
 
     return ( 
         <Container style={{height: '100vh'}}>
-            <Row className='text-center border-bottom mt-5 items-container'>
+            <Row className='text-center border-bottom mt-5'>
                 <h1 style={{marginBottom: '-10px'}}>{weekday[currentDay.getDay()]} {months[currentDay.getMonth()]} {currentDay.getDate()}</h1>
             </Row>
             <Row>
                 <Link to='/employeeprofile' className='px-0' style={{textDecoration: 'none'}}>
-                    <p className='p-0'><IoIosArrowDropleft style={{fontSize: '1.5rem'}}/> Back to dashboard</p>
+                    <p className='p-0 btn-no-style'><IoIosArrowDropleft style={{fontSize: '1.5rem'}}/> Back to dashboard</p>
                 </Link>
             </Row>
             <Row className='mt-3'>

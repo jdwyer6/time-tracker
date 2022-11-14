@@ -97,7 +97,7 @@ const AddEmployees = ({show, handleClose}) => {
                         <div className='d-flex align-items-center my-4'>
                             <Form.Control type='text' id='position' name='position' placeholder="Enter the employee's position" className='border-0 border-bottom' onChange={(e)=>{setPosition(e.target.value)}}/>
                         </div>
-                        <button className='btn-no-style' type='submit'>Register</button>
+                        <button className='btn-2' type='submit'>Register</button>
 
 
                     </Form>

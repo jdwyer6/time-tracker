@@ -6,8 +6,8 @@ const Popup = ({show, handleClose, setShow, image, title, message}) => {
 
     return ( 
         <>
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
+            <Modal show={show} onHide={handleClose} variant='dark'>
+                <Modal.Header closeButton >
                 <Modal.Title className='d-flex'>
                     <div className='text-white'>
                         {title}
