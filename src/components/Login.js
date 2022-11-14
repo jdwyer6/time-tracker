@@ -60,16 +60,14 @@ const Login = () => {
             <p>Enter your details below to continue</p>
             <form onSubmit={login}>
                 <div className='d-flex align-items-center my-4'>
-                    <BiUserCircle />
                     <Form.Control type='text' id='username' name='username' placeholder='Username' className='border-0 border-bottom' onChange={(e)=>{setUsername(e.target.value)}}/>
                 </div>
                 <div className='d-flex align-items-center my-4'>
-                    <RiLockPasswordLine />
                     <Form.Control type='password' id='password' name='password' placeholder='Password' className='border-0 border-bottom' onChange={(e)=>{setPassword(e.target.value)}}/>
                 </div>
-                    <button className='btn-primary w-100 my-2' type='submit'>Log in <MdOutlineLogin /></button>
+                    <button className='btn-2 w-100 my-2' type='submit'>Log in <MdOutlineLogin /></button>
             </form>
-            <button className='btn-primary w-100 my-2' onClick={handleShowRegister}>Register a business</button>
+            <button className='btn-2 w-100 my-2' onClick={handleShowRegister}>Register a business</button>
             <div className='d-flex justify-content-end py-0 mt-2'>
                     <a className='text-decoration-none' onClick={handleShow}><p className='font-small'>Forgot password</p></a>
             </div>

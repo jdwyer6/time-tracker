@@ -86,7 +86,7 @@ const Register = ({handleCloseRegister, showRegister, setShowRegister}) => {
     
             <Offcanvas show={showRegister} onHide={handleCloseRegister}>
             <Offcanvas.Header closeButton>
-                <Offcanvas.Title>Register your business</Offcanvas.Title>
+                <Offcanvas.Title><h2>Register your business</h2></Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
                 <Form onSubmit={createUser}>
@@ -105,10 +105,7 @@ const Register = ({handleCloseRegister, showRegister, setShowRegister}) => {
                     <div className='d-flex align-items-center my-4'>
                         <Form.Control type='text' id='position' name='position' placeholder='Enter your position' className='border-0 border-bottom' onChange={(e)=>{setPosition(e.target.value)}}/>
                     </div>
-                    <button className='btn-primary' type='submit'>Register</button>
-                    <div className='d-flex justify-content-end py-0 my-0'>
-                        <p className='font-small__blue'>Need help?</p>
-                    </div>
+                    <button className='btn-2' type='submit'>Register</button>
 
                 </Form>
             </Offcanvas.Body>
