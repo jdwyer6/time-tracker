@@ -50,9 +50,9 @@ const EmployeeProfile = () => {
     const [time, setTime] = useState(current.toLocaleTimeString());
     const [shortTime, setShortTime] = useState(current.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}));
     const [info, setInfo] = useState({});
-    const [showAddEmployees, setShowAddEmployees] = useState(false);
-    const handleCloseAddEmployees = () => setShowAddEmployees(false);
-    const handleShowAddEmployees = () => setShowAddEmployees(true);
+    // const [showAddEmployees, setShowAddEmployees] = useState(false);
+    // const handleCloseAddEmployees = () => setShowAddEmployees(false);
+    // const handleShowAddEmployees = () => setShowAddEmployees(true);
     const [showReports, setShowReports] = useState(false);
     const handleCloseReports = () => setShowReports(false);
     const handleShowReports = () => setShowReports(true);
@@ -186,10 +186,11 @@ const EmployeeProfile = () => {
 
     if(isLoading){
         return (
-            <>
+            <Container className='text-center my-5'>
+
                 <LoadingSpinner />
-                <h4>Loading...</h4>
-            </>
+                <h4 className='text-white'>Loading...</h4>
+            </Container>
         )
     }
 
@@ -211,7 +212,7 @@ const EmployeeProfile = () => {
                 <Col md='6' className='p-2'>
                     <Button_1 
                         image={clockIcon}
-                        title={user.clockedIn ? 'Clock out' : 'Clock in'}
+                        title={user.clockedIn ? 'Clocked In' : 'Clock in'}
                         description={user.clockedIn ? 'Tracking your time. Click to end shift.' : 'Start my shift'}
                         icon={<ImClock className='me-2'/>}
                         imageSize='50%'
@@ -348,7 +349,7 @@ const EmployeeProfile = () => {
                 </Col>
 
             </Row>*/}
-            <AddEmployees show={showAddEmployees} handleClose={handleCloseAddEmployees} handleShow={handleShowAddEmployees} setShow={setShowAddEmployees}/>
+            {/* <AddEmployees show={showAddEmployees} handleClose={handleCloseAddEmployees} handleShow={handleShowAddEmployees} setShow={setShowAddEmployees}/> */}
             <ReportsBar show={showReports} handleClose={handleCloseReports} handleShow={handleShowReports} setShow={setShowReports} user={user} isLoading={isLoading}/>
             <Popup show={showPopup} handleClose={handleClosePopup} handleShow={handleShowPopup} setShow={setShowPopup} title="Working on it!"  message='This feature is coming soon!' image={<MdConstruction />}/> 
         </Container>

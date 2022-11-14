@@ -86,8 +86,21 @@ p {
   padding: 0.5rem;
 }
 
+.modal-content {
+  background: rgb(235, 235, 235);
+  border-radius: 6px;
+}
+
 .clockedIn-color {
-  background-color: rgba(216, 105, 105, 0.5);
+  background-image: linear-gradient(to left, rgba(83, 133, 83, 0.5), transparent);
+}
+
+.clockedOut-color {
+  background-image: linear-gradient(to left, rgba(216, 105, 105, 0.5), transparent);
+}
+
+.bg-light-black {
+  background-color: #161C1C;
 }
 
 .side-bar {
@@ -100,6 +113,14 @@ p {
   color: white;
 }
 
+.btn-no-style {
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  font-weight: 400;
+  color: rgb(235, 235, 235);
+}
+
 .clickable {
   cursor: pointer;
 }
@@ -107,20 +128,72 @@ p {
 .employee-list-item {
   border-radius: 6px;
   border: 1px solid rgb(235, 235, 235);
-  padding: 1.5rem;
+  padding: 1rem;
   display: flex;
   justify-content: space-between;
-  background-color: #161C1C;
+  align-items: end;
+  margin-top: 1rem;
+}
+.employee-list-item:hover {
+  cursor: pointer;
 }
 
 .hours-list-item {
-  border: 1px solid rgb(235, 235, 235);
-  border-radius: 6px;
-  background-color: #161C1C;
   color: white;
   text-align: center;
   font-size: 14px;
   font-weight: 400;
+}
+.hours-list-item:hover {
+  cursor: pointer;
+}
+
+table {
+  width: 100%;
+  border-spacing: 0 0.5em;
+  border-collapse: separate;
+}
+
+table tr:last-child td:last-child {
+  border-bottom-right-radius: 6px;
+}
+
+table tr:last-child td:first-child {
+  border-bottom-left-radius: 6px;
+}
+
+table tr:first-child th:first-child,
+table tr:first-child td:first-child {
+  border-top-left-radius: 6px;
+}
+
+table tr:first-child th:last-child,
+table tr:first-child td:last-child {
+  border-top-right-radius: 6px;
+}
+
+td:last-child {
+  border-bottom-right-radius: 6px;
+}
+
+td:first-child {
+  border-bottom-left-radius: 6px;
+  border-top-left-radius: 6px;
+}
+
+th:last-child {
+  border-bottom-right-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+th:first-child {
+  border-bottom-left-radius: 6px;
+}
+
+.items-container {
+  background-color: #161C1C;
+  border-radius: 6px;
+  padding: 1.5rem;
 }
 
 a:hover {

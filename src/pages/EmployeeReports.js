@@ -6,6 +6,12 @@ import { Link } from "react-router-dom";
 import {IoIosArrowDropleft} from 'react-icons/io';
 import {BsPeople, BsPersonCircle, BsPerson} from 'react-icons/bs';
 import { TbRadiusBottomLeft } from "react-icons/tb";
+import EditHoursModal from "../components/EditHoursModal";
+import {MdAddCircleOutline} from 'react-icons/md';
+import AddEmployees from "../components/AddEmployees";
+import { ImClock } from "react-icons/im";
+import uuid4 from "uuid4";
+import Axios from "axios";
 
 const EmployeeReports = () => {
 
@@ -16,6 +22,20 @@ const EmployeeReports = () => {
     const [ isLoading, setLoading ] = useState(true);
     const [ current, setCurrent ] = useState();
     const [reversedHours, setReversedHours] = useState(); 
+    const [lastData, setLastData ] = useState();
+    const [ infoToEdit, setInfoToEdit ] = useState({
+        start: ''
+    });
+    let currentDay = new Date();
+    const [shortTime, setShortTime] = useState(currentDay.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}));
+
+    const [ showEditModal, setShowEditModal] = useState();
+    const handleCloseEditModal = () => setShowEditModal(false);
+    const handleShowEditModal = () => setShowEditModal(true);
+
+    const [showAddEmployees, setShowAddEmployees] = useState(false);
+    const handleCloseAddEmployees = () => setShowAddEmployees(false);
+    const handleShowAddEmployees = () => setShowAddEmployees(true);
 
     useEffect(() => {
         axios.get(`https://clockedin.herokuapp.com/user/${tempUser._id}`)
@@ -28,6 +48,9 @@ const EmployeeReports = () => {
         .catch(error => {
             console.log(error)
         }) 
+        setInterval(()=>{
+            setShortTime(new Date().toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}));
+        }, 1000)
     },[])
 
     const getAllUsers = async () => {
@@ -51,6 +74,7 @@ const EmployeeReports = () => {
     useEffect(()=>{
         if(current !== undefined){
             setReversedHours([...current.hours].reverse());
+            setLastData(current.hours.slice(-1))
             setLoading(false)
         }
     }, [current])
@@ -68,7 +92,10 @@ const EmployeeReports = () => {
         'Sep', 
         'Oct', 
         'Nov', 
-        'Dec'];
+        'Dec'
+    ];
+
+    const weekday = ['Sunday', 'Monday', 'Tuesday', 'Wed', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
     const getWeek = () => {
         let currentDate = new Date();
@@ -79,44 +106,94 @@ const EmployeeReports = () => {
         return weekNumber  
     }
 
+    function handleClockIn(){ 
+        const data = {
+            jobId: uuid4(), 
+            start: currentDay.getTime(), 
+            startTime: shortTime, 
+        }
+        const currentlyClockedIn = true;
+
+        Axios.post(`https://clockedin.herokuapp.com/user/${current._id}`, {data: data, currentlyClockedIn: currentlyClockedIn})
+        .then((res) => {
+            if(res.status === 200){
+                document.location.reload();
+            }else{
+                console.log('There was an error')
+            }
+        })
+        .catch(error => {
+            console.log(error.response)
+        })
+
+    }
+
+    function handleClockOut(){
+    
+        const data = {
+            date: currentDay.getDate(), 
+            month: currentDay.getMonth(), 
+            day: currentDay.getDay(), 
+            weekNumber: getWeek(), 
+            end: currentDay.getTime(), 
+            hoursWorked: JSON.parse(((currentDay.getTime()-lastData[0].start)/3600000).toFixed(4)), 
+            endTime: shortTime,
+        }
+
+        Axios.put(`https://clockedin.herokuapp.com/user/${current._id}`, {data: data})
+        .then((res) => {
+            if(res.status === 200){
+                document.location.reload();
+            }else{
+                console.log('There was an error')
+            }
+        })
+        .catch(error => {
+            console.log(error.response)
+        })
+    }
+
     if(isLoading){
         return (
-            <>
+            <Container className='text-center my-5'>
+
                 <LoadingSpinner />
-                <h4>Loading...</h4>
-            </>
+                <h4 className='text-white'>Loading...</h4>
+            </Container>
         )
     }
 
     return ( 
         <Container style={{height: '100vh'}}>
-            <Row className='mt-5'>
-                <Link to='/employeeprofile' style={{textDecoration: 'none'}}>
-                    <button className='btn-2 d-flex'><IoIosArrowDropleft style={{fontSize: '1.5rem', marginRight: '.5rem'}}/> Back to dashboard</button>
-                </Link>
-                
+            <Row className='text-center border-bottom mt-5 items-container'>
+                <h1 style={{marginBottom: '-10px'}}>{weekday[currentDay.getDay()]} {months[currentDay.getMonth()]} {currentDay.getDate()}</h1>
             </Row>
-            <Row className='mt-5'>
-                <Col>
-                    <h2><BsPeople className='me-2' />My Employees</h2>
-                    <div className='mt-5'>
+            <Row>
+                <Link to='/employeeprofile' className='px-0' style={{textDecoration: 'none'}}>
+                    <p className='p-0'><IoIosArrowDropleft style={{fontSize: '1.5rem'}}/> Back to dashboard</p>
+                </Link>
+            </Row>
+            <Row className='mt-3'>
+                <Col className='items-container me-3'>
+                    <div className='d-flex align-items-end border-bottom justify-content-between'>
+                        <h2 className='mb-0'><BsPeople className='me-2' />My Employees</h2>
+                        <button className='btn-no-style d-flex' onClick={handleShowAddEmployees}><MdAddCircleOutline style={{fontSize: '1.5rem', marginRight: '.5rem', width: '20px'}} /> Add employee</button>
+                    </div>
+                    
+                    <div className='mt-4'>
                         {employees.map((employee)=> (
-                            <div key={employee._id} className='employee-list-item' onClick={()=>setCurrent(employee)} style={{borderRadius: '6px', maxWidth: '600px'}}>
+                            <div key={employee._id} className={employee.clockedIn === true ? 'employee-list-item clockedIn-color' : 'employee-list-item clockedOut-color'} onClick={()=>setCurrent(employee)} style={{borderRadius: '6px'}}>
                                
-                                <div className='d-flex'>
-                                    <BsPersonCircle className='text-white' style={{width: '40px', height: '40px'}}/>
-                                    <div className='mx-3'>
-                                        <p className='my-0'>{employee.name}</p>
-                                        <p className='font-small my-0'>{user.position}</p>
-                                    </div>
+      
+                            
+                                <p className='my-0'>{employee.name}</p>
+                                <p className='font-small my-0'>{employee.position}</p>
      
-                                </div>
                                 <div className='d-flex flex-column align-items-end'>
-                                    <p className='m-0 font-small'>STATUS:</p>
                                     {employee.clockedIn ? (
-                                        <p className='m-0 font-small text-success fw-bold'>clocked in</p>
+                                        <p className='m-0 fw-bold'>clocked in</p>
                                     ) : (
-                                        <p className='m-0 font-small text-danger'>clocked out</p>
+                                        <p className='m-0 fw-bold'>clocked out</p>
                                     )}
                                 </div>
 
@@ -125,28 +202,40 @@ const EmployeeReports = () => {
                         ))}
                     </div>
                 </Col>
-                <Col>
-                    <h2><BsPerson className='me-2' />{current.name}</h2>
-                    <Table className='mt-5' variant="dark" striped hover responsive>
-                            <thead>
-                                <tr className=''>
-                                    <th className='text-center text-white'><p className='mb-0'>Date</p></th>
-                                    <th className='text-center text-white'><p className='mb-0'>Start time</p></th>
-                                    <th className='text-center text-white'><p className='mb-0'>End time</p></th>
-                                    <th className='text-center text-white'><p className='mb-0'>Total</p></th>
+                <Col className='items-container'>
+                    <div className='d-flex align-items-end border-bottom justify-content-between'>
+                        <h2 className='mb-0'><BsPerson className='me-2' />{current.name}</h2>
+                        {current.clockedIn === true ? (
+                            <button className='btn-no-style d-flex' onClick={handleClockOut}><ImClock style={{fontSize: '1.5rem', marginRight: '.5rem', width: '15px'}} /> Clock {current.name} out</button>
+                        ) : (
+                            <button className='btn-no-style d-flex' onClick={handleClockIn}><ImClock style={{fontSize: '1.5rem', marginRight: '.5rem', width: '15px'}} /> Clock {current.name} in</button>
+                        )}
+                        
+                        
+                    </div>
+
+                    <Table className='mt-3' variant="dark" striped hover responsive>
+
+                        <thead>
+                            <tr>
+                                <th className='text-center text-white'><h3 className='mb-0'>Date</h3></th>
+                                <th className='text-center text-white'><h3 className='mb-0'>Start time</h3></th>
+                                <th className='text-center text-white'><h3 className='mb-0'>End time</h3></th>
+                                <th className='text-center text-white'><h3 className='mb-0'>Total</h3></th>
+                            </tr>
+                        </thead>
+                        <tbody className='table-group-divider'>
+                            {reversedHours.map((entry) => (
+                                <tr key={entry.start} className='hours-list-item' onClick={handleShowEditModal}>
+                                    <td className=''>{months[entry.month]} {entry.date}</td>
+                                    <td className=''>{entry.startTime}</td>
+                                    <td className=''>{entry.endTime}</td>
+                                    <td className=''>{entry.hoursWorked}</td>
                                 </tr>
-                            </thead>
-                            <tbody className='table-group-divider'>
-                                {reversedHours.map((entry) => (
-                                    <tr key={entry.start} className='hours-list-item'>
-                                        <td className=''>{months[entry.month]} {entry.date}</td>
-                                        <td className=''>{entry.startTime}</td>
-                                        <td className=''>{entry.endTime}</td>
-                                        <td className=''>{entry.hoursWorked}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </Table>
+                            ))}
+                        </tbody>
+
+                    </Table>
                 </Col>
             </Row>
 
@@ -231,6 +320,8 @@ const EmployeeReports = () => {
                     </Table>
                 </Col>
             </Row> */}
+            <EditHoursModal show={showEditModal} setShow={setShowEditModal} />
+            <AddEmployees show={showAddEmployees} handleClose={handleCloseAddEmployees} handleShow={handleShowAddEmployees} setShow={setShowAddEmployees}/>
         </Container> 
     );
 }
