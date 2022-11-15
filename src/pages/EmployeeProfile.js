@@ -197,30 +197,50 @@ const EmployeeProfile = () => {
 
             </Row>
             <Row>
-                <Col md='6' className='p-2'>
-                    <Button_1 
-                        image={clockIcon}
-                        title={user.clockedIn ? 'Clocked In' : 'Clock in'}
-                        description={user.clockedIn ? 'Tracking your time. Click to end shift.' : 'Start my shift'}
-                        icon={<ImClock className='me-2'/>}
-                        imageSize='50%'
-                        bgColor={user.clockedIn ? 'clockedIn-color' : ''}
-                        clickAction = {user.clockedIn ? handleClockOut : handleClockIn}
-                        time={user.clockedIn ? <Timer className='mx-1 text-white' style={{fontSize: '14px'}} active duration={null}  time={amountOfTimeClockedIn}><Timecode />
-                        </Timer> : ''}
-                    />
-                </Col>
-                <Col md='6'  className='p-2'>
-                    <Button_1 
-                        image={groupIcon}
-                        title='My Employees'
-                        description='Change status, see hours/reports'
-                        icon={<BsPeople className='me-2'/>}
-                        imageSize='50%'
-                        clickAction = {()=>navigate('/employee-reports')}
-                        
-                    />
-                </Col>
+                {user.admin === true ? (
+                    <>
+                        <Col md='6'  className='p-2'>
+                            <Button_1 
+                                image={groupIcon}
+                                title='My Employees'
+                                description='Change status, see hours/reports'
+                                icon={<BsPeople className='me-2'/>}
+                                imageSize='50%'
+                                clickAction = {()=>navigate('/employee-reports')}
+                                
+                            />
+                        </Col>
+                        <Col md='6' className='p-2'>
+                        <Button_1 
+                            image={clockIcon}
+                            title={user.clockedIn ? 'Clocked In' : 'Clock in'}
+                            description={user.clockedIn ? 'Tracking your time. Click to end shift.' : 'Start my shift'}
+                            icon={<ImClock className='me-2'/>}
+                            imageSize='50%'
+                            bgColor={user.clockedIn ? 'clockedIn-color' : ''}
+                            clickAction = {user.clockedIn ? handleClockOut : handleClockIn}
+                            time={user.clockedIn ? <Timer className='mx-1 text-white' style={{fontSize: '14px'}} active duration={null}  time={amountOfTimeClockedIn}><Timecode />
+                            </Timer> : ''}
+                        />
+                        </Col>
+                    </>
+
+                ):(
+                    <Col md='12' className='p-2'>
+                        <Button_1 
+                            image={clockIcon}
+                            title={user.clockedIn ? 'Clocked In' : 'Clock in'}
+                            description={user.clockedIn ? 'Tracking your time. Click to end shift.' : 'Start my shift'}
+                            icon={<ImClock className='me-2'/>}
+                            imageSize='25%'
+                            bgColor={user.clockedIn ? 'clockedIn-color' : ''}
+                            clickAction = {user.clockedIn ? handleClockOut : handleClockIn}
+                            time={user.clockedIn ? <Timer className='mx-1 text-white' style={{fontSize: '14px'}} active duration={null}  time={amountOfTimeClockedIn}><Timecode />
+                            </Timer> : ''}
+                        />
+                    </Col>
+                )}
+
                 <Col  md='6' className='p-2'>
                     <Button_1 
                             image={reportsIcon}
