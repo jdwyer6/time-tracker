@@ -7,20 +7,36 @@ import { useState } from 'react';
 const Home = () => {
 
     return ( 
-        <Container fluid className='px-0'>
-            <div className='bg-image'></div>
-            <Row style={{height: '100vh'}} className='p-4 p-md-0'>
-                <Col md='6' className='d-flex justify-content-end flex-column p-md-5'>
-                    <div className='p-md-5 text-center text-md-start'>
-                        <h1 className='text-white mb-0'>ClockedIn</h1>
-                        <p className='text-white ps-2' style={{marginTop: '-15px'}}>Sign in made simple</p>
-                    </div>
-                </Col>
-                <Col className='d-flex align-items-center justify-content-center'>
-                    <Login />
-                </Col>
-            </Row>
-        </Container>
+        <>
+            <Container fluid className='p-0 d-none d-sm-block'>
+                <div className='bg-image'></div>
+                <Row className='d-flex justify-content-between' style={{height: '100vh'}}>
+                    <Col md='6' className='d-flex justify-content-end flex-column p-md-5'>
+                        <div className='p-md-5 text-center text-md-start'>
+                            <h1 className='text-white mb-0'>ClockedIn</h1>
+                            <p className='text-white ps-2' style={{marginTop: '-15px'}}>Sign in made simple</p>
+                        </div>
+                    </Col>
+                    <Col className='d-flex align-items-center justify-content-center'>
+                        <Login />
+                    </Col>
+                </Row>
+            </Container>
+            <Container fluid className='p-0 d-flex d-sm-none'>
+               
+                <Row className='p-2 d-flex'>
+                    <Col className='text-center'>
+                        <h1 className='text-white mb-0 '>ClockedIn</h1>
+                        <p className='text-white mb-0' style={{marginTop: '-5px'}}>Sign in made simple</p>
+                    </Col>
+                    <Col className='d-flex justify-content-center my-3'>
+                        <Login />
+                    </Col>
+                </Row>
+
+            </Container>
+        </>
+
      );
 }
  
