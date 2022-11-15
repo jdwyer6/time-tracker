@@ -22,14 +22,14 @@ const Home = () => {
                     </Col>
                 </Row>
             </Container>
-            <Container fluid className='p-0 d-flex d-sm-none'>
-               
+            <Container fluid className='p-0 d-flex d-sm-none' style={{height: '100vh'}}>
+            <div className='bg-image'></div>
                 <Row className='p-1 d-flex'>
-                    <Col className='text-center my-4'>
+                    <Col className='text-center mt-4'>
                         <h1 className='text-white mb-0 '>ClockedIn</h1>
                         <p className='text-white mb-0' style={{marginTop: '-5px'}}>Sign in made simple</p>
                     </Col>
-                    <Col className='d-flex justify-content-center my-3'>
+                    <Col className='d-flex justify-content-center my-3 mb-5'>
                         <Login />
                     </Col>
                 </Row>
