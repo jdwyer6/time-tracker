@@ -24,8 +24,8 @@ const Home = () => {
             </Container>
             <Container fluid className='p-0 d-flex d-sm-none'>
                
-                <Row className='p-2 d-flex'>
-                    <Col className='text-center'>
+                <Row className='p-1 d-flex'>
+                    <Col className='text-center my-4'>
                         <h1 className='text-white mb-0 '>ClockedIn</h1>
                         <p className='text-white mb-0' style={{marginTop: '-5px'}}>Sign in made simple</p>
                     </Col>
