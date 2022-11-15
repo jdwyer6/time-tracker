@@ -22,8 +22,8 @@ const Home = () => {
                     </Col>
                 </Row>
             </Container>
-            <Container fluid className='p-0 d-flex d-sm-none' style={{height: '100vh'}}>
-            <div className='bg-image'></div>
+            <Container fluid className='p-0 d-flex d-sm-none flex-column' style={{height: '100vh'}}>
+                <div className='bg-image'></div>
                 <Row className='p-1 d-flex'>
                     <Col className='text-center mt-4'>
                         <h1 className='text-white mb-0 '>ClockedIn</h1>
