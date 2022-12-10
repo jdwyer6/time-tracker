@@ -1,8 +1,6 @@
 import { Form } from 'react-bootstrap';
-import {BiUserCircle} from 'react-icons/bi';
-import { RiLockPasswordLine } from 'react-icons/ri';
 import { MdOutlineLogin } from 'react-icons/md';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Popup from './Popup';
@@ -36,6 +34,7 @@ const Login = () => {
         .then((res) => {
             if(res.status === 200){
                 localStorage.setItem('currentUser', JSON.stringify(res.data));
+                localStorage.setItem('loggedIn', true);
                 setLoading(false);
                 navigate('/employeeprofile');
             }

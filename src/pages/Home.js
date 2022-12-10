@@ -5,7 +5,7 @@ import Register from '../components/Register';
 import { useState } from 'react';
 
 const Home = () => {
-
+    
     return ( 
         <Container fluid className='px-0'>
             <div className='bg-image'></div>

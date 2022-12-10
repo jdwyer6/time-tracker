@@ -117,7 +117,8 @@ const EmployeeProfile = () => {
     }
 
     function logout(){
-        localStorage.removeItem('currentUser')
+        localStorage.removeItem('currentUser');
+        localStorage.setItem('loggedIn', false);
         navigate('/')
         document.location.reload()
     }
@@ -225,7 +226,7 @@ const EmployeeProfile = () => {
                     <Button_1 
                             image={reportsIcon}
                             title='My Hours'
-                            description='Start my shift.'
+                            description='See logged hours.'
                             icon={<GiChart className='me-2'/>}
                             clickAction = {setShowReports}
                             imageSize='75%'
@@ -235,7 +236,7 @@ const EmployeeProfile = () => {
                     <Button_1 
                             image={signOutIcon}
                             title='Sign out'
-                            description='Start my shift.'
+                            description='Your progress will be saved'
                             icon={<BiLogOut className='me-2'/>}
                             imageSize='50%'
                             clickAction={logout}
