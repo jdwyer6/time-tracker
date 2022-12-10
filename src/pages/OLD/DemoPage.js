@@ -1,7 +1,7 @@
 import { Container, Row, Col, Button } from "react-bootstrap";
-import DemoEmployeeCard from "../components/DemoEmployeeCard";
+import DemoEmployeeCard from "../../components/DemoEmployeeCard";
 import { useEffect, useState } from "react";
-import { DEMOEMPLOYEES } from "../shared/DEMOEMPLOYEES";
+import { DEMOEMPLOYEES } from "../../shared/DEMOEMPLOYEES";
 
 const DemoPage = () => {
     

@@ -5,7 +5,7 @@ import Register from '../components/Register';
 import { useState } from 'react';
 
 const Home = () => {
-
+    
     return ( 
         <>
             <Container fluid className='p-0 d-none d-sm-block'>

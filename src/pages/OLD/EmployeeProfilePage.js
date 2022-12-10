@@ -2,9 +2,9 @@ import { Container, Row, Col, Button, Table } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { DEMOEMPLOYEES } from '../shared/DEMOEMPLOYEES';
-import EmployeeCard from '../components/EmployeeCard';
-import HoursCard from '../components/HoursCard__OLD';
+import { DEMOEMPLOYEES } from '../../shared/DEMOEMPLOYEES';
+import EmployeeCard from '../../components/EmployeeCard';
+import HoursCard from '../../components/HoursCard__OLD';
 import Spinner from 'react-bootstrap/Spinner';
 import Timer from 'react-timer-wrapper';
 import Timecode from 'react-timecode';
@@ -13,8 +13,8 @@ import { MdLunchDining, MdTranslate } from 'react-icons/md';
 import { AiFillBackward } from 'react-icons/ai';
 import { ImClock2, ImClock } from 'react-icons/im';
 import Axios from 'axios';
-import AlertModal from '../components/AlertModal';
-import LoadingSpinner from "../components/LoadingSpinner";
+import AlertModal from '../../components/AlertModal';
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 const EmployeeProfilePage = () => {
 
