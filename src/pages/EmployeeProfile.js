@@ -19,6 +19,7 @@ import reportsIcon from '../images/ReportsIcon.png';
 import signOutIcon from '../images/signOutIcon.png';
 import groupIcon from '../images/groupIcon.png';
 import clockIcon from '../images/clockIcon.png';
+import logo from '../images/logo.png';
 
 const EmployeeProfile = () => {
     const [tempUser, setTempUser] = useState(JSON.parse(localStorage.getItem('currentUser')));
@@ -186,20 +187,45 @@ const EmployeeProfile = () => {
     return ( 
         <Container className='' style={{height: '100vh'}}>
             <Row className='d-flex flex-row pt-3'>
-                <h3 className='mb-0 d-inline'>{user.businessName}</h3>
+                {/* <h3 className='mb-0 d-inline'>{user.businessName}</h3> */}
                 <p className='d-inline'>{user.name} {user.admin ? ('(admin)') : ('(employee)')}</p>
             </Row>
-            <Row className='text-center border-bottom'>
-                <h1>{weekday[current.getDay()]} {months[current.getMonth()]} {current.getDate()}</h1>
-                
-            </Row>
-            <p>{time}</p>
-            <Row>
+            <Row className='text-center d-flex flex-row justify-content-center align-items-end'>
+   
+                    <Col className='d-none d-md-flex justify-content-end'>
+                        <img src={logo} className='mx-3 logo'/>
+                    </Col>
+                    <Col xs='12' md='auto'>
+                        <h1>ClockedIn</h1>
+                    </Col>
+                    <Col className='d-none d-md-flex'>
+                        <h3 className='mx-3'>{time}</h3>
+                    </Col>
+                <div className='d-flex flex-row justify-content-center align-items-end'>
+                    <h3>Company: {user.businessName}</h3>
+                </div>
 
+
+                {/* <h1>{user.businessName}</h1> */}
+                {/* <h1>{weekday[current.getDay()]} {months[current.getMonth()]} {current.getDate()}</h1> */}
+                
             </Row>
             <Row>
                 {user.admin === true ? (
                     <>
+                        <Col md='6' className='p-2'>
+                            <Button_1 
+                                image={clockIcon}
+                                title={user.clockedIn ? 'Clocked In' : 'Clock in'}
+                                description={user.clockedIn ? 'Tracking your time. Click to end shift.' : 'Start my shift'}
+                                icon={<ImClock className='me-2'/>}
+                                imageSize='50%'
+                                bgColor={user.clockedIn ? 'clockedIn-color' : ''}
+                                clickAction = {user.clockedIn ? handleClockOut : handleClockIn}
+                                time={user.clockedIn ? <Timer className='mx-1 text-white' style={{fontSize: '14px'}} active duration={null}  time={amountOfTimeClockedIn}><Timecode />
+                                </Timer> : ''}
+                            />
+                        </Col>
                         <Col md='6'  className='p-2'>
                             <Button_1 
                                 image={groupIcon}
@@ -211,19 +237,7 @@ const EmployeeProfile = () => {
                                 
                             />
                         </Col>
-                        <Col md='6' className='p-2'>
-                        <Button_1 
-                            image={clockIcon}
-                            title={user.clockedIn ? 'Clocked In' : 'Clock in'}
-                            description={user.clockedIn ? 'Tracking your time. Click to end shift.' : 'Start my shift'}
-                            icon={<ImClock className='me-2'/>}
-                            imageSize='50%'
-                            bgColor={user.clockedIn ? 'clockedIn-color' : ''}
-                            clickAction = {user.clockedIn ? handleClockOut : handleClockIn}
-                            time={user.clockedIn ? <Timer className='mx-1 text-white' style={{fontSize: '14px'}} active duration={null}  time={amountOfTimeClockedIn}><Timecode />
-                            </Timer> : ''}
-                        />
-                        </Col>
+
                     </>
 
                 ):(

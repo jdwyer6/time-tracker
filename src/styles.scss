@@ -44,9 +44,11 @@ html{
 }
 
 h1{
-    font-weight: 200;
-    font-size: clamp(40px, 5vw, 120px);
+    font-weight: 700;
+    font-size: clamp(60px, 7vw, 140px);
     color: $off-white;
+    line-height: 100%;
+    margin-bottom: 0px;
 }
 
 h2{
@@ -56,15 +58,20 @@ h2{
 }
 
 h3{
-    font-size: 24px;
+    font-size: clamp(12px, 2vw, 20px);
     font-weight: 500;
     color: $off-white;
+    letter-spacing: 2px;
 }
 
 p{
     font-size: 16px;
     font-weight: 400;
     color: $off-white;
+}
+
+.logo{
+    width: clamp(50px, 7vw, 130px)
 }
 
 .btn-1{
