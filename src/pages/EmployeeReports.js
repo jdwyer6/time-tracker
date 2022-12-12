@@ -2,8 +2,7 @@ import { Container, Row, Col, Table } from "react-bootstrap";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import LoadingSpinner from "../components/LoadingSpinner";
-import { Link } from "react-router-dom";
-import {IoIosArrowDropleft} from 'react-icons/io';
+import { Link, Navigate } from "react-router-dom";
 import {BsPeople, BsPersonCircle, BsPerson} from 'react-icons/bs';
 import { TbRadiusBottomLeft } from "react-icons/tb";
 import EditHoursModal from "../components/EditHoursModal";
@@ -14,6 +13,11 @@ import uuid4 from "uuid4";
 import Axios from "axios";
 import Popup from "../components/Popup";
 import { MdConstruction } from "react-icons/md";
+import { ImHome } from 'react-icons/im';
+import {RiMoneyDollarCircleFill} from 'react-icons/ri';
+import {FaAddressCard} from 'react-icons/fa'
+import BarChart from "../components/BarChart";
+import {FiSettings} from 'react-icons/fi';
 
 const EmployeeReports = () => {
 
@@ -45,6 +49,8 @@ const EmployeeReports = () => {
     const handleClosePopup = () => setShowPopup(false);
     const handleShowPopup = () => setShowPopup(true);
 
+    // const [currentWeekHrs, setCurrentWeekHrs] = useState();
+
     useEffect(() => {
         axios.get(`https://clockedin.herokuapp.com/user/${tempUser._id}`)
         .then((res) => {
@@ -66,6 +72,16 @@ const EmployeeReports = () => {
         const filteredEmployees = allUsers.data.filter(user => user.businessId === businessID)
         setEmployees(filteredEmployees)
     }
+
+    // function getMondayOfCurrentWeek() {
+    //     const today = new Date();
+    //     const first = today.getDate() - today.getDay() + 1;
+      
+    //     const monday = new Date(today.setDate(first));
+    //     return monday;
+    // }
+
+    // console.log(getMondayOfCurrentWeek())
 
     useEffect(()=>{
         if(user){
@@ -184,15 +200,110 @@ const EmployeeReports = () => {
 
     return ( 
         <Container style={{height: '100vh'}}>
-            <Row className='text-center border-bottom mt-5'>
-                <h1 style={{marginBottom: '-10px'}}>{weekday[currentDay.getDay()]} {months[currentDay.getMonth()]} {currentDay.getDate()}</h1>
+            {/* <Row className='text-center mt-5'> */}
+                <div className='bg-container-general text-center mt-3'>
+                    <h1>{user.businessName}</h1>
+                    <h3>Dashboard</h3>
+                </div>
+                
+            {/* </Row> */}
+            <Row className='bg-container-general'>
+                <Col>
+                    <Col className='bg-container-blue'>
+                        <div className="border-bottom">
+                            <h2 className='mb-0'>Actions</h2>
+                        </div>
+                        <div className='mt-2'>
+                            <p className='text-white mb-1 hover' onClick={handleShowAddEmployees}><MdAddCircleOutline className='me-2'/>Add Employees</p>
+                            <p className='text-white mb-1'><FiSettings className='me-2'/>Settings</p>
+                            <p className='text-white mb-1'><FaAddressCard className='me-2'/>Employee Details</p>
+                        </div>
+                    </Col>
+                    <Col className='bg-container-blue'>
+                        <RiMoneyDollarCircleFill className='text-white text-center' style={{width: '100%', height: '80px'}}/>
+                        <h2 className='text-center mb-0'>Payroll</h2>
+                    </Col>
+                    <Col className='bg-container-blue hover'>
+                        <Link to='/employeeprofile' className='text-decoration-none'>
+                            <ImHome className='text-white text-center' style={{width: '100%', height: '50px'}}/>
+                            <h2 className='text-center mb-0'>Home</h2>
+                            <h4 className='text-white text-center'>Go back</h4>
+                        </Link>
+                    </Col>
+                </Col>
+                <Col className='bg-container-blue'>
+                {employees.map((employee)=> (
+                            <div ref={ref} key={employee._id} className={employee.clockedIn === true ? 'employee-list-item clockedIn-color' : 'employee-list-item clockedOut-color'} onClick={(e)=>handleNameClick(employee, e)} style={{borderRadius: '6px'}}>
+      
+                                <p className='my-0'>{employee.name}</p>
+                                <p className='font-small my-0 d-none d-sm-block'>{employee.position}</p>
+     
+                                <div className='d-flex flex-column align-items-end'>
+                                    {employee.clockedIn ? (
+                                        <p className='m-0 fw-bold'>clocked in</p>
+                                    ) : (
+                                        <p className='m-0 fw-bold'>clocked out</p>
+                                    )}
+                                </div>
+
+                            </div>
+                            
+                        ))}
+                </Col>
+                <Col>
+                    <div className='bg-container-blue'>
+                        <div className='d-flex justify-content-between mb-3'>
+                            <h2>{current.name}</h2>
+                            {current.clockedIn === true ? (
+                            <>
+                                <button className='btn-2' onClick={handleClockOut}>Clock Out</button>
+                            </>
+           
+                        ) : (
+                            <>
+                                <button className='btn-2' onClick={handleClockIn}>Clock In</button>
+                            </>
+
+                        )}
+                        </div>
+                        
+                        <Table variant="dark" striped hover responsive>
+                            <thead>
+                                <tr>
+                                    <th className='text-center text-white'><h4 className='mb-0'>Date</h4></th>
+                                    <th className='text-center text-white'><h4 className='mb-0'>Start</h4></th>
+                                    <th className='text-center text-white'><h4 className='mb-0'>End</h4></th>
+                                    <th className='text-center text-white'><h4 className='mb-0'>Total</h4></th>
+                                </tr>
+                            </thead>
+                            <tbody className='table-group-divider'>
+                                {reversedHours.map((entry) => (
+                                    <tr key={entry.start} className='hours-list-item' onClick={handleShowPopup}>
+                                        <td>{months[entry.month]} {entry.date}</td>
+                                        <td>{entry.startTime}</td>
+                                        <td>{entry.endTime}</td>
+                                        <td>{entry.hoursWorked}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+                    </div>
+                    <div className='bg-container-blue'>
+                        <div>
+                            <h2>Time on site</h2>
+                        </div>
+                        <div>
+                            <BarChart />
+                        </div>
+                    </div>
+                </Col>
             </Row>
-            <Row>
+            {/* <Row>
                 <Link to='/employeeprofile' className='px-0' style={{textDecoration: 'none'}}>
                     <p className='p-0 btn-no-style'><IoIosArrowDropleft style={{fontSize: '1.5rem'}}/> Back to dashboard</p>
                 </Link>
-            </Row>
-            <Row className='mt-3'>
+            </Row> */}
+            {/* <Row className='mt-3'>
                 <Col className='items-container me-3'>
                     <div className='d-flex align-items-end border-bottom justify-content-between'>
                         <h2 className='mb-0'><BsPeople className='me-2' />My Employees</h2>
@@ -240,30 +351,9 @@ const EmployeeReports = () => {
                         
                     </div>
 
-                    <Table className='mt-3' variant="dark" striped hover responsive>
 
-                        <thead>
-                            <tr>
-                                <th className='text-center text-white'><h2 className='mb-0'>Date</h2></th>
-                                <th className='text-center text-white'><h2 className='mb-0'>Start time</h2></th>
-                                <th className='text-center text-white'><h2 className='mb-0'>End time</h2></th>
-                                <th className='text-center text-white'><h2 className='mb-0'>Total</h2></th>
-                            </tr>
-                        </thead>
-                        <tbody className='table-group-divider'>
-                            {reversedHours.map((entry) => (
-                                <tr key={entry.start} className='hours-list-item' onClick={handleShowPopup}>
-                                    <td className=''>{months[entry.month]} {entry.date}</td>
-                                    <td className=''>{entry.startTime}</td>
-                                    <td className=''>{entry.endTime}</td>
-                                    <td className=''>{entry.hoursWorked}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-
-                    </Table>
                 </Col>
-            </Row>
+            </Row> */}
             <Popup show={showPopup} handleClose={handleClosePopup} handleShow={handleShowPopup} setShow={setShowPopup} title="Working on it!"  message='This feature is coming soon!' image={<MdConstruction />}/> 
             <EditHoursModal show={showEditModal} setShow={setShowEditModal} />
             <AddEmployees show={showAddEmployees} handleClose={handleCloseAddEmployees} handleShow={handleShowAddEmployees} setShow={setShowAddEmployees}/>

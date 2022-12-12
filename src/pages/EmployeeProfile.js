@@ -187,12 +187,11 @@ const EmployeeProfile = () => {
     return ( 
         <Container className='' style={{height: '100vh'}}>
             <Row className='d-flex flex-row pt-3'>
-                {/* <h3 className='mb-0 d-inline'>{user.businessName}</h3> */}
                 <p className='d-inline'>{user.name} {user.admin ? ('(admin)') : ('(employee)')}</p>
             </Row>
             <Row className='text-center d-flex flex-row justify-content-center align-items-end'>
    
-                    <Col className='d-none d-md-flex justify-content-end'>
+                    <Col className='d-none d-md-flex justify-content-end align-items-center'>
                         <img src={logo} className='mx-3 logo'/>
                     </Col>
                     <Col xs='12' md='auto'>
@@ -204,9 +203,6 @@ const EmployeeProfile = () => {
                 <div className='d-flex flex-row justify-content-center align-items-end'>
                     <h3>Company: {user.businessName}</h3>
                 </div>
-
-
-                {/* <h1>{user.businessName}</h1> */}
                 {/* <h1>{weekday[current.getDay()]} {months[current.getMonth()]} {current.getDate()}</h1> */}
                 
             </Row>

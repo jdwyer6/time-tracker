@@ -12,7 +12,7 @@ html {
 
 h1 {
   font-weight: 700;
-  font-size: clamp(60px, 7vw, 140px);
+  font-size: clamp(60px, 6vw, 120px);
   color: rgb(235, 235, 235);
   line-height: 100%;
   margin-bottom: 0px;
@@ -37,8 +37,19 @@ p {
   color: rgb(235, 235, 235);
 }
 
+h4 {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+td {
+  font-size: 10px;
+  font-weight: 400;
+}
+
 .logo {
-  width: clamp(50px, 7vw, 130px);
+  width: clamp(50px, 6vw, 110px);
 }
 
 .btn-1 {
@@ -242,6 +253,25 @@ th:first-child {
   background-color: #161C1C;
   border-radius: 6px;
   padding: 1.5rem;
+}
+
+.bg-container-general {
+  background-color: #161C1C;
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.bg-container-blue {
+  background-color: #233030;
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 1rem;
+  box-shadow: 5px 5px 7px rgba(0, 0, 0, 0.3);
+}
+
+.table-responsive {
+  max-height: 40vh;
 }
 
 a:hover {
