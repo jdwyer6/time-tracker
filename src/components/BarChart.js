@@ -7,9 +7,8 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import { useEffect } from 'react';
 import { Bar } from 'react-chartjs-2';
-
-const y = [6, 7, 4, 5, 3, 6, 0]
 
 ChartJS.register(
   CategoryScale,
@@ -20,45 +19,53 @@ ChartJS.register(
   Legend
 );
 
-export const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'top',
-      labels: {
-        color: 'white',
-      }
+const BarChart = ({week, user}) => {
+  let y = []
+  const hoursToGraph = user.hours.filter(hour => hour.weekNumber === week)
+    
+    if(hoursToGraph !== undefined){
+      hoursToGraph.forEach((hour) =>{
+        y.push(hour.hoursWorked)
+      })
     }
-  },
-  scales: {
-    y: {
-      ticks: {
-        color: 'white'
+  
+  const labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+        labels: {
+          color: 'white',
+        }
       }
     },
-    x:{
-      ticks:{
-        color: 'white'
+    scales: {
+      y: {
+        ticks: {
+          color: 'white'
+        }
+      },
+      x:{
+        ticks:{
+          color: 'white'
+        }
       }
     }
-  }
+  
+  };
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: 'Current Week',
+        data: y,
+        backgroundColor: '#7F4646',
+      }
+    ],
+  };
 
-};
 
-const labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Current Week',
-      data: y,
-      backgroundColor: '#7F4646',
-    }
-  ],
-};
-
-const BarChart = () => {
     return <Bar options={options} data={data} />;
 }
  

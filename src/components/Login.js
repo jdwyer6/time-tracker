@@ -66,7 +66,7 @@ const Login = () => {
                 </div>
                     <button className='btn-2 w-100 my-2' type='submit'>Log in <MdOutlineLogin /></button>
             </form>
-            <button className='btn-2 w-100 my-2' onClick={handleShowRegister}>Register a business</button>
+            <button className='btn-2 w-100 my-2' onClick={handleShowRegister}>Get started for free</button>
             <div className='d-flex justify-content-end py-0 mt-2'>
                     <a className='text-decoration-none' onClick={handleShow}><p className='font-small'>Forgot password</p></a>
             </div>

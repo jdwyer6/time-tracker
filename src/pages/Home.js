@@ -14,7 +14,7 @@ const Home = () => {
                     <Col md='6' className='d-flex justify-content-end flex-column p-md-5'>
                         <div className='p-md-5 text-center text-md-start'>
                             <h1 className='text-white mb-0'>ClockedIn</h1>
-                            <p className='text-white ps-2' style={{marginTop: '-15px'}}>Sign in made simple</p>
+                            <p className='text-white ps-2' style={{marginTop: '-15px'}}>A simple solution for tracking employee hours</p>
                         </div>
                     </Col>
                     <Col className='d-flex align-items-center justify-content-center'>
@@ -27,7 +27,7 @@ const Home = () => {
                 <Row className='p-1 d-flex'>
                     <Col className='text-center mt-4'>
                         <h1 className='text-white mb-0 '>ClockedIn</h1>
-                        <p className='text-white mb-0' style={{marginTop: '-5px'}}>Sign in made simple</p>
+                        <p className='text-white mb-0' style={{marginTop: '-5px'}}>A simple solution for tracking employee hours</p>
                     </Col>
                     <Col className='d-flex justify-content-center my-3 mb-5'>
                         <Login />

@@ -18,6 +18,7 @@ import {RiMoneyDollarCircleFill} from 'react-icons/ri';
 import {FaAddressCard} from 'react-icons/fa'
 import BarChart from "../components/BarChart";
 import {FiSettings} from 'react-icons/fi';
+import { toDate } from 'date-fns'
 
 const EmployeeReports = () => {
 
@@ -31,15 +32,25 @@ const EmployeeReports = () => {
     const [lastData, setLastData ] = useState();
     const ref = useRef();
     const [prevRef, setPrevRef] = useState();
-    const [ infoToEdit, setInfoToEdit ] = useState({
-        start: ''
-    });
     let currentDay = new Date();
     const [shortTime, setShortTime] = useState(currentDay.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}));
+    const [ currentValuesToEdit, setCurrentValuesToEdit] = useState({
+        start: undefined,
+        end: undefined,
+        date: undefined,
+        index: undefined
+    });
 
     const [ showEditModal, setShowEditModal] = useState();
-    const handleCloseEditModal = () => setShowEditModal(false);
-    const handleShowEditModal = () => setShowEditModal(true);
+    const handleShowEditModal = (start, end, date, month, index) => {
+        setCurrentValuesToEdit({
+            date: `${month}/${date}`,
+            start: start,
+            end: end,
+            index: index
+        })
+        setShowEditModal(true);
+    }
 
     const [showAddEmployees, setShowAddEmployees] = useState(false);
     const handleCloseAddEmployees = () => setShowAddEmployees(false);
@@ -48,8 +59,6 @@ const EmployeeReports = () => {
     const [showPopup, setShowPopup] = useState(false);
     const handleClosePopup = () => setShowPopup(false);
     const handleShowPopup = () => setShowPopup(true);
-
-    // const [currentWeekHrs, setCurrentWeekHrs] = useState();
 
     useEffect(() => {
         axios.get(`https://clockedin.herokuapp.com/user/${tempUser._id}`)
@@ -72,16 +81,6 @@ const EmployeeReports = () => {
         const filteredEmployees = allUsers.data.filter(user => user.businessId === businessID)
         setEmployees(filteredEmployees)
     }
-
-    // function getMondayOfCurrentWeek() {
-    //     const today = new Date();
-    //     const first = today.getDate() - today.getDay() + 1;
-      
-    //     const monday = new Date(today.setDate(first));
-    //     return monday;
-    // }
-
-    // console.log(getMondayOfCurrentWeek())
 
     useEffect(()=>{
         if(user){
@@ -135,6 +134,7 @@ const EmployeeReports = () => {
             jobId: uuid4(), 
             start: currentDay.getTime(), 
             startTime: shortTime, 
+            fullStartDate: toDate(currentDay.getTime())
         }
         const currentlyClockedIn = true;
 
@@ -162,6 +162,7 @@ const EmployeeReports = () => {
             end: currentDay.getTime(), 
             hoursWorked: JSON.parse(((currentDay.getTime()-lastData[0].start)/3600000).toFixed(4)), 
             endTime: shortTime,
+            fullEndDate: toDate(currentDay.getTime())
         }
 
         Axios.put(`https://clockedin.herokuapp.com/user/${current._id}`, {data: data})
@@ -215,11 +216,11 @@ const EmployeeReports = () => {
                         </div>
                         <div className='mt-2'>
                             <p className='text-white mb-1 hover' onClick={handleShowAddEmployees}><MdAddCircleOutline className='me-2'/>Add Employees</p>
-                            <p className='text-white mb-1'><FiSettings className='me-2'/>Settings</p>
-                            <p className='text-white mb-1'><FaAddressCard className='me-2'/>Employee Details</p>
+                            <p className='text-white mb-1 hover' onClick={handleShowPopup}><FiSettings className='me-2'/>Settings</p>
+                            <p className='text-white mb-1 hover' onClick={handleShowPopup}><FaAddressCard className='me-2'/>Employee Details</p>
                         </div>
                     </Col>
-                    <Col className='bg-container-blue'>
+                    <Col className='bg-container-blue hover' onClick={handleShowPopup}>
                         <RiMoneyDollarCircleFill className='text-white text-center' style={{width: '100%', height: '80px'}}/>
                         <h2 className='text-center mb-0'>Payroll</h2>
                     </Col>
@@ -232,9 +233,17 @@ const EmployeeReports = () => {
                     </Col>
                 </Col>
                 <Col className='bg-container-blue'>
+                    <div className="border-bottom">
+                        <h2 className='mb-0'>Employees</h2>
+                    </div>
                 {employees.map((employee)=> (
-                            <div ref={ref} key={employee._id} className={employee.clockedIn === true ? 'employee-list-item clockedIn-color' : 'employee-list-item clockedOut-color'} onClick={(e)=>handleNameClick(employee, e)} style={{borderRadius: '6px'}}>
-      
+                            <div 
+                                ref={ref} 
+                                key={employee._id} 
+                                className={employee.clockedIn === true ? 'employee-list-item clockedIn-color' : 'employee-list-item clockedOut-color'} 
+                                onClick={(e)=>handleNameClick(employee, e)} 
+                                style={{borderRadius: '6px'}}
+                            >
                                 <p className='my-0'>{employee.name}</p>
                                 <p className='font-small my-0 d-none d-sm-block'>{employee.position}</p>
      
@@ -245,25 +254,25 @@ const EmployeeReports = () => {
                                         <p className='m-0 fw-bold'>clocked out</p>
                                     )}
                                 </div>
-
                             </div>
                             
                         ))}
                 </Col>
                 <Col>
                     <div className='bg-container-blue'>
-                        <div className='d-flex justify-content-between mb-3'>
-                            <h2>{current.name}</h2>
+                        <div className="border-bottom">
+                            <h2 className='mb-0'>Current Employee</h2>
+                        </div>
+                        <div className='d-flex justify-content-between my-3 align-items-center'>
+                            <h3>{current.name}</h3>
                             {current.clockedIn === true ? (
                             <>
                                 <button className='btn-2' onClick={handleClockOut}>Clock Out</button>
                             </>
-           
                         ) : (
                             <>
                                 <button className='btn-2' onClick={handleClockIn}>Clock In</button>
                             </>
-
                         )}
                         </div>
                         
@@ -277,8 +286,8 @@ const EmployeeReports = () => {
                                 </tr>
                             </thead>
                             <tbody className='table-group-divider'>
-                                {reversedHours.map((entry) => (
-                                    <tr key={entry.start} className='hours-list-item' onClick={handleShowPopup}>
+                                {reversedHours.map((entry, index) => (
+                                    <tr key={entry.start} className='hours-list-item' onClick={()=>handleShowEditModal(entry.startTime, entry.endTime, entry.date, entry.month, index)}>
                                         <td>{months[entry.month]} {entry.date}</td>
                                         <td>{entry.startTime}</td>
                                         <td>{entry.endTime}</td>
@@ -293,70 +302,36 @@ const EmployeeReports = () => {
                             <h2>Time on site</h2>
                         </div>
                         <div>
-                            <BarChart />
+                            <BarChart week={getWeek()} user={user}/>
                         </div>
                     </div>
                 </Col>
             </Row>
-            {/* <Row>
-                <Link to='/employeeprofile' className='px-0' style={{textDecoration: 'none'}}>
-                    <p className='p-0 btn-no-style'><IoIosArrowDropleft style={{fontSize: '1.5rem'}}/> Back to dashboard</p>
-                </Link>
-            </Row> */}
-            {/* <Row className='mt-3'>
-                <Col className='items-container me-3'>
-                    <div className='d-flex align-items-end border-bottom justify-content-between'>
-                        <h2 className='mb-0'><BsPeople className='me-2' />My Employees</h2>
-                        <button className='btn-no-style d-none d-sm-flex' onClick={handleShowAddEmployees}><MdAddCircleOutline style={{fontSize: '1.5rem', marginRight: '.5rem', width: '20px'}} /> Add employee</button>
-                        <button className='btn-no-style d-flex d-sm-none' onClick={handleShowAddEmployees}><MdAddCircleOutline style={{fontSize: '1.5rem', marginRight: '.5rem', width: '20px'}} /> Add</button>
-                    </div>
-                    
-                    <div className='mt-4'>
-                        {employees.map((employee)=> (
-                            <div ref={ref} key={employee._id} className={employee.clockedIn === true ? 'employee-list-item clockedIn-color' : 'employee-list-item clockedOut-color'} onClick={(e)=>handleNameClick(employee, e)} style={{borderRadius: '6px'}}>
-      
-                                <p className='my-0'>{employee.name}</p>
-                                <p className='font-small my-0 d-none d-sm-block'>{employee.position}</p>
-     
-                                <div className='d-flex flex-column align-items-end'>
-                                    {employee.clockedIn ? (
-                                        <p className='m-0 fw-bold'>clocked in</p>
-                                    ) : (
-                                        <p className='m-0 fw-bold'>clocked out</p>
-                                    )}
-                                </div>
-
-                            </div>
-                            
-                        ))}
-                    </div>
-                </Col>
-                <Col className='items-container'>
-                    <div className='d-flex align-items-end border-bottom justify-content-between'>
-                        <h2 className='mb-0'><BsPerson className='me-2' />{current.name}</h2>
-                        {current.clockedIn === true ? (
-                            <>
-                                <button className='btn-no-style d-none d-sm-flex' onClick={handleClockOut}><ImClock style={{fontSize: '1.5rem', marginRight: '.5rem', width: '15px'}} /> Clock {current.name} out</button>
-                                <button className='btn-no-style d-flex d-sm-none' onClick={handleClockOut}><ImClock style={{fontSize: '1.5rem', marginRight: '.5rem', width: '15px'}} /> Out</button>
-                            </>
-           
-                        ) : (
-                            <>
-                                <button className='btn-no-style d-none d-sm-flex' onClick={handleClockIn}><ImClock style={{fontSize: '1.5rem', marginRight: '.5rem', width: '15px'}} /> Clock {current.name} in</button>
-                                <button className='btn-no-style d-flex d-sm-none' onClick={handleClockIn}><ImClock style={{fontSize: '1.5rem', marginRight: '.5rem', width: '15px'}} /> In</button>
-                            </>
-
-                        )}
-                        
-                        
-                    </div>
-
-
-                </Col>
-            </Row> */}
-            <Popup show={showPopup} handleClose={handleClosePopup} handleShow={handleShowPopup} setShow={setShowPopup} title="Working on it!"  message='This feature is coming soon!' image={<MdConstruction />}/> 
-            <EditHoursModal show={showEditModal} setShow={setShowEditModal} />
-            <AddEmployees show={showAddEmployees} handleClose={handleCloseAddEmployees} handleShow={handleShowAddEmployees} setShow={setShowAddEmployees}/>
+            <Popup 
+                show={showPopup} 
+                handleClose={handleClosePopup} 
+                handleShow={handleShowPopup} 
+                setShow={setShowPopup} 
+                title="Working on it!"  
+                message='This feature is coming soon!' 
+                image={<MdConstruction />}
+            /> 
+            <EditHoursModal 
+                show={showEditModal} 
+                setShow={setShowEditModal} 
+                handleShow={handleShowEditModal}
+                start={currentValuesToEdit.start}
+                end={currentValuesToEdit.end}
+                date={currentValuesToEdit.date}
+                user={user}
+                index={currentValuesToEdit.index}
+            />
+            <AddEmployees 
+                show={showAddEmployees} 
+                handleClose={handleCloseAddEmployees} 
+                handleShow={handleShowAddEmployees} 
+                setShow={setShowAddEmployees}
+            />
         </Container> 
     );
 }

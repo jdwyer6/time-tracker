@@ -2,7 +2,7 @@ import { Container, Row, Col, Button, FormLabel, InputGroup, Form } from 'react-
 import Axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import { setUser } from "../redux/userSlice";
+import { setUser } from "../../redux/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const LoginPage = () => {

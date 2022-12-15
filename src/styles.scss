@@ -164,6 +164,22 @@ td{
     }
 }
 
+.btn-3{
+    background-color: transparent;
+    border: 1px solid white;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 400;
+    color: $off-white;
+    width: fit-content;
+    padding: .5rem 1rem;
+    transition: all .5s;
+
+    &:hover{
+        background-color: $coral;
+    }
+}
+
 .modal-content, .offcanvas{
     // background-image: linear-gradient(to left, rgba($clear-lake, .5), transparent);
     background-color: $black-light;
@@ -321,11 +337,8 @@ th:first-child{
 }
 
 .table-responsive{
-    max-height: 40vh;
+    max-height: 30vh;
 }
-
-
-
 
 
 

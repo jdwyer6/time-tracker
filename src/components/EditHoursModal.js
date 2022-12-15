@@ -1,50 +1,71 @@
 import { Modal, Form, Button } from 'react-bootstrap';
+import axios from 'axios';
 import { useState } from 'react';
+import { getUnixTime } from 'date-fns'
 
-const EditHoursModal = ({setShow, show, start, end}) => {
+const EditHoursModal = ({setShow, show, start, end, date, user, index}) => {
+  const handleShow = () => setShow(true);
+  const [dataToUpdate, setDataToUpdate] = useState({
+    start: null,
+    startUnix: null,
+    end: null,
+    endUnix: null
+  });
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+  const handleClose = () => {setShow(false)}
+
+  const handleSave = () => {
+    // axios.put(`https://clockedin.herokuapp.com/user/${user._id}/${index}`, {data: dataToUpdate})
+
+    axios.put(`http://localhost:3001/user/${user._id}/${index}`, {data: dataToUpdate})
+    .then((res)=>{
+      if(res.status === 200){
+        console.log(res)
+      }
+    })
+    .catch((error)=>{
+        console.log(error)
+    })
+    setShow(false);
+  }
+
     return ( 
         <>
   
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title><h2 className='text-black'>Edit shift</h2></Modal.Title>
+            <Modal.Title><h2>Edit shift</h2></Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form>
-              <Form.Group className="mb-3">
-                <Form.Label>Date</Form.Label>
-                <Form.Control
-                    type='date'
-                    autoFocus 
-                />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                    <Form.Label>Start</Form.Label>
+                <Form.Group className="mb-3 border-top">
+                    <Form.Label className='mt-3'><p className='mb-0'>Posted start time: {start}</p></Form.Label>
+                    <h4>Change start time to:</h4>
                     <Form.Control
                         type='time'
                         placeholder={start}
+                        onChange={(e)=>setDataToUpdate({...dataToUpdate, start: e.target.value, startUnix: Date.now()})}
                     />
                 </Form.Group>
-                <Form.Group>
-                    <Form.Label>End</Form.Label>
+                <Form.Group className='border-top mt-3'>
+                    <Form.Label className='mt-3'><p className='mb-0'>Posted end time: {end}</p></Form.Label>
+                    <h4>Change end time to:</h4>
                     <Form.Control
                         type='time'
                         placeholder={end}
-                        onChange={(e)=>console.log(e.currentTarget.value)}
+                        onChange={(e)=>setDataToUpdate({...dataToUpdate, end: e.target.value, endUnix: Date.now()})}
                     />
                 </Form.Group>
             </Form>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={handleClose}>
+            {/* TODO Change save changes function so it is not handle close. Handle Close saves everything  */}
+            <button className='btn-3' onClick={handleClose}>
+              Cancel
+            </button>
+            <button className='btn-2' onClick={handleSave}>
               Save Changes
-            </Button>
+            </button>
           </Modal.Footer>
         </Modal>
       </>

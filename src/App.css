@@ -13,7 +13,7 @@ html {
 h1 {
   font-weight: 700;
   font-size: clamp(60px, 6vw, 120px);
-  color: rgb(235, 235, 235);
+  color: rgb(254, 254, 254);
   line-height: 100%;
   margin-bottom: 0px;
 }
@@ -21,26 +21,27 @@ h1 {
 h2 {
   font-size: clamp(18px, 4vw, 24px);
   font-weight: 700;
-  color: rgb(235, 235, 235);
+  color: rgb(254, 254, 254);
 }
 
 h3 {
   font-size: clamp(12px, 2vw, 20px);
   font-weight: 500;
-  color: rgb(235, 235, 235);
+  color: rgb(254, 254, 254);
   letter-spacing: 2px;
 }
 
 p {
   font-size: 16px;
   font-weight: 400;
-  color: rgb(235, 235, 235);
+  color: rgb(254, 254, 254);
 }
 
 h4 {
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 2px;
+  color: rgb(254, 254, 254);
 }
 
 td {
@@ -54,7 +55,7 @@ td {
 
 .btn-1 {
   border-radius: 6px;
-  border: 1px solid rgb(235, 235, 235);
+  border: 1px solid rgb(254, 254, 254);
   height: clamp(300px, 35vh, 450px);
   display: flex;
   align-items: end;
@@ -81,7 +82,7 @@ td {
 @media only screen and (max-width: 576px) {
   .btn-1 {
     border-radius: 6px;
-    border: 1px solid rgb(235, 235, 235);
+    border: 1px solid rgb(254, 254, 254);
     height: clamp(100px, 20vh, 450px);
     display: flex;
     align-items: end;
@@ -113,7 +114,7 @@ td {
   border-radius: 6px;
   font-size: 16px;
   font-weight: 400;
-  color: rgb(235, 235, 235);
+  color: rgb(254, 254, 254);
   width: fit-content;
   padding: 0.5rem 1rem;
   transition: all 0.5s;
@@ -122,19 +123,34 @@ td {
   background-color: #D86969;
 }
 
+.btn-3 {
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 400;
+  color: rgb(254, 254, 254);
+  width: fit-content;
+  padding: 0.5rem 1rem;
+  transition: all 0.5s;
+}
+.btn-3:hover {
+  background-color: #D86969;
+}
+
 .modal-content, .offcanvas {
   background-color: #161C1C;
-  border: 1px solid rgb(235, 235, 235);
+  border: 1px solid rgb(254, 254, 254);
   border-radius: 6px;
 }
 
 .offcanvas-body {
-  border-right: 1px solid rgb(235, 235, 235);
+  border-right: 1px solid rgb(254, 254, 254);
   border-bottom-right-radius: 6px;
 }
 
 .offcanvas-header {
-  border-right: 1px solid rgb(235, 235, 235);
+  border-right: 1px solid rgb(254, 254, 254);
   border-top-right-radius: 6px;
 }
 
@@ -155,7 +171,7 @@ td {
 }
 
 .btn-close {
-  background-color: rgb(235, 235, 235);
+  background-color: rgb(254, 254, 254);
   opacity: 1;
 }
 
@@ -164,7 +180,7 @@ td {
   border: none;
   font-size: 16px;
   font-weight: 400;
-  color: rgb(235, 235, 235);
+  color: rgb(254, 254, 254);
   transition: all 0.6s;
   border-radius: 6px;
   transition: all 0.5s ease;
@@ -179,7 +195,7 @@ td {
 
 .employee-list-item {
   border-radius: 6px;
-  border: 1px solid rgb(235, 235, 235);
+  border: 1px solid rgb(254, 254, 254);
   padding: 1rem;
   display: flex;
   justify-content: space-between;
@@ -246,7 +262,7 @@ th:first-child {
 }
 
 .active {
-  background-color: rgba(235, 235, 235, 0.2);
+  background-color: rgba(254, 254, 254, 0.2);
 }
 
 .items-container {
@@ -271,7 +287,7 @@ th:first-child {
 }
 
 .table-responsive {
-  max-height: 40vh;
+  max-height: 30vh;
 }
 
 a:hover {
@@ -354,11 +370,11 @@ a:hover {
   box-shadow: 2px 2px 2px rgba(33, 37, 41, 0.3);
 }
 
-.hover-effect {
+.hover-2 {
   transition: all 0.4s;
 }
-.hover-effect:hover {
-  background-color: rgb(219, 219, 219);
+.hover-2:hover {
+  background-color: rgb(199, 114, 114);
   transform: translateY(-1px);
   box-shadow: 2px 2px 2px rgba(33, 37, 41, 0.3);
   cursor: pointer;

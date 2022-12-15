@@ -20,6 +20,7 @@ import signOutIcon from '../images/signOutIcon.png';
 import groupIcon from '../images/groupIcon.png';
 import clockIcon from '../images/clockIcon.png';
 import logo from '../images/logo.png';
+import { toDate } from 'date-fns'
 
 const EmployeeProfile = () => {
     const [tempUser, setTempUser] = useState(JSON.parse(localStorage.getItem('currentUser')));
@@ -82,6 +83,8 @@ const EmployeeProfile = () => {
         
     },[])
 
+   
+
     useEffect(()=>{
         if(user !== undefined){
             setClockedIn(JSON.parse(user.clockedIn))
@@ -129,6 +132,7 @@ const EmployeeProfile = () => {
             jobId: uuid4(), 
             start: current.getTime(), 
             startTime: shortTime, 
+            fullStartDate: toDate(current.getTime())
         }
         const currentlyClockedIn = true;
         setClockedIn(true)
@@ -157,6 +161,7 @@ const EmployeeProfile = () => {
             end: current.getTime(), 
             hoursWorked: JSON.parse(((current.getTime()-lastData[0].start)/3600000).toFixed(4)), 
             endTime: shortTime,
+            fullEndDate: toDate(current.getTime())
         }
         setClockedIn(false)
 
@@ -212,7 +217,7 @@ const EmployeeProfile = () => {
                         <Col md='6' className='p-2'>
                             <Button_1 
                                 image={clockIcon}
-                                title={user.clockedIn ? 'Clocked In' : 'Clock in'}
+                                title={user.clockedIn ? 'Clock out' : 'Clock in'}
                                 description={user.clockedIn ? 'Tracking your time. Click to end shift.' : 'Start my shift'}
                                 icon={<ImClock className='me-2'/>}
                                 imageSize='50%'
