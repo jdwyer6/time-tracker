@@ -16,9 +16,9 @@ const EditHoursModal = ({setShow, show, start, end, date, user, index}) => {
   const handleClose = () => {setShow(false)}
 
   const handleSave = () => {
-    // axios.put(`https://clockedin.herokuapp.com/user/${user._id}/${index}`, {data: dataToUpdate})
+    axios.put(`https://clockedin.herokuapp.com/user/${user._id}/${index}`, {data: dataToUpdate})
 
-    axios.put(`http://localhost:3001/user/${user._id}/${index}`, {data: dataToUpdate})
+    // axios.put(`http://localhost:3001/user/${user._id}/${index}`, {data: dataToUpdate})
     .then((res)=>{
       if(res.status === 200){
         document.location.reload();
