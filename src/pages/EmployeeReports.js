@@ -18,7 +18,10 @@ import {RiMoneyDollarCircleFill} from 'react-icons/ri';
 import {FaAddressCard} from 'react-icons/fa'
 import BarChart from "../components/BarChart";
 import {FiSettings} from 'react-icons/fi';
-import { toDate } from 'date-fns'
+import { toDate } from 'date-fns';
+import { AiFillBug } from 'react-icons/ai';
+import tippy from 'tippy.js';
+import 'tippy.js/dist/tippy.css';
 
 const EmployeeReports = () => {
 
@@ -189,6 +192,10 @@ const EmployeeReports = () => {
         
     }
 
+    tippy('#hoursTip', {
+        content: "Click to edit",
+    });
+
     if(isLoading){
         return (
             <Container className='text-center my-5'>
@@ -230,6 +237,14 @@ const EmployeeReports = () => {
                             <h2 className='text-center mb-0'>Home</h2>
                             <h4 className='text-white text-center'>Go back</h4>
                         </Link>
+                    </Col>
+                    <Col className='bg-container-blue hover'>
+                        <a href='mailto:dwyerjakej@gmail.com' className="text-decoration-none">
+                            <AiFillBug className='text-white text-center' style={{width: '100%', height: '50px'}}/>
+                            <h2 className='text-center mb-0'>Bug reports</h2>
+                            <h4 className='text-white text-center'>Send feedback</h4>
+                        </a>
+
                     </Col>
                 </Col>
                 <Col className='bg-container-blue'>
@@ -287,7 +302,7 @@ const EmployeeReports = () => {
                             </thead>
                             <tbody className='table-group-divider'>
                                 {reversedHours.map((entry, index) => (
-                                    <tr key={entry.start} className='hours-list-item' onClick={()=>handleShowEditModal(entry.startTime, entry.endTime, entry.date, entry.month, index)}>
+                                    <tr key={entry.fullStartDate} className='hours-list-item' onClick={()=>handleShowEditModal(entry.startTime, entry.endTime, entry.date, entry.month, index)} id='hoursTip'>
                                         <td>{months[entry.month]} {entry.date}</td>
                                         <td>{entry.startTime}</td>
                                         <td>{entry.endTime}</td>

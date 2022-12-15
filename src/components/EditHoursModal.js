@@ -2,6 +2,7 @@ import { Modal, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { useState } from 'react';
 import { getUnixTime } from 'date-fns'
+import { useEffect } from 'react';
 
 const EditHoursModal = ({setShow, show, start, end, date, user, index}) => {
   const handleShow = () => setShow(true);
@@ -20,7 +21,7 @@ const EditHoursModal = ({setShow, show, start, end, date, user, index}) => {
     axios.put(`http://localhost:3001/user/${user._id}/${index}`, {data: dataToUpdate})
     .then((res)=>{
       if(res.status === 200){
-        console.log(res)
+        document.location.reload();
       }
     })
     .catch((error)=>{
@@ -28,6 +29,30 @@ const EditHoursModal = ({setShow, show, start, end, date, user, index}) => {
     })
     setShow(false);
   }
+
+  useEffect(()=>{
+    const entry = user.hours[index]
+    if(dataToUpdate.start){
+      const month = entry.month
+      const entryDate = entry.date
+      const year = JSON.parse(entry.fullStartDate.slice(0, 4))
+      const hour = dataToUpdate.start.slice(0, 2)
+      const minute = dataToUpdate.start.slice(3, 5)
+      const unixTime = getUnixTime(new Date(year, month, entryDate, hour, minute))
+      setDataToUpdate({...dataToUpdate, startUnix: unixTime})
+    }
+
+    if(dataToUpdate.end){
+      const month = entry.month
+      const entryDate = entry.date
+      const year = JSON.parse(entry.fullStartDate.slice(0, 4))
+      const hour = dataToUpdate.end.slice(0, 2)
+      const minute = dataToUpdate.end.slice(3, 5)
+      const unixTime = getUnixTime(new Date(year, month, entryDate, hour, minute))
+      setDataToUpdate({...dataToUpdate, endUnix: unixTime})
+    }
+
+  }, [dataToUpdate.start, dataToUpdate.end])
 
     return ( 
         <>
@@ -44,7 +69,7 @@ const EditHoursModal = ({setShow, show, start, end, date, user, index}) => {
                     <Form.Control
                         type='time'
                         placeholder={start}
-                        onChange={(e)=>setDataToUpdate({...dataToUpdate, start: e.target.value, startUnix: Date.now()})}
+                        onChange={(e)=>setDataToUpdate({...dataToUpdate, start: e.target.value})}
                     />
                 </Form.Group>
                 <Form.Group className='border-top mt-3'>
@@ -53,7 +78,7 @@ const EditHoursModal = ({setShow, show, start, end, date, user, index}) => {
                     <Form.Control
                         type='time'
                         placeholder={end}
-                        onChange={(e)=>setDataToUpdate({...dataToUpdate, end: e.target.value, endUnix: Date.now()})}
+                        onChange={(e)=>setDataToUpdate({...dataToUpdate, end: e.target.value})}
                         //TODO: UNIX TIME IS TAKING CURRENT TIME AND NOT ENTERED TIME
                     />
                 </Form.Group>
