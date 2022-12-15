@@ -54,6 +54,7 @@ const EditHoursModal = ({setShow, show, start, end, date, user, index}) => {
                         type='time'
                         placeholder={end}
                         onChange={(e)=>setDataToUpdate({...dataToUpdate, end: e.target.value, endUnix: Date.now()})}
+                        //TODO: UNIX TIME IS TAKING CURRENT TIME AND NOT ENTERED TIME
                     />
                 </Form.Group>
             </Form>
