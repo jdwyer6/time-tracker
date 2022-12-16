@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { getUnixTime } from 'date-fns'
 import { useEffect } from 'react';
 
-const EditHoursModal = ({setShow, show, start, end, date, user, index}) => {
+const EditHoursModal = ({setShow, show, start, end, date, user, jobId}) => {
+  const entry = user.hours.filter(entry => entry.jobId === jobId)[0]
   const handleShow = () => setShow(true);
   const [dataToUpdate, setDataToUpdate] = useState({
     start: null,
@@ -16,9 +17,9 @@ const EditHoursModal = ({setShow, show, start, end, date, user, index}) => {
   const handleClose = () => {setShow(false)}
 
   const handleSave = () => {
-    // axios.put(`https://clockedin.herokuapp.com/user/${user._id}/${index}`, {data: dataToUpdate})
+    // axios.put(`https://clockedin.herokuapp.com/user/${user._id}/${jobId}`, {data: dataToUpdate})
 
-    axios.put(`http://localhost:3001/user/${user._id}/${index}`, {data: dataToUpdate})
+    axios.put(`http://localhost:3001/user/${user._id}/${jobId}`, {data: dataToUpdate})
     .then((res)=>{
       if(res.status === 200){
         document.location.reload();
@@ -31,11 +32,10 @@ const EditHoursModal = ({setShow, show, start, end, date, user, index}) => {
   }
 
   useEffect(()=>{
-    const entry = user.hours[index]
     if(dataToUpdate.start){
       const month = entry.month
       const entryDate = entry.date
-      const year = JSON.parse(entry.fullStartDate.slice(0, 4))
+      const year = entry.fullStartDate.slice(0, 4)
       const hour = dataToUpdate.start.slice(0, 2)
       const minute = dataToUpdate.start.slice(3, 5)
       const unixTime = getUnixTime(new Date(year, month, entryDate, hour, minute))
@@ -45,7 +45,7 @@ const EditHoursModal = ({setShow, show, start, end, date, user, index}) => {
     if(dataToUpdate.end){
       const month = entry.month
       const entryDate = entry.date
-      const year = JSON.parse(entry.fullStartDate.slice(0, 4))
+      const year = entry.fullStartDate.slice(0, 4)
       const hour = dataToUpdate.end.slice(0, 2)
       const minute = dataToUpdate.end.slice(3, 5)
       const unixTime = getUnixTime(new Date(year, month, entryDate, hour, minute))

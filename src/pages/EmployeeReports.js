@@ -45,12 +45,12 @@ const EmployeeReports = () => {
     });
 
     const [ showEditModal, setShowEditModal] = useState();
-    const handleShowEditModal = (start, end, date, month, index) => {
+    const handleShowEditModal = (start, end, date, month, jobId) => {
         setCurrentValuesToEdit({
             date: `${month}/${date}`,
             start: start,
             end: end,
-            index: index
+            jobId: jobId
         })
         setShowEditModal(true);
     }
@@ -301,8 +301,8 @@ const EmployeeReports = () => {
                                 </tr>
                             </thead>
                             <tbody className='table-group-divider'>
-                                {reversedHours.map((entry, index) => (
-                                    <tr key={entry.fullStartDate} className='hours-list-item' onClick={()=>handleShowEditModal(entry.startTime, entry.endTime, entry.date, entry.month, index)} id='hoursTip'>
+                                {reversedHours.map((entry) => (
+                                    <tr key={entry.fullStartDate} className='hours-list-item' onClick={()=>handleShowEditModal(entry.startTime, entry.endTime, entry.date, entry.month, entry.jobId)} id='hoursTip'>
                                         <td>{months[entry.month]} {entry.date}</td>
                                         <td>{entry.startTime}</td>
                                         <td>{entry.endTime}</td>
@@ -339,7 +339,7 @@ const EmployeeReports = () => {
                 end={currentValuesToEdit.end}
                 date={currentValuesToEdit.date}
                 user={user}
-                index={currentValuesToEdit.index}
+                jobId={currentValuesToEdit.jobId}
             />
             <AddEmployees 
                 show={showAddEmployees} 
