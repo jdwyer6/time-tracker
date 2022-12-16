@@ -5,6 +5,7 @@ import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Popup from './Popup';
 import Register from './Register';
+import LoadingSpinner from './LoadingSpinner';
 
 const Login = () => {
 
@@ -49,7 +50,11 @@ const Login = () => {
 
     if(isLoading){
         return(
-            <h1 className='text-white'>Loading...</h1>
+            <>
+                <h1 className='text-white'>Loading...</h1>
+                <LoadingSpinner/>
+            </>
+
         )
     }
 
