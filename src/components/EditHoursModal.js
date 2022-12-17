@@ -18,7 +18,6 @@ const EditHoursModal = ({setShow, show, start, end, date, user, jobId}) => {
 
   const handleSave = () => {
     axios.put(`https://clockedin.herokuapp.com/user/${user._id}/${jobId}`, {data: dataToUpdate})
-    // axios.put(`http://localhost:3001/user/${user._id}/${jobId}`, {data: dataToUpdate})
     .then((res)=>{
       if(res.status === 200){
         document.location.reload();

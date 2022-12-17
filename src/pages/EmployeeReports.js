@@ -22,6 +22,7 @@ import { toDate } from 'date-fns';
 import { AiFillBug } from 'react-icons/ai';
 import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css';
+import EmployeeDetails from '../components/EmployeeDetails'
 
 const EmployeeReports = () => {
 
@@ -62,6 +63,10 @@ const EmployeeReports = () => {
     const [showPopup, setShowPopup] = useState(false);
     const handleClosePopup = () => setShowPopup(false);
     const handleShowPopup = () => setShowPopup(true);
+
+    const [showEmployeeDetails, setShowEmployeeDetails] = useState(false);
+    const handleCloseEmployeeDetails = () => setShowEmployeeDetails(false);
+    const handleShowEmployeeDetails = () => setShowEmployeeDetails(true);
 
     useEffect(() => {
         axios.get(`https://clockedin.herokuapp.com/user/${tempUser._id}`)
@@ -192,9 +197,11 @@ const EmployeeReports = () => {
         
     }
 
-    tippy('#hoursTip', {
-        content: "Click to edit",
-    });
+    tippy(
+        '#hoursTip', {
+            content: "Click to edit",
+        }
+    );
 
     if(isLoading){
         return (
@@ -224,7 +231,7 @@ const EmployeeReports = () => {
                         <div className='mt-2'>
                             <p className='text-white mb-1 hover' onClick={handleShowAddEmployees}><MdAddCircleOutline className='me-2'/>Add Employees</p>
                             <p className='text-white mb-1 hover' onClick={handleShowPopup}><FiSettings className='me-2'/>Settings</p>
-                            <p className='text-white mb-1 hover' onClick={handleShowPopup}><FaAddressCard className='me-2'/>Employee Details</p>
+                            <p className='text-white mb-1 hover' onClick={handleShowEmployeeDetails}><FaAddressCard className='me-2'/>Employee Details</p>
                         </div>
                     </Col>
                     <Col className='bg-container-blue hover' onClick={handleShowPopup}>
@@ -346,6 +353,12 @@ const EmployeeReports = () => {
                 handleClose={handleCloseAddEmployees} 
                 handleShow={handleShowAddEmployees} 
                 setShow={setShowAddEmployees}
+            />
+            <EmployeeDetails 
+                show={showEmployeeDetails}
+                handleClose = {handleCloseEmployeeDetails}
+                employees = {employees}
+                setShow = {setShowEmployeeDetails}
             />
         </Container> 
     );
