@@ -14,7 +14,7 @@ const EmployeeDetails = ({show, handleClose, employees, setShow}) => {
         admin: null
     });
     const saveUpdates = () => {
-        axios.put(`http://clockedin.herokuapp.com/update/${currentEmployee._id}`, {data: dataToUpdate})
+        axios.put(`https://clockedin.herokuapp.com/update/${currentEmployee._id}`, {data: dataToUpdate})
         .then((res)=>{
             if(res.status === 200){
               document.location.reload();
