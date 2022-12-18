@@ -31,8 +31,7 @@ const EditHoursModal = ({setShow, show, start, end, date, user, jobId}) => {
   }
 
   const handleDelete = () =>{
-    //TODO: change to heroku link
-    axios.delete(`http://localhost:3001/user/${user._id}/${jobId}`)
+    axios.delete(`https://clockedin.herokuapp.com/user/${user._id}/${jobId}`)
     .then((res)=>{
       if(res.status === 200){
         document.location.reload()
