@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { getUnixTime } from 'date-fns'
 import { useEffect } from 'react';
+import {BsFillTrashFill} from 'react-icons';
 
 const EditHoursModal = ({setShow, show, start, end, date, user, jobId}) => {
   const entry = user.hours.filter(entry => entry.jobId === jobId)[0]
@@ -27,6 +28,20 @@ const EditHoursModal = ({setShow, show, start, end, date, user, jobId}) => {
         console.log(error)
     })
     setShow(false);
+  }
+
+  const handleDelete = () =>{
+    //TODO: change to heroku link
+    axios.delete(`http://localhost:3001/user/${user._id}/${jobId}`)
+    .then((res)=>{
+      if(res.status === 200){
+        document.location.reload()
+      }
+    })
+    .catch((error)=>{
+      console.log(error)
+    })
+    setShow(false)
   }
 
   useEffect(()=>{
@@ -77,19 +92,22 @@ const EditHoursModal = ({setShow, show, start, end, date, user, jobId}) => {
                         type='time'
                         placeholder={end}
                         onChange={(e)=>setDataToUpdate({...dataToUpdate, end: e.target.value})}
-                        //TODO: UNIX TIME IS TAKING CURRENT TIME AND NOT ENTERED TIME
                     />
                 </Form.Group>
             </Form>
           </Modal.Body>
-          <Modal.Footer>
-            {/* TODO Change save changes function so it is not handle close. Handle Close saves everything  */}
-            <button className='btn-3' onClick={handleClose}>
-              Cancel
-            </button>
-            <button className='btn-2' onClick={handleSave}>
-              Save Changes
-            </button>
+          <Modal.Footer className='d-flex justify-content-between'>
+            <div className='d-flex'>
+              <button className='btn-3' onClick={handleDelete}>Delete entry</button>
+            </div>
+            <div>
+              <button className='btn-3 mx-2' onClick={handleClose}>
+                Cancel
+              </button>
+              <button className='btn-2' onClick={handleSave}>
+                Save Changes
+              </button>
+            </div>
           </Modal.Footer>
         </Modal>
       </>
